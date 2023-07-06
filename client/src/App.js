@@ -11,8 +11,7 @@ function App() {
       <Header />
       <Homepage />
       <Footer />
-
-      <Footer />
+      
     </div>
   );
 }
