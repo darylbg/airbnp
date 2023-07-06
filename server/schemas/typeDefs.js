@@ -33,6 +33,8 @@ const typeDefs = gql`
     user: User
   }
 
+ 
+
   input listingInput {
     name: String
     description: String!
