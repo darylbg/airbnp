@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Listing, Notification, Rating } = require('../models');
 const { signToken } = require('../utils/auth');
 const { model } = require('mongoose');
 
@@ -11,18 +11,22 @@ const resolvers = {
   
           return userData;
         }
-  
         throw new AuthenticationError('Not logged in');
       },
+      getAllListings: async (parent, args, context) => {
+        const listingsData = await Listing.find({}).populate('userId').populate('ratings').populate('notifications');
+        return listingsData;
+      },
+      getListingById: async (parent, { listingId }, context) => {
+        if (context.user) {
+          const listingData = await Listing.findOne({ _id: listingId }).populate('ratings').populate('notifications');
+          return listingData;
+        }
+        throw new AuthenticationError('You need to be logged in!');
+      }
     },
 
     Mutation: {
-      createUser: async (parent, args) => {
-        const user = await User.create(args);
-        const token = signToken(user);
-        return { token, user };
-      },
-  
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
         if (!user) {
@@ -42,30 +46,114 @@ const resolvers = {
   
         return { token, user };
       },
-      
-      saveMyToilet: async (parent, { toiletData }, context) => {
+
+      createListing: async (parent, { listingData }, context) => {
         if (context.user) {
-          const updatedUser = await User.findByIdAndUpdate(
-            { _id: context.user._id },
-            { $push: { savedToilets: toiletData } },
-            { new: true }
-          );
-          return updatedUser;
+          const newListing = await Listing.create({
+            ...listingData,
+            userId: context.user._id,
+            title: title,
+            lat: lat,
+            lng: lng,
+            address: address,
+            description: description,
+            image: image,
+            price: price,
+            rating: rating ,
+            notifications: [],
+            ratings: []
+          });
+          return newListing;
         }
         throw new AuthenticationError('You need to be logged in!');
       },
-  
-      removeMyToilet: async (parent, { toiletId }, context) => {
+
+      updateListing: async (parent, { listingId, listingData }) => {
         if (context.user) {
-          const updatedUser = await User.findOneAndUpdate(
-            { _id: context.user._id },
-            { $pull: { savedToilets: { toiletId } } },
-            { new: true }
-          );
-          return updatedUser;
+          const updatedListing = Listing.findByIdAndUpdate(
+            listingId, {
+              ...listingData,
+              // userId: context.user._id,
+              title: title,
+              lat: lat,
+              lng: lng,
+              address: address,
+              description: description,
+              image: image,
+              price: price,
+              rating: rating
+          },
+          {
+            new: true,
+          });
+          return updatedListing;
         }
         throw new AuthenticationError('You need to be logged in!');
       },
+
+      removeListing: async (parent, { listingId }, context) => {
+        if (context.user) {
+          const removedListing = await Listing.findOneAndDelete({ _id: listingId });
+            if (removedListing) {
+              await Notification.deleteMany({ listingId: listingId });
+              await Rating.deleteMany({ listingId: listingId });
+              const thisUser = await User.findOneAndUpdate(
+                { _id: context.user._id },
+                { $pull: { listings: listingId } },
+                { new: true }
+              );
+            }
+          return thisUser;
+        }
+        throw new AuthenticationError('You need to be logged in!');
+      },
+
+      createNotification: async (parent, { listingId, arrivingBy }, context) => {
+        if (context.user) {
+          const newNotification = await Notification.create({
+            listingId: listingId,
+            arrivingBy: arrivingBy,
+            userId: context.user._id,
+          });
+          await Listing.findOneAndUpdate(
+            { _id: listingId },
+            { $addToSet: { notifications: newNotification } },
+            { new: true }
+          );
+          return newNotification;
+        }
+        throw new AuthenticationError('You need to be logged in!');
+      },
+
+      removeNotification: async (parent, { notificationId, listingId }, context) => {
+        if (context.user) {
+          const removedNotification = await Notification.findOneAndDelete({ _id: notificationId });
+          await Listing.findOneAndUpdate(
+            { _id: removedNotification.listingId },
+            { $pull: { notifications: removedNotification } },
+            { new: true }
+          );
+          return;
+        }
+        throw new AuthenticationError('You need to be logged in!');
+      },
+      createRating: async (parent, { listingId, rating, comment }, context) => {
+        if (context.user) {
+          const newRating = await Rating.create({
+            listingId: listingId,
+            rating: rating,
+            userId: context.user._id,
+            comment: comment,
+          });
+          const thisListing = await Listing.findOneAndUpdate(
+            { _id: listingId },
+            { $addToSet: { ratings: newRating } },
+            { new: true }
+          );
+          return thisListing;
+        }
+        throw new AuthenticationError('You need to be logged in!');
+      }
     },
   };
   

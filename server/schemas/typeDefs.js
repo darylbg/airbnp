@@ -17,15 +17,25 @@ const typeDefs = gql`
     address: String
     description: String
     image: String
-    userId: [User]
+    userId: ID!
     price: Int
     rating: Int
     notifications: [Notification]
   }
 
   type Notification {
-    listingId: [Listing]
+    listingId: ID!
+    userId: ID!
+    arrivingBy: String
     createdAt: String
+  }
+
+  type Rating {
+    listingId: ID!
+    userId: ID!
+    createdAt: String
+    rating: Int
+    comment: String
   }
 
   type Auth {
@@ -33,16 +43,15 @@ const typeDefs = gql`
     user: User
   }
 
- 
-
   input listingInput {
-    name: String
+    title: String
+    lat: Float
+    lng: Float
+    address: String!
     description: String!
-    toiletId: String!
     image: String
-    link: String
-    lat: Float!
-    lng: Float! 
+    userId: ID!
+    price: Int!
   }
 
   input userInput {
@@ -62,11 +71,12 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     signup(userData: userInput!): Auth
-    createListing(userId: ID!, listingData: listingInput!): Listing
+    createListing(listingData: listingInput!): Listing
     updateListing(listingId: ID!, listingData: listingInput!): Listing
     removeListing(listingId: ID!): User
-    createNotification(listingId: ID!): Notification
-    removeNotification(listingId: ID!): Listing
+    createNotification(listingId: ID!, userId: ID! arrivingBy: String!): Listing
+    removeNotification(notificationId: ID!, listingId: ID!): Listing
+    createRating(listingId: ID!, rating: Int, comment: String): Listing
   }
 `;
 
