@@ -9,6 +9,12 @@ const typeDefs = gql`
     savedToilets: [Toilet]
   }
 
+  input UserInput {
+    username: String!
+    email: String!
+    password: String!
+  }
+
   type Toilet {
     toiletId: ID!
     name: String
@@ -40,6 +46,7 @@ const typeDefs = gql`
 
   type Mutation {
     login(email: String!, password: String!): Auth
+    signup(userData: UserInput!): Auth
     createUser(username: String!, email: String!, password: String!): Auth
     saveMyToilet(toiletData: ToiletInput!): User
     removeMyToilet(toiletId: String!): User
