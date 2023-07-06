@@ -5,7 +5,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     firstName: String
-    lastName: Sting
+    lastName: String
     email: String
     listings: [Listing]
   }
@@ -25,7 +25,7 @@ const typeDefs = gql`
 
   type Notification {
     listingId: [Listing]
-    createdAt: Date
+    createdAt: String
   }
 
   type Auth {
