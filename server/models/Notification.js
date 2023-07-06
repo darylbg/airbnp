@@ -8,8 +8,9 @@ const notificationSchema = new Schema({
             required: true
         }
     ],
-    createdAt: {
-        type: Date.now()
+    createdAt: { 
+        type: Date, 
+        default: Date.now 
     }
 });
 
