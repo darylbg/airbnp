@@ -24,7 +24,7 @@ const typeDefs = gql`
     user: User
   }
 
-  input ToiletInput { # Corrected the input type name to "ToiletInput" (capital "T")
+  input ToiletInput 
     name: String
     description: String!
     toiletId: String!
