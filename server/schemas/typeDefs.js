@@ -5,7 +5,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String
-    ToiletsCount: Int
+    toiletsCount: Int
     savedToilets: [Toilet]
   }
 
@@ -15,8 +15,8 @@ const typeDefs = gql`
     description: String
     image: String
     link: String
-    lat: Number!
-    lng: Number!
+    lat: Float!
+    lng: Float! 
   }
 
   type Auth {
@@ -24,14 +24,14 @@ const typeDefs = gql`
     user: User
   }
 
-  input toiletInput {
+  input ToiletInput { # Corrected the input type name to "ToiletInput" (capital "T")
     name: String
     description: String!
     toiletId: String!
     image: String
     link: String
-    lat: Number!
-    lng: Number!
+    lat: Float!
+    lng: Float! 
   }
 
   type Query {
@@ -43,7 +43,6 @@ const typeDefs = gql`
     createUser(username: String!, email: String!, password: String!): Auth
     saveMyToilet(toiletData: ToiletInput!): User
     removeMyToilet(toiletId: String!): User
-    
   }
 `;
 
