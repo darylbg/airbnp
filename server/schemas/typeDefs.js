@@ -4,19 +4,28 @@ const typeDefs = gql`
   type User {
     _id: ID!
     username: String!
+    firstName: String
+    lastName: String
     email: String
-    toiletsCount: Int
-    savedToilets: [Toilet]
+    listings: [Listing]
   }
 
-  type Toilet {
-    toiletId: ID!
-    name: String
-    description: String
-    image: String
-    link: String
+  type Listing {
+    title: String!
     lat: Float!
     lng: Float! 
+    address: String
+    description: String
+    image: String
+    userId: [User]
+    price: Int
+    rating: Int
+    notifications: [Notification]
+  }
+
+  type Notification {
+    listingId: [Listing]
+    createdAt: String
   }
 
   type Auth {
@@ -24,7 +33,9 @@ const typeDefs = gql`
     user: User
   }
 
-  input ToiletInput 
+ 
+
+  input listingInput {
     name: String
     description: String!
     toiletId: String!
@@ -34,15 +45,28 @@ const typeDefs = gql`
     lng: Float! 
   }
 
+  input userInput {
+    username: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+  }
+
   type Query {
     user: User
+    getAllListings: [Listing]
+    getListingById(listingId: ID!): Listing
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    createUser(username: String!, email: String!, password: String!): Auth
-    saveMyToilet(toiletData: ToiletInput!): User
-    removeMyToilet(toiletId: String!): User
+    signup(userData: userInput!): Auth
+    createListing(userId: ID!, listingData: listingInput!): Listing
+    updateListing(listingId: ID!, listingData: listingInput!): Listing
+    removeListing(listingId: ID!): User
+    createNotification(listingId: ID!): Notification
+    removeNotification(listingId: ID!): Listing
   }
 `;
 

@@ -32,7 +32,7 @@ const userSchema = new Schema(
       required: true,
     },
     // set savedToilets to be an array of data that adheres to the ToiletSchema
-    toilets: [
+    listings: [
       {
         type: Types.ObjectId,
         ref: 'Listing'
