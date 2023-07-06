@@ -7,17 +7,14 @@ import Homepage from './pages/Homepage'
 
 function App() {
   return (
-
-    <Router>
+  <div>
     <Header />
-    <Routes>
-      {/* <Route path="/" element={<Homepage />} exact/>
-      <Route path="/user" element={<User />}/> */}
-    </Routes>
-    <Footer />
-  </Router>
+    <Homepage />
 
+    <Footer />
+  </div>
   );
 }
+
 
 export default App;
