@@ -11,8 +11,8 @@ function App() {
     <Router>
     <Header />
     <Routes>
-      <Route path="/" element={<Homepage />} exact/>
-      <Route path="/user" element={<User />}/>
+      {/* <Route path="/" element={<Homepage />} exact/>
+      <Route path="/user" element={<User />}/> */}
     </Routes>
     <Footer />
   </Router>
