@@ -35,7 +35,14 @@ const resolvers = {
         const token = signToken(user);
         return { token, user };
       },
+
+      signup: async (parent, { userData }) => {
+        const user = await User.create(userData);
+        const token = signToken(user);
   
+        return { token, user };
+      },
+      
       saveMyToilet: async (parent, { toiletData }, context) => {
         if (context.user) {
           const updatedUser = await User.findByIdAndUpdate(
