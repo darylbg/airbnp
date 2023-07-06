@@ -1,12 +1,22 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // import schema from Book.js
-const toiletSchema = require('./Toilet.js');
+// const Listing = require('./Listing.js');
 
 const userSchema = new Schema(
   {
     username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    lastName: {
       type: String,
       required: true,
       unique: true,
@@ -22,7 +32,13 @@ const userSchema = new Schema(
       required: true,
     },
     // set savedToilets to be an array of data that adheres to the ToiletSchema
-    savedToilets: [toiletSchema],
+    toilets: [
+      {
+        type: Types.ObjectId,
+        ref: 'Listing'
+      }
+    ],
+    
   },
   // set this to use virtual below
   {
