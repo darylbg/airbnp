@@ -57,6 +57,7 @@ const typeDefs = gql`
     user: User
     getAllListings: [Listing]
     getListingById(listingId: ID!): Listing
+    searchUser(username: String!): [User]
   }
 
   type Mutation {
