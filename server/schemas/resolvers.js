@@ -1,6 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
-const { signToken } = require('../utils/auth/');
+const { signToken } = require('../utils/auth');
 const { model } = require('mongoose');
 
 const resolvers = {
@@ -17,31 +17,25 @@ const resolvers = {
     },
 
     Mutation: {
-        createUser: async (parent, args) => {
-          const user = await User.create(args);
-          const token = signToken(user);
-    
-          return { token, user };
-        },
-    },
-
-    login: async (parent, { email, password }) => {
-        const user = await User.findOne({ email });
-  
-        if (!user) {
-          throw new AuthenticationError('Incorrect credentials');
-        }
-  
-        const correctPw = await user.isCorrectPassword(password);
-  
-        if (!correctPw) {
-          throw new AuthenticationError('Incorrect credentials');
-        }
-  
+      createUser: async (parent, args) => {
+        const user = await User.create(args);
         const token = signToken(user);
         return { token, user };
       },
-
+  
+      login: async (parent, { email, password }) => {
+        const user = await User.findOne({ email });
+        if (!user) {
+          throw new AuthenticationError('Incorrect credentials');
+        }
+        const correctPw = await user.isCorrectPassword(password);
+        if (!correctPw) {
+          throw new AuthenticationError('Incorrect credentials');
+        }
+        const token = signToken(user);
+        return { token, user };
+      },
+  
       saveMyToilet: async (parent, { toiletData }, context) => {
         if (context.user) {
           const updatedUser = await User.findByIdAndUpdate(
@@ -49,26 +43,23 @@ const resolvers = {
             { $push: { savedToilets: toiletData } },
             { new: true }
           );
-  
           return updatedUser;
         }
-  
         throw new AuthenticationError('You need to be logged in!');
       },
-
+  
       removeMyToilet: async (parent, { toiletId }, context) => {
         if (context.user) {
           const updatedUser = await User.findOneAndUpdate(
             { _id: context.user._id },
-            { $pull: { savedToilets:   { toiletId } } },
+            { $pull: { savedToilets: { toiletId } } },
             { new: true }
           );
-  
           return updatedUser;
         }
-  
         throw new AuthenticationError('You need to be logged in!');
       },
-};
-
-module.exports = resolvers;
+    },
+  };
+  
+  module.exports = resolvers;
