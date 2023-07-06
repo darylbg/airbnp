@@ -13,7 +13,10 @@ function App() {
       <Footer />
     </div>
 
+    <Footer />
+  </div>
   );
 }
+
 
 export default App;
