@@ -57,7 +57,7 @@ const Header = () => {
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink to="/logout" className="dropdown-item">
+                      <NavLink to="/" className="dropdown-item">
                         Logout
                       </NavLink>
                     </li>
