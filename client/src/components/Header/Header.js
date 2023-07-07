@@ -3,42 +3,42 @@ import "./Header.css";
 
 const Header = () => {
   return (
-  <div>
-    <nav class="navbar navbar-expand-md bg-body-tertiary fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Airbnp</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="navbarOffcanvasLg" aria-labelledby="navbarOffcanvasLgLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Airbnp</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Login/Sign Up</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Account
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">My Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<div>
+  <nav className="navbar navbar-expand-md bg-body-tertiary fixed-top">
+    <div className="container-fluid">
+      <a className="navbar-brand" href="#">Airbnp</a>
+      <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="offcanvas offcanvas-end" tabIndex="-1" id="navbarOffcanvasLg" aria-labelledby="navbarOffcanvasLgLabel">
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Airbnp</h5>
+          <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-    </nav>
-  </div>
+        <div className="offcanvas-body">
+          <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" aria-current="page" href="#">Login/Sign Up</a>
+            </li>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Account
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li><a className="dropdown-item" href="#">My Profile</a></li>
+                <li><a className="dropdown-item" href="#">Dashboard</a></li>
+                <li><a className="dropdown-item" href="#">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
   );
 };
 

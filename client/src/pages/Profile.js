@@ -1,11 +1,11 @@
 import React from 'react'
 
-const User = () => {
+const Profile = () => {
   return (
-    <div>
+    <div class="vh-100 bg-success d-flex align-items-md-center justify-content-sm-center">
       I am profile
     </div>
   )
 }
 
-export default User
+export default Profile
