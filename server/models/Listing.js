@@ -26,7 +26,7 @@ const listingSchema = new Schema({
     type: String,
   },
   userId: {
-    type: Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User'
   },
   price: {
@@ -37,12 +37,17 @@ const listingSchema = new Schema({
     type: Number
   },
   notifications: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Notification'
+      }
+  ],
+  ratings: [
     {
-      type: Types.ObjectId,
-      ref: 'Notification'
+      type: Schema.Types.ObjectId,
+      ref: 'Rating'
     }
-]
-
+  ]
 });
 
 const Listing = model("Listing", listingSchema);

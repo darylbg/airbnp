@@ -34,7 +34,7 @@ const userSchema = new Schema(
     // set savedToilets to be an array of data that adheres to the ToiletSchema
     listings: [
       {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Listing'
       }
     ],
