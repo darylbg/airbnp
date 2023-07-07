@@ -1,0 +1,17 @@
+.login-register-container {
+    max-width: 400px;
+    padding-top: 100px;
+    height: 575px;
+}
+
+.login-register-tabs li {
+    flex: 1;
+}
+
+.login-register-tabs li button {
+    width: 100%;
+}
+
+.login-register-container form {
+    padding-top: 25px;
+}
