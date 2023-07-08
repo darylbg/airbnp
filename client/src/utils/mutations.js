@@ -10,9 +10,12 @@ export const LOGIN_USER = gql`
       }
     }
   }
+  `;
 
-  mutation Mutation($userData: userInput!) {
-    signup(userData: $userData) {
+
+export const REGISTER = gql`
+  mutation($userData: userInput!) {
+    register(userData: $userData) {
       token
       user {
         email
@@ -23,3 +26,4 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+

@@ -33,9 +33,6 @@ const listingSchema = new Schema({
     type: Number,
     required: true
   },
-  rating: {
-    type: Number
-  },
   notifications: [
       {
         type: Schema.Types.ObjectId,

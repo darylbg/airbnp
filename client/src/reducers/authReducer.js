@@ -47,7 +47,7 @@ export const authReducer = createSlice({
       };
     },
 
-    signup_user(state, action) {
+    register_user(state, action) {
       return {
         ...state,
         isLoggedIn: true,
@@ -65,5 +65,5 @@ export const authReducer = createSlice({
   },
 });
 
-export const { login_user, logout, signup_user } = authReducer.actions;
+export const { login_user, logout, register_user } = authReducer.actions;
 export default authReducer.reducer;
