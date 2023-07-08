@@ -47,7 +47,7 @@ const Header = () => {
                     <NavDropdown.Item as={NavLink} to="/profile">My Profile</NavDropdown.Item>
                     <NavDropdown.Item as={NavLink} to="/dashboard">Dashboard</NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item as={NavLink} onClick={logout}>Logout</NavDropdown.Item>
+                    <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                   </NavDropdown>
                 ):(
                   <Nav.Link as={NavLink} to="/login">Login / Register</Nav.Link>
