@@ -14,12 +14,10 @@ const userSchema = new Schema(
     firstName: {
       type: String,
       required: true,
-      unique: true,
     },
     lastName: {
       type: String,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
@@ -32,12 +30,15 @@ const userSchema = new Schema(
       required: true,
     },
     // set savedToilets to be an array of data that adheres to the ToiletSchema
-    listings: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Listing'
-      }
-    ],
+    listings: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Listing'
+        }
+      ],
+      default: []
+    },
     
   },
   // set this to use virtual below
@@ -64,8 +65,8 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 // when we query a user, we'll also get another field called `toiletCount` with the number of saved toilets we have
-userSchema.virtual('toiletCount').get(function () {
-  return this.savedToilets.length;
+userSchema.virtual('listingCount').get(function () {
+  return this.listings.length;
 });
 
 const User = model('User', userSchema);
