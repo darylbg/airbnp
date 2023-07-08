@@ -41,8 +41,7 @@ const listings = [
 
 const LocalListings = () => {
   return (
-    <Container className="d-flex align-items-end">
-      <div className="Listings-card bg-warning p-5">
+    <Container className="d-flex fixed-bottom p-5">
         <Row>
           {listings.map((listing) => (
             <Col className="border border-dark d-flex align-items-center justify-content-center flex-column" key={listing.title}>
@@ -52,7 +51,6 @@ const LocalListings = () => {
             </Col>
           ))}
         </Row>
-      </div>
     </Container>
   );
 };
