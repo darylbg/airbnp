@@ -6,12 +6,13 @@ import Homepage from './pages/Homepage';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import './App.css';
 
 function App() {
   return (
     <Router>
-      <div className="app-div">
-        <Header />
+      <Header />
+      <div className="app-div"> 
         <div className="main-content">
           <Routes>
             <Route path="/" element={<Homepage />} />
@@ -20,10 +21,17 @@ function App() {
             <Route path="/login" element={<Login />} />
           </Routes>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </Router>
   );
 }
 
 export default App;
+
+
+
+
+
+
+

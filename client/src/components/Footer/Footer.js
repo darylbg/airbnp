@@ -1,13 +1,14 @@
-import React from "react";
-import "./Footer.css";
+import React from 'react';
+import './Footer.css';
+import { Container, Row } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <footer className="footer mt-auto py-3 bg-danger">
-      <div className="container text-center">
-        <span className="text-muted">Footer</span>
-      </div>
-    </footer>
+    <Container className="bg-warning fixed-bottom bg-body-tertiary w-100 p-3">
+      <Row>
+        footer
+      </Row>
+    </Container>
   );
 };
 
