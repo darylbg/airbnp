@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useMutation } from "@apollo/client";
+import { useNavigate } from 'react-router-dom';
 import { LOGIN } from "../../../utils/mutations";
 import { login_user } from "../../../reducers/authReducer";
 
@@ -12,6 +13,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { EyeSlash, Eye } from 'react-bootstrap-icons';
 
 function LoginForm({ handleTogglePassword, passwordVisible}) {
+
+  const navigate = useNavigate();
   const [login] = useMutation(LOGIN);
 
   const [values, setValues] = useState({
@@ -49,7 +52,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
       console.log(`Welcome Back! ${data.login.user.username} is now logged in`);
 
       setValues({ ...values });
-      // navigate("/");
+      navigate("/");
     } catch (error) {
       console.log(error);
       setValues({ ...values });
