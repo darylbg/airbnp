@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import toilet1 from '../../utils/Images/King.webp';
 import toilet2 from '../../utils/Images/Dirty.webp';
 import toilet3 from '../../utils/Images/royal-style-gold-toilet-5.jpg';
@@ -41,14 +41,21 @@ const listings = [
 
 const LocalListings = () => {
   return (
-    <Container className="d-flex align-items-end">
-      <div className="Listings-card bg-warning p-5">
+    <Container className="d-flex align-items-end fixed-bottom p-4">
+      <div className="Listings-card p-5">
         <Row>
           {listings.map((listing) => (
-            <Col className="border border-dark d-flex align-items-center justify-content-center flex-column" key={listing.title}>
-              <p className="small-font-size">{listing.title}</p>
-              <img className="w-50 h-50" src={listing.image} alt={listing.title} />
-              <p>{listing.description}</p>
+            <Col className="d-flex align-items-center  justify-content-center flex-column" key={listing.title}>
+              <Card style={{ width: '13rem' }}>
+              <Card.Img variant="top" src={listing.image} alt={listing.title} style={{ height: '10rem' }} />
+                <Card.Body>
+                  <Card.Title className="small-text text-center">{listing.title}</Card.Title>
+                  <Card.Text className="small-text text-center">{listing.description}</Card.Text>
+                  <div className='d-flex justify-content-center'>
+                    <Button variant="dark">Use</Button>
+                  </div>                  
+                </Card.Body>
+              </Card>
             </Col>
           ))}
         </Row>
