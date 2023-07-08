@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { useMutation } from "@apollo/client";
+import { SIGNUP } from "../../../utils/mutations";
+import { signup_user } from "../../../reducers/authReducer";
 
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';

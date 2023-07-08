@@ -40,7 +40,7 @@ const resolvers = {
         return { token, user };
       },
 
-      signup: async (parent, { userData }) => {
+      register: async (parent, { userData }) => {
         const user = await User.create(userData);
         const token = signToken(user);
   

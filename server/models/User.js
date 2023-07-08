@@ -64,8 +64,8 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 // when we query a user, we'll also get another field called `toiletCount` with the number of saved toilets we have
-userSchema.virtual('toiletCount').get(function () {
-  return this.savedToilets.length;
+userSchema.virtual('listingCount').get(function () {
+  return this.listings.length;
 });
 
 const User = model('User', userSchema);
