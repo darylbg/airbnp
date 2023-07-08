@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom';
 
 const Homepage = () => {
   return (
-    <div className='vh-100 bg-success d-flex align-items-md-center justify-content-sm-center'>
-      <LocalListings />
+    <div className='container' style={{width: '100%', justifyContent: 'center', display: 'flex', backgroundColor: "red" }}>
+      <LocalListings />    
     </div>
   )
 }
