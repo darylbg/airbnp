@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
 import { LOGIN } from "../../../utils/mutations";
 import { login_user } from "../../../reducers/authReducer";
+import Auth from '../../../utils/auth';
 
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -50,11 +51,12 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
           listings: data.login.listings
         })
       );
-      localStorage.setItem("id_token", data.login.token);
+      Auth.login(data.login.token);
+      // localStorage.setItem("id_token", data.login.token);
       console.log(`Welcome Back! ${data.login.user.username} is now logged in`);
 
       setValues({ ...values });
-      navigate("/");
+      // navigate("/");
     } catch (error) {
       console.log(error);
       setValues({ ...values });

@@ -52,7 +52,7 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                 email: data.register.user.email
             };
             dispatch(register_user(userData));
-            localStorage.setItem('id_token', data.register.token);
+            // localStorage.setItem('id_token', data.register.token);
             console.log(`hi there ${data.register.user.username}`);
 
             // Reset the form values to initial empty state
