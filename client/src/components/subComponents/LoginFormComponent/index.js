@@ -10,12 +10,14 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Alert from 'react-bootstrap/Alert';
 import { EyeSlash, Eye } from 'react-bootstrap-icons';
 
 function LoginForm({ handleTogglePassword, passwordVisible}) {
 
   const navigate = useNavigate();
   const [login] = useMutation(LOGIN);
+  const [alertShow, setAlertShow] = useState(false);
 
   const [values, setValues] = useState({
     email: "",
@@ -56,6 +58,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
     } catch (error) {
       console.log(error);
       setValues({ ...values });
+      setAlertShow(true);
     }
   };
 
@@ -81,12 +84,22 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
                 {passwordVisible ? <Eye /> : <EyeSlash />}
             </InputGroup.Text>
         </InputGroup>
+        <div style={{width: '100%'}}>
         <Button 
+        style={{display: 'inline-block'}}
           variant='primary' 
           onClick={submitHandler}
         >
           Login
         </Button>
+            <Alert 
+              show={alertShow}
+              key='success' 
+              variant='danger' 
+              style={{ display: 'inline-block', float: 'right' }}>
+                Incorrect details try again
+            </Alert>       
+        </div>
     </Form>
   )
 };
