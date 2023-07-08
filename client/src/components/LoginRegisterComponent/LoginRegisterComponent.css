@@ -1,7 +1,6 @@
 .login-register-tabs {
     width: 400px;
-    padding-top: 100px;
-    height: 575px;
+    padding-top: 50px;
 }
 
 @media screen and (max-width: 500px) {

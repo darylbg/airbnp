@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Alert from 'react-bootstrap/Alert';
 import { EyeSlash, Eye } from 'react-bootstrap-icons';
 
 
@@ -23,12 +24,17 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
 
     const [register] = useMutation(REGISTER);
 
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertVariant, setAlertVariant] = useState('danger'); 
+
     const dispatch = useDispatch();
 
     const submitHandler = async () => {
         const { firstName, lastName, username, email, password } = values;
         if (!firstName || !lastName || !username || !email || !password) {
             console.log('registration error maybe field missing or incomplete');
+            setAlertVariant('danger'); // Set alert variant to 'danger' for unsuccessful submission
+            setShowAlert(true);
             return;
         }
 
@@ -47,7 +53,18 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
             };
             dispatch(register_user(userData));
             localStorage.setItem('id_token', data.register.token);
-            console.log(`hi there ${data.register.user.username}`)
+            console.log(`hi there ${data.register.user.username}`);
+
+            // Reset the form values to initial empty state
+            setValues({
+                firstName: '',
+                lastName: '',
+                username: '',
+                email: '',
+                password: '',
+            });
+            setAlertVariant('success'); // Set alert variant to 'success' for successful submission
+            setShowAlert(true);
         } catch (error) {
             console.log(error);
         }
@@ -95,7 +112,14 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                     {passwordVisible ? <Eye /> : <EyeSlash />}
                 </InputGroup.Text>
             </InputGroup>
-            <Button variant='primary' onClick={submitHandler}>Register</Button>
+            <div style={{width: '100%'}}>
+                <Button variant='primary' onClick={submitHandler} style={{display: 'inline-block', marginRight: '10px'}}>Register</Button>
+                {showAlert && (
+                    <Alert key='success' variant={alertVariant} style={{ display: 'inline-block', float: 'right' }}>
+                        {alertVariant === 'success' ? 'Success!' : 'Error!'} This is an alert message.
+                    </Alert>
+                )}
+            </div>
         </Form>
     )
 };
