@@ -1,17 +1,23 @@
-.login-register-container {
-    max-width: 400px;
+.login-register-tabs {
+    width: 400px;
     padding-top: 100px;
     height: 575px;
 }
 
-.login-register-tabs li {
+@media screen and (max-width: 500px) {
+    .login-register-tabs {
+        width: 90%;
+    }
+}
+
+.login-register-tabs ul li {
     flex: 1;
 }
 
-.login-register-tabs li button {
+.login-register-tabs ul li button {
     width: 100%;
 }
 
-.login-register-container form {
+.login-register-tabs .tab-content {
     padding-top: 25px;
 }

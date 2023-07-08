@@ -3,7 +3,7 @@ import LoginRegister from '../components/LoginRegisterComponent'
 
 const Login = () => {
   return (
-    <div className='vh-100 bg-success d-flex align-items-md-center justify-content-sm-center'>
+    <div className='container' style={{width: '100%', justifyContent: 'center', display: 'flex' }}>
       <LoginRegister />
     </div>
   )
