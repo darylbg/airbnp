@@ -18,7 +18,6 @@ const Header = () => {
             data-bs-target="#navbarOffcanvasLg"
             aria-controls="navbarOffcanvasLg"
             aria-label="Toggle navigation"
-            onClick={() => navigate('/')}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -32,20 +31,29 @@ const Header = () => {
             <div className="offcanvas-body">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li className="nav-item">
-                  <NavLink exact to="/" className="nav-link" activeClassName="active">
+                  <NavLink exact to="/" className="nav-link">
                     Home
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/login" className="nav-link" activeClassName="active">
-                    Login/Sign Up
+                  <NavLink to="/login" className="nav-link">
+                    Login / Register
                   </NavLink>
                 </li>
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-target="#dropdownMenu" aria-expanded="false">
+                  <NavLink
+                    className="nav-link dropdown-toggle"
+                    to="#"
+                    id="dropdownMenu"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    data-bs-target="#navbarOffcanvasLg"
+                    aria-expanded="false"
+                    activeClassName="active"
+                  >
                     Account
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end" id="dropdownMenu">
+                  </NavLink>
+                  <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu">
                     <li>
                       <NavLink to="/profile" className="dropdown-item">
                         My Profile
