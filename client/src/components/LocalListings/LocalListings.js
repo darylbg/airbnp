@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import toilet1 from '../../utils/Images/King.webp';
 import toilet2 from '../../utils/Images/Dirty.webp';
 import toilet3 from '../../utils/Images/royal-style-gold-toilet-5.jpg';
@@ -40,19 +41,19 @@ const listings = [
 
 const LocalListings = () => {
   return (
-    <div className="d-flex min-vh-100 align-items-end">
+    <Container className="d-flex align-items-end">
       <div className="Listings-card bg-warning p-5">
-        <div className="row">
+        <Row>
           {listings.map((listing) => (
-            <div className="col border border-dark d-flex align-items-center justify-content-center flex-column" key={listing.title}>
+            <Col className="border border-dark d-flex align-items-center justify-content-center flex-column" key={listing.title}>
               <p className="small-font-size">{listing.title}</p>
               <img className="w-50 h-50" src={listing.image} alt={listing.title} />
               <p>{listing.description}</p>
-            </div>
+            </Col>
           ))}
-        </div>
+        </Row>
       </div>
-    </div>
+    </Container>
   );
 };
 

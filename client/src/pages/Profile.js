@@ -2,7 +2,7 @@ import React from 'react'
 
 const Profile = () => {
   return (
-    <div class="vh-100 bg-success d-flex align-items-md-center justify-content-sm-center">
+    <div className='container' style={{width: '100%', justifyContent: 'center', display: 'flex' }}>
       I am profile
     </div>
   )
