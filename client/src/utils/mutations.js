@@ -28,11 +28,12 @@ export const REGISTER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation UpdateUserDetails($firstName: String!, $lastName: String!, $email: String!) {
-    updateUserDetails(firstName: $firstName, lastName: $lastName, email: $email) {
+  mutation updateUserDetails($firstName: String!, $lastName: String!, $image: String) {
+    updateUserDetails(firstName: $firstName, lastName: $lastName, image: $image) {
       firstName
       lastName
-      email
+      username
+      image
     }
   }
 `;

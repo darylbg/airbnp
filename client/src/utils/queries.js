@@ -6,7 +6,9 @@ export const QUERY_USER = gql`
       _id
       username
       email
-
+      firstName
+      lastName
+      image
     }
   }
 `;

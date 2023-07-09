@@ -4,7 +4,7 @@ import Alert from 'react-bootstrap/Alert';
 
 const ImageUpload = ({ handleInputDisable, inputDisable, onUpload }) => {
     const CLOUDINARY_NAME = process.env.REACT_APP_CLOUDINARY_NAME;
-    console.log(CLOUDINARY_NAME);
+    // console.log(CLOUDINARY_NAME);
 
     const [ validUpload, setValidUpload ] = useState(true);
     const [ message, setMessage ] = useState('');
@@ -45,7 +45,7 @@ const ImageUpload = ({ handleInputDisable, inputDisable, onUpload }) => {
         formdata.append("upload_preset", 'vzrpgeu5');
     
         const res = await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/auto/upload`,
+          `https://api.cloudinary.com/v1_1/darylb/auto/upload`,
           {
             method: "post",
             mode: "cors",
