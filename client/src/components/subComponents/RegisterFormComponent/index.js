@@ -56,6 +56,9 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
             console.log(`hi there ${data.register.user.username}`);
 
             // Reset the form values to initial empty state
+           
+            setAlertVariant('success'); // Set alert variant to 'success' for successful submission
+            setShowAlert(true);
             setValues({
                 firstName: '',
                 lastName: '',
@@ -63,10 +66,11 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                 email: '',
                 password: '',
             });
-            setAlertVariant('success'); // Set alert variant to 'success' for successful submission
-            setShowAlert(true);
+
         } catch (error) {
             console.log(error);
+        } finally {
+            
         }
     }
 
