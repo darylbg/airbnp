@@ -1,0 +1,17 @@
+.profile-heading-row {
+    margin-bottom: 50px;
+}
+
+.profile-img-wrapper {
+    border: 2px solid red;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 6px solid transparent;
+}
