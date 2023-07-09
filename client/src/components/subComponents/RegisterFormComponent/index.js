@@ -29,7 +29,8 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
 
     const dispatch = useDispatch();
 
-    const submitHandler = async () => {
+    const submitHandler = async (e) => {
+        e.preventDefault()
         const { firstName, lastName, username, email, password } = values;
         if (!firstName || !lastName || !username || !email || !password) {
             console.log('registration error maybe field missing or incomplete');
@@ -51,7 +52,7 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                 username: data.register.user.username,
                 email: data.register.user.email
             };
-            dispatch(register_user(userData));
+            // dispatch(register_user(userData));
             // localStorage.setItem('id_token', data.register.token);
             console.log(`hi there ${data.register.user.username}`);
 
@@ -67,6 +68,8 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                 password: '',
             });
 
+            e.target.reset();
+
         } catch (error) {
             console.log(error);
         } finally {
@@ -75,7 +78,7 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
     }
 
     return (
-        <Form>
+        <Form onSubmit={submitHandler}>
             <FloatingLabel controlId="floatingRegisterInput1" label="First Name" className="mb-3">
                 <Form.Control 
                     type="text" 
@@ -120,7 +123,7 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                 </InputGroup.Text>
             </InputGroup>
             <div style={{width: '100%'}}>
-                <Button variant='primary' onClick={submitHandler} style={{display: 'inline-block', marginRight: '10px'}}>Register</Button>
+                <Button type='submit' variant='primary' style={{display: 'inline-block', marginRight: '10px'}}>Register</Button>
                 {showAlert && (
                     <Alert key='success' variant={alertVariant} style={{ display: 'inline-block', float: 'right' }}>
                         {alertVariant === 'success' ? 'Success!' : 'Error!'} This is an alert message.

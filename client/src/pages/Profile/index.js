@@ -7,29 +7,46 @@ import Button from 'react-bootstrap/Button';
 import './Profile.css';
 
 import EditProfileForm from '../../components/subComponents/EditProfileComponent';
+import { useQuery } from '@apollo/client';
+import { QUERY_USER } from '../../utils/queries';
 
 const Profile = () => {
+  const { data } = useQuery(QUERY_USER);
+  let currentUser;
 
+  if(data) {
+    currentUser = data.user
+    console.log(currentUser)
+  }
   return (
     <Container fluid="md">
-      <Row className='profile-heading-row'>
-        <Col md='auto'>
-          <div className='profile-img-wrapper'>
-            <img className='profile-img' src="https://res.cloudinary.com/darylb/image/upload/v1688912273/zw9lqdl8rija11an5pcw.png"></img>
-          </div>
+      {currentUser ? (
+      <>
+        <Row className='profile-heading-row'>
+          <Col md='auto'>
+            <div className='profile-img-wrapper'>
+              <img className='profile-img' src="https://res.cloudinary.com/darylb/image/upload/v1688912273/zw9lqdl8rija11an5pcw.png"></img>
+            </div>
+            </Col>
+            <Col>
+              <h1>Profile</h1>
+              <h3>{currentUser.firstName}</h3>
+              <h3>{currentUser.email}</h3>
           </Col>
-          <Col>
-            <h1>Profile</h1>
-            <h3>Daryl Blough</h3>
-            <h3>darylxcuf@gmail.com</h3>
-        </Col>
-      </Row>
-      <Row>
-        <Col sm='auto'>
-          <h5>Edit your details</h5>
-          <EditProfileForm />
-        </Col>
-      </Row>
+        </Row>
+        <Row>
+          <Col sm='auto'>
+            <h5>Edit your details</h5>
+            <EditProfileForm userObj={currentUser}/>
+          </Col>
+        </Row>
+      </>
+      ) 
+      : (
+        <div>
+          Login nerd
+        </div>
+      )}
     </Container>
   )
 }
