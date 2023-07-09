@@ -59,38 +59,63 @@ const NewListing = () => {
   return (
     <Form>
       <Row>
-        <Col sm={6}>
+        <h2 className='text-center p-3'>New listing</h2>
+      </Row>
+      <Row>
+      <Col sm={6}>
           <Input 
-            id="title"
+            id="Street"
             element="input" 
             type="text" 
-            placeholder="Title" 
-            label="Title" 
+            placeholder="Street" 
+            label="Street" 
             validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid title" 
+            errorText="Please enter a valid street" 
             onInput={inputHandler}/>
         </Col>
         <Col sm={6}>
           <Input 
-            id="address"
+            id="Postcode"
             element="input" 
             type="text" 
-            placeholder="Address" 
-            label="Address" 
+            placeholder="Postcode" 
+            label="Postcode" 
             validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid Adress" 
+            errorText="Please enter a valid postcode" 
+            onInput={inputHandler}/>
+        </Col>
+        <Col sm={6}>
+          <Input 
+            id="Number"
+            element="input" 
+            type="text" 
+            placeholder="Number" 
+            label="Number" 
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid property number" 
+            onInput={inputHandler}/>
+        </Col>
+        <Col sm={6}>
+          <Input 
+            id="Price"
+            element="input" 
+            type="text" 
+            placeholder="Price" 
+            label="Price" 
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid title" 
             onInput={inputHandler}/>
         </Col>
       </Row>
       <Row>
         <Col sm={12}>
           <Input 
-          id="price"
+          id="Title"
           element="input" 
-          type="text" placeholder="Price" 
-          label="Price" 
+          type="text" placeholder="Title" 
+          label="Title" 
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid Price"
+          errorText="Please enter a valid title"
           onInput={inputHandler}/>
 
           <Input 
