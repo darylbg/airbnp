@@ -1,49 +1,109 @@
-import React from 'react';
+import React, { useCallback, useReducer } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import Inputs from '../FormElements/Inputs';
+import Input from '../FormElements/Input';
 import { validate, VALIDATOR_REQUIRE } from '../../utils/validators';
 
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case 'INPUT_CHANGE':
+      let formIsValid = true;
+      for (const inputId in state.inputs) {
+        if (inputId === action.inputId) {
+          formIsValid = formIsValid && action.isValid;
+        } else {
+          formIsValid = formIsValid && state.inputs[inputId].isValid;
+        }
+      }
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [action.inputId]: { value: action.value, isValid: action.isValid }
+        },
+        isValid: formIsValid
+      };
+    default:
+      return state;
+  }
+};
+
 const NewListing = () => {
+
+  const [formState, dispatch] = useReducer(formReducer, {
+    inputs: {
+      title: {
+        value: '',
+        isValid: false
+      },
+      description: {
+        value: '',
+        isValid: false
+      },
+      price: {
+        value: '',
+        isValid: false
+      },
+      address: {
+        value: '',
+        isValid: false
+      }
+    },
+    isValid: false
+  });
+
+  const inputHandler = useCallback((id, value, isValid) => {
+    dispatch({ type: 'INPUT_CHANGE', value: value, isValid: isValid, inputId: id });
+  }, []);
+  
+
   return (
     <Form>
       <Row>
         <Col sm={6}>
-          <Inputs 
+          <Input 
+            id="title"
             element="input" 
             type="text" 
             placeholder="Title" 
             label="Title" 
             validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid title" />
+            errorText="Please enter a valid title" 
+            onInput={inputHandler}/>
         </Col>
         <Col sm={6}>
-          <Inputs 
+          <Input 
+            id="address"
             element="input" 
             type="text" 
             placeholder="Address" 
             label="Address" 
             validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid Adress" />
+            errorText="Please enter a valid Adress" 
+            onInput={inputHandler}/>
         </Col>
       </Row>
       <Row>
         <Col sm={12}>
-          <Inputs 
+          <Input 
+          id="price"
           element="input" 
           type="text" placeholder="Price" 
           label="Price" 
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid Price"/>
+          errorText="Please enter a valid Price"
+          onInput={inputHandler}/>
 
-          <Inputs 
+          <Input 
+          id="description"
           type="text" 
           placeholder="Description" 
           label="Description" 
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid description"/>
+          errorText="Please enter a valid description"
+          onInput={inputHandler}/>
         </Col>
       </Row>
-      <Button type="submit">Submit</Button>
+      <Button type="submit" disabled={!formState.isValid}>Submit</Button>
     </Form>
   );
 };
