@@ -39,7 +39,9 @@ const userSchema = new Schema(
       ],
       default: []
     },
-    
+    image: {
+      type: String
+    }
   },
   // set this to use virtual below
   {

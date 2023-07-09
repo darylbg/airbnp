@@ -4,7 +4,7 @@ import { Container, Row } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <Container fluid className="bg-warning fixed-bottom bg-body-tertiary w-100 p-3">
+    <Container fluid className="bg-warning bg-body-tertiary w-100 p-3">
       <Row>
         footer
       </Row>
