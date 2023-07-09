@@ -1,34 +1,57 @@
 import React, { useReducer } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FloatingLabel } from 'react-bootstrap';
+import { validate } from '../../utils/validators'
 
-const Inputs = (props) => {
-
-  const inputReducer = (state, action) => {
+const inputReducer = (state, action) => {
     switch (action.type) {
-        case 'CHANGE':
-            return {
-                ...state,
-                value: action.val,
-                isValid: true
-            };
-        default:
-            return state;    
+      case 'CHANGE':
+        return {
+          ...state,
+          value: action.val,
+          isValid: validate(action.val, action.validators)
+        };
+      case 'TOUCH': {
+        return {
+          ...state,
+          isTouched: true
+        }
+      }
+      default:
+        return state;
     }
-  };    
+  };
+  
+  const Input = props => {
+    const [inputState, dispatch] = useReducer(inputReducer, {
+      value: '',
+      isTouched: false,
+      isValid: false
+    });
+  
+    const changeHandler = event => {
+      dispatch({
+        type: 'CHANGE',
+        val: event.target.value,
+        validators: props.validators
+      });
+    };
+  
+    const touchHandler = () => {
+      dispatch({
+        type: 'TOUCH'
+      });
+    };
+  
 
-  const [inputState, dispatch] = useReducer(inputReducer, {value: "", isValid: false});
-
-  const changeHandler = event => {
-        dispatch({type: CHANGE, val: event.target.value});
-    }
-
-   const element = props.element === 'input' ? (
+   const element = 
+    props.element === 'input' ? (
         <Form.Control
           id={props.id}
           type={props.type}
           placeholder={props.placeholder}
           onChange={changeHandler}
+          onBlur={touchHandler}
           value={inputState.value}
           className={`form-control ${!inputState.isValid ? "form-control-invalid" : ""}`}
         />
@@ -38,6 +61,7 @@ const Inputs = (props) => {
           id={props.id}
           rows={props.rows || 3}
           onChange={changeHandler}
+          onBlur={touchHandler}
           value={inputState.value}
           className={`form-control ${!inputState.isValid ? "form-control-invalid" : ""}`}
         />
@@ -49,7 +73,7 @@ const Inputs = (props) => {
         <Form.Group className="mb-3"> 
             <FloatingLabel htmlFor={props.id} label={props.label}>
                 {element}
-                {!inputState.isValid && <p>{props.errorText}</p>}
+                {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
             </FloatingLabel>
         </Form.Group>
       </Form>
@@ -57,4 +81,4 @@ const Inputs = (props) => {
   );
 };
 
-export default Inputs;
+export default Input;
