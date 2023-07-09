@@ -7,16 +7,16 @@ const NewListing = () => {
     <Form>
       <Row>
         <Col sm={6}>
-          <Inputs element="input" type="text" placeholder="Title" label="Title" />
+          <Inputs element="input" type="text" placeholder="Title" label="Title" errorText="Please enter a valaid title" />
         </Col>
         <Col sm={6}>
-          <Inputs element="input" type="text" placeholder="Address" label="Address" />
+          <Inputs element="input" type="text" placeholder="Address" label="Address" errorText="Please enter a valaid Adress" />
         </Col>
       </Row>
       <Row>
         <Col sm={12}>
           <Inputs element="input" type="text" placeholder="Price" label="Price" />
-          <Inputs type="text" placeholder="Description" label="Description" />
+          <Inputs type="text" placeholder="Description" label="Description" errorText="Please enter a valaid descrition"/>
         </Col>
       </Row>
       <Button type="submit">Submit</Button>
