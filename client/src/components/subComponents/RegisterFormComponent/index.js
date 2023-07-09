@@ -108,7 +108,10 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                     onChange={(e) => setValues({ ...values, password: e.target.value })}
                 />
                 </FloatingLabel>
-                <InputGroup.Text onClick={handleTogglePassword}>
+                <InputGroup.Text 
+                    onClick={handleTogglePassword}
+                    style={{cursor: 'pointer', ':hover': {cursor: 'hand'}}}
+                >
                     {passwordVisible ? <Eye /> : <EyeSlash />}
                 </InputGroup.Text>
             </InputGroup>
