@@ -4,7 +4,7 @@ import Alert from 'react-bootstrap/Alert';
 
 const ImageUpload = ({ handleInputDisable, inputDisable, onUpload }) => {
     const CLOUDINARY_NAME = process.env.REACT_APP_CLOUDINARY_NAME;
-    console.log(CLOUDINARY_NAME);
+    // console.log(CLOUDINARY_NAME);
 
     const [ validUpload, setValidUpload ] = useState(true);
     const [ message, setMessage ] = useState('');

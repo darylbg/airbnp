@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './Profile.css';
+import Login from '../../pages/Login'
 
 import EditProfileForm from '../../components/subComponents/EditProfileComponent';
 import { useQuery } from '@apollo/client';
@@ -15,8 +16,8 @@ const Profile = () => {
   let currentUser;
 
   if(data) {
-    currentUser = data.user
-    console.log(currentUser)
+    currentUser = data.user;
+    console.log(currentUser);
   }
   return (
     <Container fluid="md">
@@ -30,7 +31,7 @@ const Profile = () => {
             </Col>
             <Col>
               <h1>Profile</h1>
-              <h3>{currentUser.firstName}</h3>
+              <h3>{currentUser.firstName}</h3><h3>{currentUser.lastName}</h3>
               <h3>{currentUser.email}</h3>
           </Col>
         </Row>
@@ -44,7 +45,8 @@ const Profile = () => {
       ) 
       : (
         <div>
-          Login nerd
+          <h2>Please log in to view your profile</h2>
+          <Login />
         </div>
       )}
     </Container>

@@ -8,44 +8,69 @@ import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 import ImageUpload from '../../subComponents/imageUpload.js';
+import { useDispatch } from 'react-redux';
 
-const Profile = () => {
+const Profile = ({userObj}) => {
   const [inputDisable, setInputDisable] = useState(true);
-  const [firstName, setFirstName] = useState('Daryl');
-  const [lastName, setLastName] = useState('Blough');
-  const [username, setUsername] = useState('dazza');
-  const [imageUrl, setImageUrl] = useState(''); // State to hold the image URL
+  const [firstNameInput, setFirstNameInput] = useState(String(userObj.firstName));
+  const [lastNameInput, setLastNameInput] = useState(String(userObj.lastName));
+  const [usernameInput, setUsernameInput] = useState(String(userObj.username));
+  const [imageUrlInput, setImageUrlInput] = useState(String(userObj.image)); 
+  console.log(`first name: ${firstNameInput}`);
 
   const handleInputDisable = (e) => {
     e.preventDefault();
     setInputDisable(!inputDisable);
-    console.log(username);
+    // console.log(username);
   };
 
   const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
+    setFirstNameInput(e.target.value);
   };
 
   const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
+    setLastNameInput(e.target.value);
   };
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    setUsernameInput(e.target.value);
   };
 
-  const handleEditProfile = () => {
+  const [update_user] = useMutation(UPDATE_USER);
+  const dispatch = useDispatch();
+
+  const handleEditProfile = async (e) => {
+    e.preventDefault();
     setInputDisable(!inputDisable);
-    // build this out
+    if (!firstNameInput || !lastNameInput || !usernameInput) {
+      console.log('please fill out all fields to update');
+      return;
+    }
+    try {
+      const { data } = await update_user({
+        variables: {
+          updateUserDetails: { 
+            firstName: firstNameInput,
+            lastName: lastNameInput,
+            username: usernameInput,
+            image: imageUrlInput
+           }
+        },
+      });
+      console.log(`new profile data: ${JSON.stringify(data)}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
 
   return (
     <Form>
       <FloatingLabel controlId="floatingEditProfile1" label="First Name">
         <Form.Control
           type="text"
-          placeholder="First Name"
-          value={firstName}
+          placeholder='First Name'
+          value={firstNameInput}
           onChange={handleFirstNameChange}
           disabled={inputDisable}
         />
@@ -55,7 +80,7 @@ const Profile = () => {
         <Form.Control
           type="text"
           placeholder="Last Name"
-          value={lastName}
+          value={lastNameInput}
           onChange={handleLastNameChange}
           disabled={inputDisable}
         />
@@ -65,13 +90,18 @@ const Profile = () => {
         <Form.Control
           type="text"
           placeholder="Username"
-          value={username}
+          value={usernameInput}
           onChange={handleUsernameChange}
           disabled={inputDisable}
         />
       </FloatingLabel>
       <br />
-      <ImageUpload onUpload={setImageUrl} handleInputDisable={handleInputDisable} inputDisable={inputDisable} />
+      <ImageUpload 
+        onUpload={setImageUrlInput} 
+        handleInputDisable={handleInputDisable} 
+        inputDisable={inputDisable} 
+        value={userObj.image}
+      />
       <Button 
         type='button' 
         variant="secondary" 
