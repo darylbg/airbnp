@@ -47,6 +47,21 @@ const resolvers = {
         return { token, user };
       },
 
+      updateUserDetails: async (parent, { firstName, lastName, email, image }, context) => {
+        if (context.user) {
+          try {
+            const user = await User.findOneAndUpdate(
+              {_id: context.user._id},
+              { $set: { firstName, lastName, email, image }},
+              { new: true });
+              return user;
+          } catch (error) {
+            console.log(error);
+          }
+          }
+          throw new AuthenticationError('You need to be logged in!');
+        },
+
       createListing: async (parent, { listingData }, context) => {
         if (context.user) {
           const newListing = await Listing.create({

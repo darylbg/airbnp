@@ -15,7 +15,7 @@ const Profile = () => {
       <Row className='profile-heading-row'>
         <Col md='auto'>
           <div className='profile-img-wrapper'>
-            <img className='profile-img' src='https://media.gq.com/photos/645956c367d4264086a5d77f/16:9/w_2352,h_1323,c_limit/Screen%20Shot%202023-05-08%20at%204.07.48%20PM.png'></img>
+            <img className='profile-img' src="https://res.cloudinary.com/darylb/image/upload/v1688912273/zw9lqdl8rija11an5pcw.png"></img>
           </div>
           </Col>
           <Col>

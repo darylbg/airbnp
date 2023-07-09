@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { useMutation } from "@apollo/client";
+import { useNavigate } from 'react-router-dom';
+import { UPDATE_USER } from "../../../utils/mutations";
+import { updateUserDetails } from "../../../reducers/userReducer";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+
+import ImageUpload from '../../subComponents/imageUpload.js';
 
 const Profile = () => {
   const [inputDisable, setInputDisable] = useState(true);
   const [firstName, setFirstName] = useState('Daryl');
   const [lastName, setLastName] = useState('Blough');
   const [username, setUsername] = useState('dazza');
+  const [imageUrl, setImageUrl] = useState(''); // State to hold the image URL
 
-  const handleInputDisable = () => {
+  const handleInputDisable = (e) => {
+    e.preventDefault();
     setInputDisable(!inputDisable);
+    console.log(username);
   };
 
   const handleFirstNameChange = (e) => {
@@ -28,54 +34,59 @@ const Profile = () => {
     setUsername(e.target.value);
   };
 
-  const handleSave = () => {
-    // Perform save logic here
+  const handleEditProfile = () => {
     setInputDisable(!inputDisable);
+    // build this out
   };
 
   return (
     <Form>
-        <FloatingLabel controlId="floatingEditProfile1" label="First Name" className="">
-            <Form.Control
-                type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={handleFirstNameChange}
-                disabled={inputDisable}
-            />
-        </FloatingLabel>
-        <br />
-        <FloatingLabel controlId="floatingEditProfile2" label="Last Name" className="">
+      <FloatingLabel controlId="floatingEditProfile1" label="First Name">
         <Form.Control
-            type="text"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={handleLastNameChange}
-            disabled={inputDisable}
+          type="text"
+          placeholder="First Name"
+          value={firstName}
+          onChange={handleFirstNameChange}
+          disabled={inputDisable}
         />
-        </FloatingLabel>
-        <br />
-        <FloatingLabel controlId="floatingEditProfile3" label="Username" className="">
+      </FloatingLabel>
+      <br />
+      <FloatingLabel controlId="floatingEditProfile2" label="Last Name">
         <Form.Control
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={handleUsernameChange}
-            disabled={inputDisable}
+          type="text"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={handleLastNameChange}
+          disabled={inputDisable}
         />
-        </FloatingLabel>
-        <br />
-        <Button variant="secondary" onClick={handleInputDisable}>
-            Edit details
-        </Button>
-        <Button
-            className={inputDisable ? 'd-none' : 'd-block'}
-            variant="primary"
-            style={{ float: 'right' }}
-            onClick={handleSave}
-        >
-            Save
-        </Button>
+      </FloatingLabel>
+      <br />
+      <FloatingLabel controlId="floatingEditProfile3" label="Username">
+        <Form.Control
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={handleUsernameChange}
+          disabled={inputDisable}
+        />
+      </FloatingLabel>
+      <br />
+      <ImageUpload onUpload={setImageUrl} handleInputDisable={handleInputDisable} inputDisable={inputDisable} />
+      <Button 
+        type='button' 
+        variant="secondary" 
+        onClick={handleInputDisable}>
+        Edit details
+      </Button>
+      <Button
+        type='button'
+        className={inputDisable ? 'd-none' : 'd-block'}
+        variant="primary"
+        style={{ float: 'right' }}
+        onClick={handleEditProfile}
+      >
+        Save
+      </Button>
     </Form>
   );
 };

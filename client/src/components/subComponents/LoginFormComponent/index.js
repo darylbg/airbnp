@@ -91,7 +91,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
         </InputGroup>
         <div style={{width: '100%'}}>
         <Button 
-        style={{display: 'inline-block'}}
+          style={{display: 'inline-block'}}
           variant='primary' 
           onClick={submitHandler}
         >
