@@ -36,13 +36,15 @@ const listingSchema = new Schema({
   notifications: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Notification'
+        ref: 'Notification',
+        default: null
       }
   ],
   ratings: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Rating'
+      ref: 'Rating',
+      default: null
     }
   ]
 });
