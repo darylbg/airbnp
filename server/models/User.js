@@ -41,7 +41,7 @@ const userSchema = new Schema(
     },
     image: {
       type: String,
-      default: ''
+      default: 'https://media.istockphoto.com/id/1316947194/vector/messenger-profile-icon-on-white-isolated-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=1iQ926GXQTJkopoZAdYXgU17NCDJIRUzx6bhzgLm9ps='
     }
   },
   // set this to use virtual below
