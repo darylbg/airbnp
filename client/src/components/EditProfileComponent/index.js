@@ -50,6 +50,7 @@ const Profile = ({ userObj }) => {
         variables: {
           firstName: firstNameInput.trim().toString(),
           lastName: lastNameInput.trim().toString(),
+          username: usernameInput.trim().toString(),
           image: imageUrlInput.trim().toString()
         },
       });
@@ -122,10 +123,10 @@ const Profile = ({ userObj }) => {
         />
       </FloatingLabel>
       <br />
-      <FloatingLabel controlId="floatingEditProfile3" label="Username">
+      <FloatingLabel controlId="floatingEditProfile3" label="Public Display Name">
         <Form.Control
           type="text"
-          placeholder="Username"
+          placeholder="Public Display Name"
           value={usernameInput}
           onChange={handleUsernameChange}
           disabled={inputDisable}

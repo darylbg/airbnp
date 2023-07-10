@@ -6,6 +6,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Auth from '../../utils/auth';
+import Image from 'react-bootstrap/Image';
+
+import { useQuery } from '@apollo/client';
+import { QUERY_USER } from '../../utils/queries';
+
+import './Header.css';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,6 +23,12 @@ const Header = () => {
     navigate('/');
   }
 
+  const { data } = useQuery(QUERY_USER);
+  let currentUser;
+
+  if(data) {
+    currentUser = data.user;
+  }
   return (
     <>
       <Navbar expand={expand} className="bg-body-tertiary mb-3">
@@ -35,14 +47,22 @@ const Header = () => {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+                <Nav.Link as={NavLink} to="/"  className='lrg-nav-link'>Home</Nav.Link>
                 {/* conditionally render login/register */}
                 { Auth.loggedIn() ? (
                   <NavDropdown
-                    title="Account"
+                    title={
+                      currentUser ? (
+                        <>
+                          <Image className='header-account-img' src={currentUser.image} /> Account
+                        </>
+                      ) : (
+                        'Account'
+                      )
+                    }
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
-                    className='dropdown-menu-end'
-                    align='end'
+                    className="dropdown-menu-end lrg-nav-link"
+                    align="end"
                   >
                     <NavDropdown.Item as={NavLink} to="/profile">My Profile</NavDropdown.Item>
                     <NavDropdown.Item as={NavLink} to="/dashboard">Dashboard</NavDropdown.Item>
@@ -50,7 +70,7 @@ const Header = () => {
                     <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                   </NavDropdown>
                 ):(
-                  <Nav.Link as={NavLink} to="/login">Login / Register</Nav.Link>
+                  <Nav.Link as={NavLink} to="/login"  className='lrg-nav-link'>Login / Register</Nav.Link>
                 )}
               </Nav>
             </Offcanvas.Body>

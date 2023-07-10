@@ -47,12 +47,12 @@ const resolvers = {
         return { token, user };
       },
 
-      updateUserDetails: async (parent, { firstName, lastName, image }, context) => {
+      updateUserDetails: async (parent, { firstName, lastName, username, image }, context) => {
         if (context.user) {
           try {
             const user = await User.findOneAndUpdate(
               {_id: context.user._id},
-              { $set: { firstName, lastName, image }},
+              { $set: { firstName, lastName, username, image }},
               { new: true });
               return user;
           } catch (error) {

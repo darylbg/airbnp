@@ -26,6 +26,7 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertVariant, setAlertVariant] = useState('danger'); 
+    const [ alertMessage, setAlertMessage ] = useState('');
 
     const dispatch = useDispatch();
 
@@ -33,9 +34,9 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
         e.preventDefault()
         const { firstName, lastName, username, email, password } = values;
         if (!firstName || !lastName || !username || !email || !password) {
-            console.log('registration error maybe field missing or incomplete');
-            setAlertVariant('danger'); // Set alert variant to 'danger' for unsuccessful submission
+            setAlertVariant('danger');
             setShowAlert(true);
+            setAlertMessage('Registration error maybe field missing or incomplete');
             return;
         }
 
@@ -52,14 +53,10 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                 username: data.register.user.username,
                 email: data.register.user.email
             };
-            // dispatch(register_user(userData));
-            // localStorage.setItem('id_token', data.register.token);
-            console.log(`hi there ${data.register.user.username}`);
-
-            // Reset the form values to initial empty state
            
-            setAlertVariant('success'); // Set alert variant to 'success' for successful submission
+            setAlertVariant('success'); 
             setShowAlert(true);
+            setAlertMessage('Thank you for registering please log in');
             setValues({
                 firstName: '',
                 lastName: '',
@@ -71,7 +68,11 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
             e.target.reset();
 
         } catch (error) {
-            console.log(error);
+            if (error.graphQLErrors.length > 0) {
+                setAlertVariant('danger');
+                setShowAlert(true);
+                setAlertMessage('That display name or email is already in use, please choose a different one or log in');
+              } 
         } finally {
             
         }
@@ -93,7 +94,7 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                     onChange={(e) => setValues({ ...values, lastName: e.target.value })}
                 />
             </FloatingLabel>
-            <FloatingLabel controlId="floatingRegisterInput3" label="Username" className="mb-3">
+            <FloatingLabel controlId="floatingRegisterInput3" label="Public Display Name" className="mb-3">
                 <Form.Control 
                     type="text" 
                     placeholder="johnDoe" 
@@ -123,12 +124,12 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                 </InputGroup.Text>
             </InputGroup>
             <div style={{width: '100%'}}>
-                <Button type='submit' variant='primary' style={{display: 'inline-block', marginRight: '10px'}}>Register</Button>
                 {showAlert && (
-                    <Alert key='success' variant={alertVariant} style={{ display: 'inline-block', float: 'right' }}>
-                        {alertVariant === 'success' ? 'Success!' : 'Error!'} This is an alert message.
+                    <Alert key='success' variant={alertVariant} style={{ display: 'block'}}>
+                        {alertMessage}
                     </Alert>
                 )}
+                <Button type='submit' variant='primary' style={{display: 'inline-block', marginRight: '10px'}}>Register</Button>
             </div>
         </Form>
     )
