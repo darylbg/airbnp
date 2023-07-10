@@ -14,6 +14,15 @@ import { QUERY_USER } from '../../utils/queries';
 import './Header.css';
 
 const Header = () => {
+  const Styles = {
+    height: '25px',
+    width: '25px',
+    objectFit: 'cover',
+    borderRadius: '50%',
+    border: '1px solid red',
+    marginRight: '5px'
+  }
+
   const navigate = useNavigate();
   const expand = 'sm'; // Set the desired expand value for the Navbar
 
@@ -54,7 +63,12 @@ const Header = () => {
                     title={
                       currentUser ? (
                         <>
-                          <Image className='header-account-img' src={currentUser.image} /> Account
+                          <Image 
+                            className='header-account-img' 
+                            src={currentUser.image} 
+                            style={Styles}
+                          /> 
+                          Account
                         </>
                       ) : (
                         'Account'
