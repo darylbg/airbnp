@@ -13,6 +13,7 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Alert from 'react-bootstrap/Alert';
 import { EyeSlash, Eye } from 'react-bootstrap-icons';
+import './login.css'
 
 function LoginForm({ handleTogglePassword, passwordVisible}) {
 
@@ -98,11 +99,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
             >
                 {alertMessage}
             </Alert>
-        <Button 
-          style={{display: 'inline-block'}}
-          variant='primary' 
-          onClick={submitHandler}
-        >
+        <Button className="login-button" variant='primary' onClick={submitHandler}>
           Login
         </Button>       
         </div>

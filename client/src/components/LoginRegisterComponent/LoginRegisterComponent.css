@@ -2,6 +2,9 @@
     width: 400px;
     padding-top: 50px;
 }
+.register-tab {
+    color: #FF385C;
+}
 
 @media screen and (max-width: 500px) {
     .login-register-tabs {
