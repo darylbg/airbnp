@@ -2,12 +2,12 @@ import React from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import LocalListings from '../components/LocalListings/LocalListings';
-import MyListings from '../components/MyListings/MyListings';
-import NewListingModal from '../components/NewListing/NewListingModal'
-import Login from './Login';
+import LocalListings from '../../components/LocalListings/LocalListings';
+import MyListings from '../../components/MyListings/MyListings';
+import NewListingModal from '../../components/NewListing/NewListingModal'
+import Login from '../Login';
 import { useQuery } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries';
+import { QUERY_USER } from '../../utils/queries';
 
 
 const Dashboard = () => {
