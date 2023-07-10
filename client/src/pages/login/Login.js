@@ -1,13 +1,12 @@
 import React from 'react'
-import LocalListings from '../components/LocalListings/LocalListings'
+import LoginRegister from '../../components/LoginRegisterComponent'
 
-
-const Homepage = () => {
+const Login = () => {
   return (
     <div className='container' style={{width: '100%', justifyContent: 'center', display: 'flex' }}>
-      <LocalListings />    
+      <LoginRegister />
     </div>
   )
 }
 
-export default Homepage
+export default Login
