@@ -54,11 +54,6 @@ const LocalListings = () => {
     >
       <div className='Listings-card p-5'>
         <Row>
-          <Col className='map'>
-            <img src='../map.jpg' />
-          </Col>
-        </Row>
-        <Row>
           {listings.map(listing => (
             <Col
               md={4}

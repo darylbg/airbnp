@@ -3,6 +3,9 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import Input from '../FormElements/Input';
 import { validate, VALIDATOR_REQUIRE } from '../../utils/validators';
 import './newListing.css'
+import { useDispatch } from "react-redux";
+import { useMutation } from "@apollo/client";
+import { CREATE_LISTING } from "../../../utils/mutations";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -64,10 +67,9 @@ const NewListing = () => {
       return;
     }
 
-    // Perform form submission logic here
+  
     console.log('Form submitted:', formState.inputs);
 
-    // Close the modal after form submission
     setModalShow(false);
   };
 
