@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import './Profile.css';
 import Login from '../../pages/Login'
 
@@ -25,13 +23,18 @@ const Profile = () => {
         <Row className='profile-heading-row'>
           <Col md='auto'>
             <div className='profile-img-wrapper'>
-              <img className='profile-img' src={currentUser.image}></img>
+              <img className='profile-img' alt='profile' src={currentUser.image}></img>
             </div>
             </Col>
             <Col>
-              <h1>Profile</h1>
-              <h3>{currentUser.firstName}</h3><h3>{currentUser.lastName}</h3>
-              <h3>{currentUser.email}</h3>
+              <div className='profile-header-text'>
+                <h1>Profile</h1>
+                <div className='profile-header-name'>
+                  <h3>{currentUser.firstName}</h3>{' '}
+                  <h3>{currentUser.lastName}</h3>
+                  <h4>{currentUser.email}</h4>
+                </div>
+              </div>
           </Col>
         </Row>
         <Row>

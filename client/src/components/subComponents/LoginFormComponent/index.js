@@ -19,6 +19,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
   const navigate = useNavigate();
   const [login] = useMutation(LOGIN);
   const [alertShow, setAlertShow] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('')
 
   const [values, setValues] = useState({
     email: "",
@@ -27,19 +28,21 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
 
   const dispatch = useDispatch();
 
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
+    e.preventDefault();
     setValues({ ...values });
     const { email, password } = values;
     if (!email || !password) {
-      console.log("Please Fill All the Fields");
+      setAlertMessage('Please fill all the fields');
+      setAlertShow(true);
       setValues({ ...values });
       return;
-    }
+    } 
+
     try {
       const { data } = await login({
         variables: { email, password },
       });
-      console.log(data.login.user);
       dispatch(
         login_user({
           token: data.login.token,
@@ -52,15 +55,13 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
         })
       );
       Auth.login(data.login.token);
-      // localStorage.setItem("id_token", data.login.token);
-      console.log(`Welcome Back! ${data.login.user.username} is now logged in`);
 
       setValues({ ...values });
       // navigate("/");
     } catch (error) {
-      console.log(error);
       setValues({ ...values });
       setAlertShow(true);
+      setAlertMessage('Incorrect email or password');
     }
   };
 
@@ -90,20 +91,20 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
             </InputGroup.Text>
         </InputGroup>
         <div style={{width: '100%'}}>
+        <Alert 
+              show={alertShow}
+              key='success' 
+              variant='danger' 
+            >
+                {alertMessage}
+            </Alert>
         <Button 
           style={{display: 'inline-block'}}
           variant='primary' 
           onClick={submitHandler}
         >
           Login
-        </Button>
-            <Alert 
-              show={alertShow}
-              key='success' 
-              variant='danger' 
-              style={{ display: 'inline-block', float: 'right' }}>
-                Incorrect details try again
-            </Alert>       
+        </Button>       
         </div>
     </Form>
   )

@@ -42,7 +42,9 @@ const Profile = ({ userObj }) => {
   const handleEditProfile = async (e) => {
     e.preventDefault();
     setInputDisable(!inputDisable);
-    if (!firstNameInput.trim() || !lastNameInput.trim() || !usernameInput.trim()) {
+    if (!firstNameInput || !lastNameInput || !usernameInput) {
+      setMessage('Fields cannot be blank');
+      setValidUpload(false);
       return;
     }
     try {
@@ -50,12 +52,15 @@ const Profile = ({ userObj }) => {
         variables: {
           firstName: firstNameInput.trim().toString(),
           lastName: lastNameInput.trim().toString(),
+          username: usernameInput.trim().toString(),
           image: imageUrlInput.trim().toString()
         },
       });
       window.location.reload();
     } catch (error) {
       console.log(error);
+      setMessage('That username is already in use, please choose a different one');
+      setValidUpload(false);
     }
   };
 
@@ -122,10 +127,10 @@ const Profile = ({ userObj }) => {
         />
       </FloatingLabel>
       <br />
-      <FloatingLabel controlId="floatingEditProfile3" label="Username">
+      <FloatingLabel controlId="floatingEditProfile3" label="Public Display Name">
         <Form.Control
           type="text"
-          placeholder="Username"
+          placeholder="Public Display Name"
           value={usernameInput}
           onChange={handleUsernameChange}
           disabled={inputDisable}
