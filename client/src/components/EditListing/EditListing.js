@@ -2,7 +2,6 @@ import React, { useCallback, useReducer, useState } from 'react';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import Input from '../FormElements/Input';
 import { validate, VALIDATOR_REQUIRE } from '../../utils/validators';
-import './newListing.css'
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -28,7 +27,7 @@ const formReducer = (state, action) => {
   }
 };
 
-const NewListing = () => {
+const EditListing = () => {
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: {
       title: {
@@ -64,23 +63,23 @@ const NewListing = () => {
       return;
     }
 
-    // Perform form submission logic here
+    // form submission logic
     console.log('Form submitted:', formState.inputs);
 
-    // Close the modal after form submission
+    
     setModalShow(false);
   };
 
   return (
     <>
       <Button className="bg-dark new-button" variant="primary" onClick={() => setModalShow(true)}>
-  Add
+  Edit
 </Button>
 
       <Modal show={modalShow} onHide={() => setModalShow(false)}>
         <Form onSubmit={submitHandler}>
           <Modal.Header closeButton>
-            <Modal.Title>Add</Modal.Title>
+            <Modal.Title>Edit</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Row>
@@ -159,7 +158,10 @@ const NewListing = () => {
               </Col>
             </Row>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className='d-flex justify-content-between'>
+            <Button variant="danger">
+                Delete
+            </Button>
             <Button type="submit" disabled={!formState.isValid}>
               Submit
             </Button>
@@ -170,4 +172,4 @@ const NewListing = () => {
   );
 };
 
-export default NewListing;
+export default EditListing;
