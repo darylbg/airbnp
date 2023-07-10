@@ -5,7 +5,6 @@ import { validate, VALIDATOR_REQUIRE } from '../../utils/validators';
 import './newListing.css'
 import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";
-import { CREATE_LISTING } from "../../../utils/mutations";
 
 const formReducer = (state, action) => {
   switch (action.type) {
