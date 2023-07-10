@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import LocalListings from '../../components/LocalListings/LocalListings';
 import MyListings from '../../components/MyListings/MyListings';
 import NewListingModal from '../../components/NewListing/NewListingModal'
-import Login from '../Login';
+import Login from '../login/Login';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
 

@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './Profile.css';
-import Login from '../../pages/Login'
+import Login from '../login/Login'
 
 import EditProfileForm from '../../components/EditProfileComponent';
 import { useQuery } from '@apollo/client';

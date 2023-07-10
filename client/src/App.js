@@ -6,7 +6,7 @@ import Footer from "./components/Footer/Footer";
 import Homepage from "./pages/homepage/Homepage";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/dashboard/Dashboard";
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import {
   ApolloClient,
   InMemoryCache,
