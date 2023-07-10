@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import './Profile.css';
 import Login from '../../pages/Login'
 
-import EditProfileForm from '../../components/subComponents/EditProfileComponent';
+import EditProfileForm from '../../components/EditProfileComponent';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
 
@@ -17,7 +17,6 @@ const Profile = () => {
 
   if(data) {
     currentUser = data.user;
-    console.log(currentUser);
   }
   return (
     <Container fluid="md">
@@ -26,7 +25,7 @@ const Profile = () => {
         <Row className='profile-heading-row'>
           <Col md='auto'>
             <div className='profile-img-wrapper'>
-              <img className='profile-img' src="https://res.cloudinary.com/darylb/image/upload/v1688912273/zw9lqdl8rija11an5pcw.png"></img>
+              <img className='profile-img' src={currentUser.image}></img>
             </div>
             </Col>
             <Col>
