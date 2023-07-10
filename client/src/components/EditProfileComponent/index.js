@@ -42,7 +42,9 @@ const Profile = ({ userObj }) => {
   const handleEditProfile = async (e) => {
     e.preventDefault();
     setInputDisable(!inputDisable);
-    if (!firstNameInput.trim() || !lastNameInput.trim() || !usernameInput.trim()) {
+    if (!firstNameInput || !lastNameInput || !usernameInput) {
+      setMessage('Fields cannot be blank');
+      setValidUpload(false);
       return;
     }
     try {
@@ -57,6 +59,8 @@ const Profile = ({ userObj }) => {
       window.location.reload();
     } catch (error) {
       console.log(error);
+      setMessage('That username is already in use, please choose a different one');
+      setValidUpload(false);
     }
   };
 

@@ -125,7 +125,7 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
             </InputGroup>
             <div style={{width: '100%'}}>
                 {showAlert && (
-                    <Alert key='success' variant={alertVariant} style={{ display: 'block'}}>
+                    <Alert key='success' variant={alertVariant}>
                         {alertMessage}
                     </Alert>
                 )}
