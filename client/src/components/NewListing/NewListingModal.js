@@ -2,6 +2,7 @@ import React, { useCallback, useReducer, useState } from 'react';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import Input from '../FormElements/Input';
 import { validate, VALIDATOR_REQUIRE } from '../../utils/validators';
+import './newListing.css'
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -72,14 +73,14 @@ const NewListing = () => {
 
   return (
     <>
-      <Button className="bg-dark" variant="primary" onClick={() => setModalShow(true)}>
-        New Listing
-      </Button>
+      <Button className="bg-dark new-button" variant="primary" onClick={() => setModalShow(true)}>
+  Add
+</Button>
 
       <Modal show={modalShow} onHide={() => setModalShow(false)}>
         <Form onSubmit={submitHandler}>
           <Modal.Header closeButton>
-            <Modal.Title>New listing</Modal.Title>
+            <Modal.Title>Add</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Row>

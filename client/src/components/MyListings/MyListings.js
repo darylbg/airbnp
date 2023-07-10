@@ -62,7 +62,7 @@ const MyListings = () => {
             </Card>
           </Col>
         ))}
-        <Col className='d-flex justify-content-center w-100'>
+        <Col className='d-flex flex-column align-item-center justify-content-center'>
           <NewListingsModal />
         </Col>
       </Row>
