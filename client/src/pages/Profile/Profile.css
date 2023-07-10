@@ -1,4 +1,7 @@
 .profile-heading-row {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(255, 47, 64);
     margin-bottom: 50px;
 }
 
@@ -9,6 +12,7 @@
 }
 
 .profile-img {
+    border-radius: 50%;
     width: 150px;
     height: 150px;
     object-fit: cover;
@@ -21,6 +25,7 @@
 }
 
 .profile-header-name h3 {
+
     display: inline-block;
     font-weight: lighter;
 }
@@ -29,3 +34,4 @@
     font-weight: lighter;
     font-style: italic;
 }
+
