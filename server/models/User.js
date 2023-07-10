@@ -30,15 +30,13 @@ const userSchema = new Schema(
       required: true,
     },
     // set savedToilets to be an array of data that adheres to the ToiletSchema
-    listings: {
-      type: [
+    listings: [
         {
           type: Schema.Types.ObjectId,
-          ref: 'Listing'
-        }
+          ref: 'Listing',
+          default: []
+        },
       ],
-      default: []
-    },
     image: {
       type: String,
       default: 'https://media.istockphoto.com/id/1316947194/vector/messenger-profile-icon-on-white-isolated-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=1iQ926GXQTJkopoZAdYXgU17NCDJIRUzx6bhzgLm9ps='
