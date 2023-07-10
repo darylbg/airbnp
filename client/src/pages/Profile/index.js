@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import './Profile.css';
 import Login from '../../pages/Login'
 
-import EditProfileForm from '../../components/subComponents/EditProfileComponent';
+import EditProfileForm from '../../components/EditProfileComponent';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
 

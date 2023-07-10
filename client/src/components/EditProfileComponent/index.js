@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
-import { UPDATE_USER } from "../../../utils/mutations";
-import { updateUserDetails } from "../../../reducers/userReducer";
+import { UPDATE_USER } from "../../utils/mutations";
+import { updateUserDetails } from "../../reducers/userReducer";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -133,7 +133,7 @@ const Profile = ({ userObj }) => {
       </FloatingLabel>
       <br />
       <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>Upload profile image</Form.Label>
+        <Form.Label>Upload new profile image</Form.Label>
         <Form.Control
           type="file"
           onChange={processFile}
