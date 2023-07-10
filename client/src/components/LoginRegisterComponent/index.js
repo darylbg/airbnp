@@ -19,7 +19,7 @@ function LoginRegister() {
     };
 
   return (
-    <div className='login-register-tabs'>
+    <div>
       <TabContainer>
       <Tabs defaultActiveKey="first">
         <Tab eventKey="first" title="Login">

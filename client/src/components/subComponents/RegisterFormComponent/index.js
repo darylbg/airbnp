@@ -1,3 +1,4 @@
+import './Register.css';
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";
@@ -10,6 +11,7 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Alert from 'react-bootstrap/Alert';
 import { EyeSlash, Eye } from 'react-bootstrap-icons';
+
 
 
 function RegisterForm({ handleTogglePassword, passwordVisible}) {
@@ -129,7 +131,7 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
                         {alertMessage}
                     </Alert>
                 )}
-                <Button type='submit' variant='primary' style={{display: 'inline-block', marginRight: '10px'}}>Register</Button>
+                <Button className="register-button" type='submit' variant='primary' style={{}}>Register</Button>
             </div>
         </Form>
     )
