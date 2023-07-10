@@ -1,7 +1,7 @@
 .profile-heading-row {
     display: flex;
     justify-content: space-between;
-    background-color: rgb(255, 47, 64);
+    background-color: white;
     margin-bottom: 50px;
 }
 
@@ -21,6 +21,7 @@
 }
 
 .profile-header-text {
+    color: #FF385C;
     font-size: 1.7em;
 }
 
