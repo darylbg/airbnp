@@ -1,0 +1,9 @@
+.map {
+  border-radius: 10px;
+  height: 350px;
+  background-color: brown;
+}
+.card {
+  width: 350px;
+  height: 350px;
+}
