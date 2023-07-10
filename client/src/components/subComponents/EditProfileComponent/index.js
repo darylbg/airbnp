@@ -21,7 +21,6 @@ const Profile = ({userObj}) => {
   const handleInputDisable = (e) => {
     e.preventDefault();
     setInputDisable(!inputDisable);
-    // console.log(username);
   };
 
   const handleFirstNameChange = (e) => {
@@ -42,22 +41,20 @@ const Profile = ({userObj}) => {
   const handleEditProfile = async (e) => {
     e.preventDefault();
     setInputDisable(!inputDisable);
-    if (!firstNameInput || !lastNameInput || !usernameInput) {
-      console.log('please fill out all fields to update');
+    if (!firstNameInput.trim() || !lastNameInput.trim() || !usernameInput.trim()) {
+      console.log('Please fill out all fields to update.');
       return;
     }
     try {
       const { data } = await update_user({
         variables: {
-          updateUserDetails: { 
-            firstName: firstNameInput,
-            lastName: lastNameInput,
-            username: usernameInput,
-            image: imageUrlInput
-           }
+          firstName: firstNameInput.trim().toString(),
+          lastName: lastNameInput.trim().toString(),
+          image: imageUrlInput.trim().toString()
         },
       });
-      console.log(`new profile data: ${JSON.stringify(data)}`);
+      window.location.reload()
+      console.log(`New profile data: ${JSON.stringify(data)}`);
     } catch (error) {
       console.log(error);
     }
