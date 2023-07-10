@@ -3,6 +3,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import Input from '../FormElements/Input';
 import { validate, VALIDATOR_REQUIRE } from '../../utils/validators';
 
+
 const formReducer = (state, action) => {
   switch (action.type) {
     case 'INPUT_CHANGE':
