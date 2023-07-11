@@ -37,7 +37,6 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
 
     useEffect(() => {
 
-
         if (map.current) return; // initialize map
         map.current = new mapboxgl.Map({
         container: mapContainer.current, 
@@ -403,11 +402,11 @@ const resetForm = () => {
   </div>
   </div>
             
-         
+
 
 </section>
     );
 }
 
 
-export default Map;
+ export default Map;
