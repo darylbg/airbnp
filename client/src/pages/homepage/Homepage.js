@@ -1,5 +1,5 @@
 import React from 'react'
-import LocalListings from '../components/LocalListings/LocalListings'
+import LocalListings from '../../components/LocalListings/LocalListings'
 import Map from '../../components/Map/Map'
 
 

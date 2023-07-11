@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import { FloatingLabel, InputGroup } from 'react-bootstrap';
+import CloseButton from 'react-bootstrap/CloseButton';
+import { FloatingLabel, InputGroup, Row, Col } from 'react-bootstrap';
 import { ADD_LISTING } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
+import './AddListingComponent.css';
+import Modal from 'react-modal';
 
 import { AddressAutofill } from '@mapbox/search-js-react';
 import Geocode from "react-geocode";
@@ -83,50 +85,40 @@ const [values, setValues] = useState({
     }
   );
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  // Define the modal styles and accessibility options
+  const modalStyle = {
+    content: {
+      // Add your custom styles here
+    },
+    overlay: {
+      // Add your custom styles here
+    }
+  };
+
   return (
     <>
-      <div>
-        <Form>
-        <AddressAutofill accessToken="pk.eyJ1IjoiZGF6emExMjMiLCJhIjoiY2xqcjZzc2Y5MGN5NTNncWpsZ3ByZG9tciJ9.N_FhIXIqTaKbq03NukHGYQ">
-                <Form.Control
-                name="address" placeholder="Address" type="text"
-                autoComplete="address"
-                />
-              </AddressAutofill>
-                <Form.Control
-                name="apartment" placeholder="Apartment number" type="text"
-                autoComplete="address-line2"
-                />
-                <Form.Control
-                name="city" placeholder="City" type="text"
-                autoComplete="address-level2"
-                />
-                <Form.Control
-                name="state" placeholder="State" type="text"
-                autoComplete="address-level1"
-                />
-                <Form.Control
-                name="country" placeholder="Country" type="text"
-                autoComplete="country"
-                />
-                <Form.Control
-                name="postcode" placeholder="Postcode" type="text"
-                autoComplete="postal-code"
-                />
-            </Form>
-      </div>
-      <Button variant="primary" onClick={handleShow}>
-        + Add a listing
-      </Button>
+      <Button variant='primary' onClick={openModal}>+ Add Listing</Button>
 
-      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>New Listing</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={modalStyle}
+        contentLabel="Example Modal"
+      >
+        <Form>
+          {/* <Row> */}
             <Form.Group>
-              <Form.Label>Title</Form.Label>
+              <Form.Label>Add new Listing</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="my new listing"
@@ -146,24 +138,34 @@ const [values, setValues] = useState({
               />
             </Form.Group>
             <br />
+            <Form.Group>
+              <Row>
+            <Form.Label>Address</Form.Label>
             <AddressAutofill accessToken="pk.eyJ1IjoiZGF6emExMjMiLCJhIjoiY2xqcjZzc2Y5MGN5NTNncWpsZ3ByZG9tciJ9.N_FhIXIqTaKbq03NukHGYQ">
                 <Form.Control
-                name="address" placeholder="Address" type="text"
+                name="address" placeholder="Search address" type="text"
                 autoComplete="address-line1"
                 />
-              </AddressAutofill>
+            </AddressAutofill>
+            <Col sm={6}>
                 <Form.Control
                 name="apartment" placeholder="Apartment number" type="text"
                 autoComplete="address-line2"
                 />
+                </Col>
+                <Col sm={6}>
                 <Form.Control
                 name="city" placeholder="City" type="text"
                 autoComplete="address-level2"
                 />
+                </Col>
+                <Col sm={6}>
                 <Form.Control
                 name="state" placeholder="State" type="text"
                 autoComplete="address-level1"
+                className='d-none'
                 />
+                </Col>
                 <Form.Control
                 name="country" placeholder="Country" type="text"
                 autoComplete="country"
@@ -172,6 +174,8 @@ const [values, setValues] = useState({
                 name="postcode" placeholder="Postcode" type="text"
                 autoComplete="postal-code"
                 />
+                </Row>
+            </Form.Group>
             <br />
             <InputGroup>
               <InputGroup.Text>Price: £</InputGroup.Text>
@@ -188,16 +192,10 @@ const [values, setValues] = useState({
               <Form.Label>Upload a photo</Form.Label>
               <Form.Control type="file" />
             </Form.Group>
+            {/* </Row> */}
           </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+
+        <CloseButton className='close-listing-modal' onClick={closeModal}></CloseButton>
       </Modal>
     </>
   );
