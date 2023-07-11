@@ -1,12 +1,12 @@
 import React from 'react';
-// import './Footer.css';
+import './Footer.css';
 import { Container, Row } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <Container fluid className="bg-warning bg-body-tertiary w-100 p-3">
+    <Container fluid className="myFooter bg-warning bg-body-tertiary w-100 p-3">
       <Row>
-        footer
+        <h2>Footer</h2>
       </Row>
     </Container>
   );

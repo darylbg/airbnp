@@ -5,6 +5,10 @@
 .register-tab {
     color: #FF385C;
 }
+.myClass ul > li > a {
+    background-color: gray;
+    color: white;
+}
 
 @media screen and (max-width: 500px) {
     .login-register-tabs {
