@@ -58,8 +58,8 @@ export const UPDATE_USER = gql`
   }
 `;
 
-export const ADD_LISTING = gql`
-  mutation addListing($listingData: ListingInput!) {
+export const CREATE_LISTING = gql`
+  mutation createListing($listingData: listingInput!) {
     createListing(listingData: $listingData) {
       title
       lat

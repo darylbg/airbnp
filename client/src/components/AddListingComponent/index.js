@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import CloseButton from "react-bootstrap/CloseButton";
-import { FloatingLabel, InputGroup, Row, Col } from "react-bootstrap";
-import { ADD_LISTING } from "../../utils/mutations";
+import { FloatingLabel, InputGroup, Row, Col, Alert } from "react-bootstrap";
+import { CREATE_LISTING } from "../../utils/mutations";
 import { useMutation } from "@apollo/client";
 import "./AddListingComponent.css";
 import Modal from "react-modal";
@@ -14,24 +14,27 @@ import Geocode from "react-geocode";
 
 function AddListing() {
   const [show, setShow] = useState(false);
-  const [addressLine1, setAddressLine1] = useState('');
-  const [addressLine2, setAddressLine2] = useState('');
-  const [addressLevel1, setAddressLevel1] = useState('');
-  const [addressLevel2, setAddressLevel2] = useState('');
-  const [country, setCountry] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  
-  const fullAddress = `${addressLine1} ${addressLine2} ${addressLevel1} ${addressLevel2} ${country} ${postalCode}`
-  console.log(fullAddress);
+  const [addressLine1, setAddressLine1] = useState("");
+  const [addressLine2, setAddressLine2] = useState("");
+  const [addressLevel1, setAddressLevel1] = useState("");
+  const [addressLevel2, setAddressLevel2] = useState("");
+  const [country, setCountry] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+
+  const [imageUrlInput, setImageUrlInput] = useState('');
+  const [validUpload, setValidUpload] = useState(true);
+  const [message, setMessage] = useState('');
+
+  const fullAddress = `${addressLine1} ${addressLine2} ${addressLevel1} ${addressLevel2} ${country} ${postalCode}`;
+  // console.log(fullAddress);
   const [values, setValues] = useState({
     title: "",
     description: "",
     address: "",
-    price: "",
+    price: 0,
     lat: null,
     lng: null,
     image: "",
-    price: null,
     userId: "",
   });
 
@@ -40,60 +43,47 @@ function AddListing() {
 
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
-  console.log(`this is auth ${auth.user.userId}`);
 
-  const addListing = useMutation(ADD_LISTING);
+  const [createListing] = useMutation(CREATE_LISTING);
+  Geocode.setApiKey("AIzaSyAibEqEhSqm5drveDG8x92BLTJ-Xm1kya4");
 
   const listingSubmitHandler = async (e) => {
-    const { title, description, address, price } = values;
     e.preventDefault();
-    // if (!title || !address || !price) {
-    //   console.log("fill out all required fields");
-    //   return;
-    // }
+
     try {
-      const { data } = await addListing({
+      const response = await Geocode.fromAddress(fullAddress);
+      const { lat, lng } = response.results[0].geometry.location;
+
+      const { title, description, price, image } = values;
+
+      const { data } = await createListing({
         variables: {
           listingData: {
-            title: setValues.title,
-            description: setValues.description,
-            address: setValues.address,
-            price: setValues.price,
-            lat: setValues.lat,
-            lng: setValues.lng,
-            image: setValues.image,
-            price: setValues.price,
-            userId: auth.user._id,
+            title,
+            description,
+            address: fullAddress,
+            price,
+            lat,
+            lng,
+            image: image,
+            userId: auth.user.userId,
           },
         },
       });
       console.log(data);
-    } catch (error) {}
 
-    handleClose();
-  };
+      setAddressLine1("");
+      setAddressLine2("");
+      setAddressLevel1("");
+      setAddressLevel2("");
+      setCountry("");
+      setPostalCode("");
 
-  const [address, setAddress] = useState("");
-
-  const handleChange = (event) => {
-    setAddress(event.target.value);
-  };
-
-  const [searchAddress, setSearchAddress] = useState("");
-
-  const handleAddressChange = (event) => {
-    setSearchAddress(event.target.value);
-  };
-  Geocode.setApiKey("AIzaSyAibEqEhSqm5drveDG8x92BLTJ-Xm1kya4");
-  Geocode.fromAddress("Eiffel Tower").then(
-    (response) => {
-      const { lat, lng } = response.results[0].geometry.location;
-      // console.log(`coordinates: ${lat}, ${lng}`);
-    },
-    (error) => {
-      // console.error(error);
+      handleClose();
+    } catch (error) {
+      console.error(error);
     }
-  );
+  };
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -113,6 +103,49 @@ function AddListing() {
     overlay: {
       // Add your custom styles here
     },
+  };
+
+  // image handling
+  const processFile = async (e) => {
+    const file = e.target.files[0];
+
+    // Check file type
+    if (!file.type.startsWith("image/")) {
+      setValidUpload(false);
+      setMessage("Invalid file type. Please select an image.");
+      return;
+    }
+
+    // Check file size
+    const fileSizeInMB = file.size / (1024 * 1024);
+    const maxSizeInMB = 10; // Maximum allowed file size in MB
+    if (fileSizeInMB > maxSizeInMB) {
+      setValidUpload(false);
+      setMessage(`File size exceeds the maximum limit of ${maxSizeInMB}MB.`);
+      return;
+    }
+
+    const formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("cloud_name", process.env.REACT_APP_CLOUDINARY_NAME);
+    formdata.append("upload_preset", "vzrpgeu5");
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/darylb/auto/upload`,
+      {
+        method: "post",
+        mode: "cors",
+        body: formdata,
+      }
+    );
+
+    const json = await res.json();
+    const imageUrl = json.secure_url;
+    setImageUrlInput(imageUrl);
+    setValues({ ...values, image: imageUrl }); // Update the image URL state
+      console.log(imageUrl);
+    setValidUpload(true);
+    setMessage("");
   };
 
   return (
@@ -161,9 +194,7 @@ function AddListing() {
                   placeholder="Search address"
                   type="text"
                   autoComplete="address-line1"
-                  onChange={(e) =>
-                    setAddressLine1(e.target.value )
-                  }
+                  onChange={(e) => setAddressLine1(e.target.value)}
                 />
               </AddressAutofill>
               <Col sm={6}>
@@ -172,9 +203,7 @@ function AddListing() {
                   placeholder="Apartment number"
                   type="text"
                   autoComplete="address-line2"
-                  onChange={(e) =>
-                    setAddressLine2(e.target.value )
-                  }
+                  onChange={(e) => setAddressLine2(e.target.value)}
                 />
               </Col>
               <Col sm={6}>
@@ -183,9 +212,7 @@ function AddListing() {
                   placeholder="City"
                   type="text"
                   autoComplete="address-level2"
-                  onChange={(e) =>
-                    setAddressLevel2(e.target.value )
-                  }
+                  onChange={(e) => setAddressLevel2(e.target.value)}
                 />
               </Col>
               <Form.Control
@@ -193,9 +220,7 @@ function AddListing() {
                 placeholder="State"
                 type="text"
                 autoComplete="address-level1"
-                onChange={(e) =>
-                  setAddressLevel1(e.target.value )
-                }
+                onChange={(e) => setAddressLevel1(e.target.value)}
               />
               <Col sm={6}>
                 <Form.Control
@@ -203,9 +228,7 @@ function AddListing() {
                   placeholder="Country"
                   type="text"
                   autoComplete="country"
-                  onChange={(e) =>
-                    setCountry(e.target.value )
-                  }
+                  onChange={(e) => setCountry(e.target.value)}
                 />
               </Col>
               <Col sm={6}>
@@ -214,9 +237,7 @@ function AddListing() {
                   placeholder="Postcode"
                   type="text"
                   autoComplete="postal-code"
-                  onChange={(e) =>
-                    setPostalCode(e.target.value )
-                  }
+                  onChange={(e) => setPostalCode(e.target.value)}
                 />
               </Col>
             </Row>
@@ -229,20 +250,33 @@ function AddListing() {
               step="0.01"
               placeholder="Enter price"
               // value={price}
-              onChange={(e) => setValues({ ...values, price: e.target.value })}
+              onChange={(e) => {
+                const price = parseInt(e.target.value); // Convert the value to an integer
+                setValues({ ...values, price: isNaN(price) ? 0 : price }); // Set the price as an integer or 0 if the value is not a valid number
+              }}
             />
           </InputGroup>
           <br />
-          <Form.Group controlId="addListingformFile" className="mb-3">
+          {/* <Form.Group controlId="addListingformFile" className="mb-3">
             <Form.Label>Upload a photo</Form.Label>
             <Form.Control type="file" />
+          </Form.Group> */}
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Upload new profile image</Form.Label>
+            <Form.Control
+              type="file"
+              onChange={processFile}
+              // disabled={inputDisable}
+            />
+            <br />
+            <Alert
+              className={validUpload ? "d-none" : "block"}
+              variant="danger"
+            >
+              {message}
+            </Alert>
           </Form.Group>
-          <Button
-            className="register-button"
-            type="submit"
-            variant="primary"
-            style={{}}
-          >
+          <Button className="" type="submit" variant="primary" style={{}}>
             Add Listing
           </Button>
         </Form>
