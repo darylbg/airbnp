@@ -1,5 +1,7 @@
 import React from "react";
 import "./LocalList.css";
+import { Link } from "react-router-dom";
+import BookListing from "../MyListings/BookListing";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import toilet1 from "../../utils/Images/King.webp";
 import toilet2 from "../../utils/Images/Dirty.webp";
@@ -80,7 +82,9 @@ const LocalListings = () => {
                     {listing.description}
                   </Card.Text>
                   <div className='d-flex justify-content-center'>
-                    <Button variant='dark'>Use</Button>
+                    <Link to={`/bookListing/${listing._id}`}>
+                      <Button variant='dark'>Use</Button>
+                    </Link>
                   </div>
                 </Card.Body>
               </Card>
