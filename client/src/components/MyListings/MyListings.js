@@ -7,6 +7,7 @@ import toilet4 from '../../utils/Images/toilet.webp';
 import toilet5 from '../../utils/Images/Large_Bathroom.webp';
 import LocalListings from '../LocalListings/LocalListings';
 import NewListingsModal from '../NewListing/NewListingModal';
+import EditListing from '../EditListing/EditListing';
 
 const listings = [
   {
@@ -56,7 +57,7 @@ const MyListings = () => {
                 <Card.Title className="small-text text-center">{listing.title}</Card.Title>
                 <Card.Text className="small-text text-center">{listing.description}</Card.Text>
                 <div className="d-flex justify-content-center">
-                  <Button variant="dark">Edit</Button>
+                  <EditListing />
                 </div>
               </Card.Body>
             </Card>

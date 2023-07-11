@@ -28,6 +28,7 @@ const resolvers = {
 
     Mutation: {
       login: async (parent, { email, password }) => {
+        console.log ("login",email,password)
         const user = await User.findOne({ email });
         if (!user) {
           throw new AuthenticationError('Incorrect credentials');
@@ -41,6 +42,7 @@ const resolvers = {
       },
 
       register: async (parent, { userData }) => {
+        console.log ("register",userData);
         const user = await User.create(userData);
         const token = signToken(user);
   

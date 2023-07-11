@@ -19,7 +19,7 @@ const typeDefs = gql`
     description: String
     image: String
     userId: ID!
-    price: Int
+    price: Float!
     rating: Int
     notifications: [Notification]
   }

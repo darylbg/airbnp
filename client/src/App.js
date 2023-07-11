@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Homepage from "./pages/Homepage";
+import Homepage from "./pages/homepage/Homepage";
 import Profile from "./pages/Profile";
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Login from "./pages/login/Login";
 import {
   ApolloClient,
   InMemoryCache,
