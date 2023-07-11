@@ -5,6 +5,6 @@ import listingsReducer from "./reducers/listingsReducer";
 export default configureStore({
   reducer: {
     auth: authReducer,
-    listing: listingsReducer
+    // listing: listingsReducer
   },
 });

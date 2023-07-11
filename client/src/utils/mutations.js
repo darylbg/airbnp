@@ -38,24 +38,18 @@ export const UPDATE_USER = gql`
   }
 `;
 
-// export const CREATE_LISTING = gql`
-//   mutation createListing($listingData: ListingInput!) {
-//     createListing(listingData: $listingData) {
-//       title
-//       lat
-//       lng
-//       address
-//       description
-//       image
-//       userId
-//       price
-//       rating {
-//         []
-//       }
-//       notifications {
-//         []
-//       }
-//     }
-//   }
-// `;
+export const ADD_LISTING = gql`
+  mutation addListing($listingData: ListingInput!) {
+    createListing(listingData: $listingData) {
+      title
+      lat
+      lng
+      address
+      description
+      image
+      userId
+      price
+    }
+  }
+`;
 

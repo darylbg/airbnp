@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useMutation } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
@@ -58,7 +58,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
       Auth.login(data.login.token);
 
       setValues({ ...values });
-      // navigate("/");
+
     } catch (error) {
       setValues({ ...values });
       setAlertShow(true);
