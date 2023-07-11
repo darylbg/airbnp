@@ -8,10 +8,10 @@ export const authReducer = createSlice({
       token: "",
       userId: "",
       username: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      listings: [],
+      firstName: '',
+      lastName: '',
+      email: '',
+      listings: []
     },
   },
   reducers: {
@@ -27,7 +27,7 @@ export const authReducer = createSlice({
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           email: action.payload.email,
-          listings: action.payload.listings,
+          listings: action.payload.listings
         },
       };
     },
@@ -37,13 +37,13 @@ export const authReducer = createSlice({
         ...state,
         isLoggedIn: false,
         user: {
-          token: "",
-          userId: "",
-          username: "",
-          firstName: "",
-          lastName: "",
-          email: "",
-          listings: [],
+            token: "",
+            userId: "",
+            username: "",
+            firstName: '',
+            lastName: '',
+            email: '',
+            listings: []
         },
       };
     },
@@ -53,13 +53,13 @@ export const authReducer = createSlice({
         ...state,
         isLoggedIn: true,
         user: {
-          token: action.payload.token,
-          userId: action.payload.userId,
-          username: action.payload.username,
-          firstName: action.payload.firstName,
-          lastName: action.payload.lastName,
-          email: action.payload.email,
-          listings: action.payload.listings,
+            token: action.payload.token,
+            userId: action.payload.userId,
+            username: action.payload.username,
+            firstName: action.payload.firstName,
+            lastName: action.payload.lastName,
+            email: action.payload.email,
+            listings: action.payload.listings
         },
       };
     },

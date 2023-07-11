@@ -8,6 +8,7 @@ import NewListingModal from '../../components/NewListing/NewListingModal'
 import Login from '../login/Login';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
+import AddListing from '../../components/AddListingComponent';
 
 
 const Dashboard = () => {
@@ -22,13 +23,18 @@ const Dashboard = () => {
   return (
    <Container className='d-flex justify-content-center'>
     {currentUser ? (
-    <Row>
-      <Col xs={4} sm={4}>
-      </Col>
-      <Col xs={4} sm={4}>
-        <MyListings />
-      </Col>
-    </Row>
+      <>
+        <Row>
+          <AddListing />
+        </Row>
+        <Row>
+          <Col xs={4} sm={4}>
+          </Col>
+          <Col xs={4} sm={4}>
+            {/* <MyListings /> */}
+          </Col>
+        </Row>
+      </>
     ):(
       <Row>
         <h2>Please log in to view your dashboard</h2>

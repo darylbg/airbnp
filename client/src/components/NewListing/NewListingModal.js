@@ -3,7 +3,7 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import Input from '../FormElements/Input';
 import { validate, VALIDATOR_REQUIRE } from '../../utils/validators';
 import './newListing.css'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMutation } from "@apollo/client";
 
 const formReducer = (state, action) => {
@@ -31,6 +31,8 @@ const formReducer = (state, action) => {
 };
 
 const NewListing = () => {
+  const { listing } = useSelector((state) => state);
+  console.log(listing)
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: {
       title: {
