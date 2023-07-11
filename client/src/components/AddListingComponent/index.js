@@ -6,7 +6,9 @@ import Modal from 'react-bootstrap/Modal';
 import { FloatingLabel, InputGroup } from 'react-bootstrap';
 import { ADD_LISTING } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
-import Autocomplete from "react-google-autocomplete";
+
+import { AddressAutofill } from '@mapbox/search-js-react';
+import Geocode from "react-geocode";
 
 function AddListing() {
   const [show, setShow] = useState(false);
@@ -59,10 +61,60 @@ const [values, setValues] = useState({
     handleClose();
   };
 
-    const YOUR_GOOGLE_MAPS_API_KEY = 'AIzaSyAibEqEhSqm5drveDG8x92BLTJ-Xm1kya4';
+  const [address, setAddress] = useState('');
+
+  const handleChange = (event) => {
+    setAddress(event.target.value);
+  };
+
+  const [searchAddress, setSearchAddress] = useState('');
+
+  const handleAddressChange = (event) => {
+    setSearchAddress(event.target.value);
+  };
+  Geocode.setApiKey("AIzaSyAibEqEhSqm5drveDG8x92BLTJ-Xm1kya4");
+  Geocode.fromAddress("Eiffel Tower").then(
+    (response) => {
+      const { lat, lng } = response.results[0].geometry.location;
+      console.log(`coordinates: ${lat}, ${lng}`);
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
 
   return (
     <>
+      <div>
+        <Form>
+        <AddressAutofill accessToken="pk.eyJ1IjoiZGF6emExMjMiLCJhIjoiY2xqcjZzc2Y5MGN5NTNncWpsZ3ByZG9tciJ9.N_FhIXIqTaKbq03NukHGYQ">
+                <Form.Control
+                name="address" placeholder="Address" type="text"
+                autoComplete="address"
+                />
+              </AddressAutofill>
+                <Form.Control
+                name="apartment" placeholder="Apartment number" type="text"
+                autoComplete="address-line2"
+                />
+                <Form.Control
+                name="city" placeholder="City" type="text"
+                autoComplete="address-level2"
+                />
+                <Form.Control
+                name="state" placeholder="State" type="text"
+                autoComplete="address-level1"
+                />
+                <Form.Control
+                name="country" placeholder="Country" type="text"
+                autoComplete="country"
+                />
+                <Form.Control
+                name="postcode" placeholder="Postcode" type="text"
+                autoComplete="postal-code"
+                />
+            </Form>
+      </div>
       <Button variant="primary" onClick={handleShow}>
         + Add a listing
       </Button>
@@ -94,18 +146,32 @@ const [values, setValues] = useState({
               />
             </Form.Group>
             <br />
-            <Autocomplete
-  apiKey={YOUR_GOOGLE_MAPS_API_KEY}
-  style={{ width: "90%" }}
-  onPlaceSelected={(place) => {
-    console.log(place);
-  }}
-  options={{
-    types: ["(regions)"],
-    componentRestrictions: { country: "ru" },
-  }}
-  defaultValue="Amsterdam"
-/>;
+            <AddressAutofill accessToken="pk.eyJ1IjoiZGF6emExMjMiLCJhIjoiY2xqcjZzc2Y5MGN5NTNncWpsZ3ByZG9tciJ9.N_FhIXIqTaKbq03NukHGYQ">
+                <Form.Control
+                name="address" placeholder="Address" type="text"
+                autoComplete="address-line1"
+                />
+              </AddressAutofill>
+                <Form.Control
+                name="apartment" placeholder="Apartment number" type="text"
+                autoComplete="address-line2"
+                />
+                <Form.Control
+                name="city" placeholder="City" type="text"
+                autoComplete="address-level2"
+                />
+                <Form.Control
+                name="state" placeholder="State" type="text"
+                autoComplete="address-level1"
+                />
+                <Form.Control
+                name="country" placeholder="Country" type="text"
+                autoComplete="country"
+                />
+                <Form.Control
+                name="postcode" placeholder="Postcode" type="text"
+                autoComplete="postal-code"
+                />
             <br />
             <InputGroup>
               <InputGroup.Text>Price: £</InputGroup.Text>
