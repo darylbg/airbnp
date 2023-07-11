@@ -6,6 +6,7 @@ import toilet2 from "../../utils/Images/Dirty.webp";
 import toilet3 from "../../utils/Images/royal-style-gold-toilet-5.jpg";
 import toilet4 from "../../utils/Images/toilet.webp";
 import toilet5 from "../../utils/Images/Large_Bathroom.webp";
+import { Link } from "react-router-dom";
 
 const listings = [
   {
@@ -75,7 +76,9 @@ const LocalListings = () => {
                     {listing.description}
                   </Card.Text>
                   <div className='d-flex justify-content-center'>
-                    <Button variant='dark'>Use</Button>
+                    <Link to={`/bookListingById/${listing._id}`}>
+                      <Button variant='dark'>Use</Button>
+                    </Link>
                   </div>
                 </Card.Body>
               </Card>

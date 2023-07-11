@@ -7,6 +7,7 @@ import Homepage from "./pages/homepage/Homepage";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Login from "./pages/login/Login";
+import BookListingById from "./components/MyListings/BookListingById";
 import {
   ApolloClient,
   InMemoryCache,
@@ -43,6 +44,10 @@ function App() {
           <div className='main-content'>
             <Routes>
               <Route path='/' element={<Homepage />} />
+              <Route
+                path='/bookListingById/:id'
+                element={<BookListingById />}
+              />
               <Route path='/profile' element={<Profile />} />
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/login' element={<Login />} />

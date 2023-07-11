@@ -6,7 +6,7 @@ import { AddressAutofill } from '@mapbox/search-js-react';
 
 // import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './Map.css';
-import SearchForm from '../SearchForm';
+import SearchForm from './SearchForm';
 
 
 
@@ -33,9 +33,9 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     const [destLngLat, setDestLngLat] = useState([]);
     const [destination, setDestination] = useState('')
     const [instructions, setInstructions] = useState('');
+    const [profile, setProfile] = useState('');
 
     useEffect(() => {
-
 
         if (map.current) return; // initialize map
         map.current = new mapboxgl.Map({
@@ -47,6 +47,44 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
         
     });
 
+//render current listings on map, dummy data for now
+    useEffect(() => {
+
+      const geoJson = {
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "title": "London",
+              "description": "i love the railways, not realllehh"
+            },
+            "geometry": {
+              "coordinates": [-0.1276, 51.5073],
+              "type": "Point"
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "title": "Sheffield",
+              "description": "sheffing"
+            },
+            "geometry": {
+              "coordinates": [-1.4702, 53.3807],
+              "type": "Point"
+            }
+          }]}
+
+
+          geoJson.features.forEach(function(marker) {
+            var el = document.createElement('div');
+            el.className = 'marker';
+
+            new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map.current);
+          })
+      
+      
+  });
         const setUser = async () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition( async (position)=> {
@@ -110,12 +148,6 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
             }
             console.log(location)
 
-            // map.current.setCenter([lon, lat]);
-            // map.current.setZoom(15)
-        
-            // searchForUser(lon, lat);
-        
-        
             const start = {
                 center: [lng, lat],
                 zoom: zoom,
@@ -209,10 +241,6 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
                 `<h3>end</h3>`
               ))
               .addTo(map.current);
-
-   
-              
-        
             },[setFeature, viewport]
           );
         
@@ -232,12 +260,12 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
         
           }
         
-          const getDirection = async (e) => {
-            e.preventDefault();
-            
-    try {
+const getDirection = async (e) => {
+  e.preventDefault();
+try {
+  if(startLngLat.length === 0 || setDestLngLat.length === 0) return;
       const query = await fetch(
-        `https://api.mapbox.com/matching/v5/mapbox/driving/${startLngLat[0]},${startLngLat[1]};${destLngLat[0]},${destLngLat[1]}?geometries=geojson&steps=true&radiuses=25;25&access_token=pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4OHgifQ.AuZEXXUmyWFMfTxQAjH_CQ`
+        `https://api.mapbox.com/matching/v5/mapbox/${profile}/${startLngLat[0]},${startLngLat[1]};${destLngLat[0]},${destLngLat[1]}?geometries=geojson&steps=true&radiuses=50;50&access_token=pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4OHgifQ.AuZEXXUmyWFMfTxQAjH_CQ`
       );
       const direction = await query.json();
       console.log(direction);
@@ -290,8 +318,12 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
 const resetForm = () => {
   setStartAddress('');
   setDestination('');
+  setstartLngLat([])
+  setDestLngLat([]);
  }
-
+ useEffect(() => {
+  console.log(profile)
+}, [profile])
 
   return (
     <section className='map-component'>
@@ -346,10 +378,18 @@ const resetForm = () => {
 
 />
 </AddressAutofill>
-
+<div class="mapbox-directions-profile mapbox-directions-component-keyline mapbox-directions-clearfix">
+    
+    <input id="mapbox-directions-profile-driving" type="radio" name="profile" value="mapbox/driving" onClick={()=> { setProfile('driving') }}/>
+    <label for="mapbox-directions-profile-driving">Driving</label>
+    <input id="mapbox-directions-profile-walking" type="radio" name="profile" value="mapbox/walking" onClick={()=> { setProfile('walking') }}/>
+    <label for="mapbox-directions-profile-walking">Walking</label>
+    <input id="mapbox-directions-profile-cycling" type="radio" name="profile" value="mapbox/cycling" onClick={()=> { setProfile('cycling') }}/>
+    <label for="mapbox-directions-profile-cycling">Cycling</label>
+  </div>
           <div className="button-wrapper">
             <button className="btn btn-info" id="btn-direction" onClick={getDirection}>
-              get directions
+              Get directions
             </button>
             <button type="button" className="btn btn-info" id="btn-reset" onClick={resetForm}>
               Reset
@@ -362,11 +402,11 @@ const resetForm = () => {
   </div>
   </div>
             
-         
+
 
 </section>
     );
 }
 
 
-export default Map;
+ export default Map;
