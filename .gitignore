@@ -3,3 +3,4 @@ node_modules
 .vscode
 .gitignore
 .env
+package-lock.json
