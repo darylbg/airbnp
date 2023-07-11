@@ -4,3 +4,7 @@
     top:15px;
     right: 15px;
 }
+
+.list-modal-address span {
+    display: block;
+}

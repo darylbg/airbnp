@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import CloseButton from "react-bootstrap/CloseButton";
-import { FloatingLabel, InputGroup, Row, Col, Alert } from "react-bootstrap";
+import { InputGroup, Row, Col, Alert } from "react-bootstrap";
 import { CREATE_LISTING } from "../../utils/mutations";
 import { useMutation } from "@apollo/client";
 import "./AddListingComponent.css";
@@ -99,6 +99,7 @@ function AddListing() {
   const modalStyle = {
     content: {
       // Add your custom styles here
+      maxWidth: '500px'
     },
     overlay: {
       // Add your custom styles here
@@ -162,8 +163,9 @@ function AddListing() {
       >
         <Form onSubmit={listingSubmitHandler}>
           {/* <Row> */}
+          <h3>Add new listing</h3>
           <Form.Group>
-            <Form.Label>Add new Listing</Form.Label>
+            <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
               placeholder="my new listing"
@@ -197,7 +199,14 @@ function AddListing() {
                   onChange={(e) => setAddressLine1(e.target.value)}
                 />
               </AddressAutofill>
-              <Col sm={6}>
+              <div className="mb-3 list-modal-address">
+                <span>{addressLine1} {addressLine2}</span>
+                <span>{addressLevel1} {addressLevel2}</span>
+                <span>{postalCode}</span>
+                <span style={{textTransform: 'uppercase'}}>{country}</span>
+                <span></span>
+              </div>
+              <Col sm={6} className="d-none">
                 <Form.Control
                   name="apartment"
                   placeholder="Apartment number"
@@ -206,7 +215,7 @@ function AddListing() {
                   onChange={(e) => setAddressLine2(e.target.value)}
                 />
               </Col>
-              <Col sm={6}>
+              <Col sm={6}  className="d-none">
                 <Form.Control
                   name="city"
                   placeholder="City"
@@ -221,8 +230,9 @@ function AddListing() {
                 type="text"
                 autoComplete="address-level1"
                 onChange={(e) => setAddressLevel1(e.target.value)}
+                className="d-none"
               />
-              <Col sm={6}>
+              <Col sm={6}  className="d-none">
                 <Form.Control
                   name="country"
                   placeholder="Country"
@@ -231,7 +241,7 @@ function AddListing() {
                   onChange={(e) => setCountry(e.target.value)}
                 />
               </Col>
-              <Col sm={6}>
+              <Col sm={6}  className="d-none">
                 <Form.Control
                   name="postcode"
                   placeholder="Postcode"
@@ -242,7 +252,7 @@ function AddListing() {
               </Col>
             </Row>
           </Form.Group>
-          <br />
+          {/* <br /> */}
           <InputGroup>
             <InputGroup.Text>Price: £</InputGroup.Text>
             <Form.Control
