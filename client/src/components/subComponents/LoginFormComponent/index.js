@@ -44,20 +44,21 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
       const { data } = await login({
         variables: { email, password },
       });
+      console.log(data);
       dispatch(
         login_user({
           token: data.login.token,
-          userId: data.login._id,
-          username: data.login.username,
-          firstName: data.login.firstName,
-          lastName: data.login.lastName,
-          email: data.login.email,
-          listings: data.login.listings
+          userId: data.login.user._id,
+          username: data.login.user.username,
+          firstName: data.login.user.firstName,
+          lastName: data.login.user.lastName,
+          email: data.login.user.email,
+          listings: data.login.user.listings
         })
       );
       Auth.login(data.login.token);
-
-      setValues({ ...values });
+        navigate('/');
+     
 
     } catch (error) {
       setValues({ ...values });
