@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { UPDATE_LISTING } from "../../utils/mutations";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Row,
   Col,
@@ -11,41 +14,58 @@ import {
 import { Check } from 'react-bootstrap-icons'
 import { AddressAutofill } from "@mapbox/search-js-react";
 import Geocode from "react-geocode";
-import './DashboardListings.css'
+import './DashboardListings.css';
 
 function DashboardListings({ listing }) {
-  const [show, setShow] = useState(false);
-  const [addressLine1, setAddressLine1] = useState(listing.address.line1);
-  const [addressLine2, setAddressLine2] = useState(listing.address.line2);
-  const [addressLevel1, setAddressLevel1] = useState(listing.address.level1);
-  const [addressLevel2, setAddressLevel2] = useState(listing.address.level2);
-  const [country, setCountry] = useState(listing.address.country);
-  const [postalCode, setPostalCode] = useState(listing.address.postalCode);
+    const [show, setShow] = useState(false);
+    const [addressLine1, setAddressLine1] = useState(listing.address.line1);
+    const [addressLine2, setAddressLine2] = useState(listing.address.line2);
+    const [addressLevel1, setAddressLevel1] = useState(listing.address.level1);
+    const [addressLevel2, setAddressLevel2] = useState(listing.address.level2);
+    const [country, setCountry] = useState(listing.address.country);
+    const [postalCode, setPostalCode] = useState(listing.address.postalCode);
+  
+    const [imageUrlInput, setImageUrlInput] = useState('');
+    const [validUpload, setValidUpload] = useState(true);
+    const [message, setMessage] = useState("");
 
-  const [imageUrlInput, setImageUrlInput] = useState('');
-  const [validUpload, setValidUpload] = useState(true);
-  const [message, setMessage] = useState("");
-
-  const [values, setValues] = useState({
-    title: listing.title,
-    description: listing.description,
-    address: listing.address,
-    price: listing.price,
-    lat: listing.lat,
-    lng: listing.lng,
-    image: imageUrlInput,
-    // userId: "",
-  });
-
-  const fullAddress = `${addressLine1} ${addressLine2} ${addressLevel1} ${addressLevel2} ${country} ${postalCode}`;
-
-  Geocode.setApiKey("AIzaSyAibEqEhSqm5drveDG8x92BLTJ-Xm1kya4");
-
-  const listingUpdateHandler = async (e) => {
-    e.preventDefault();
-    const response = await Geocode.fromAddress(fullAddress);
-    const { lat, lng } = response.results[0].geometry.location;
-  };
+    const { auth } = useSelector((state) => state);
+    const dispatch = useDispatch();
+  
+    const [values, setValues] = useState({
+      title: listing.title,
+      description: listing.description,
+      address: listing.address,
+      price: listing.price,
+      lat: listing.lat,
+      lng: listing.lng,
+      image: imageUrlInput,
+    //   userId: auth.user.userId
+    });
+  
+    const fullAddress = `${addressLine1} ${addressLine2} ${addressLevel1} ${addressLevel2} ${country} ${postalCode}`;
+  
+    const [updateListing] = useMutation(UPDATE_LISTING);
+  
+    Geocode.setApiKey("AIzaSyAibEqEhSqm5drveDG8x92BLTJ-Xm1kya4");
+  
+    const listingUpdateHandler = async (e) => {
+      e.preventDefault();
+      const response = await Geocode.fromAddress(fullAddress);
+      const { lat, lng } = response.results[0].geometry.location;
+  
+      try {
+        const { data: updatedData } = await updateListing({
+          variables: { 
+            listingId: listing._id, 
+            listingData: { ...values, lat, lng } }, 
+        });
+        console.log(listing._id);
+        console.log("Updated data:", updatedData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   const processFile = async (e) => {
     const file = e.target.files[0];
@@ -83,7 +103,7 @@ function DashboardListings({ listing }) {
     const json = await res.json();
     const imageUrl = json.secure_url;
     setImageUrlInput(imageUrl);
-    setValues({ ...values, image: imageUrl }); // Update the image URL state
+    setValues({ ...values, image: imageUrlInput }); // Update the image URL state
     console.log(imageUrl);
     setValidUpload(true);
     setMessage("");
@@ -101,7 +121,7 @@ function DashboardListings({ listing }) {
                 <Card.Title>{listing.title}</Card.Title>
                 {/* <Card.Text> */}
                   <Form
-                  // onSubmit={listingSubmitHandler}
+                  onSubmit={listingUpdateHandler}
                   >
                     <Form.Group>
                       <Form.Label>Title</Form.Label>

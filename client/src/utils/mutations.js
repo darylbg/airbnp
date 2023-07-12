@@ -1,46 +1,46 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const LOGIN = gql`
-mutation login($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
-    token
-    user {
-      _id
-      email
-      username
-      firstName
-      image
-      lastName
-      listings {
-        description
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        _id
+        email
+        username
+        firstName
         image
-        address
-        lat
-        lng
-        notifications {
-          arrivingBy
-          createdAt
-          listingId
+        lastName
+        listings {
+          description
+          image
+          address
+          lat
+          lng
+          notifications {
+            arrivingBy
+            createdAt
+            listingId
+            userId
+          }
+          price
+          ratings {
+            comment
+            createdAt
+            listingId
+            rating
+            userId
+          }
+          title
           userId
         }
-        price
-        ratings {
-          comment
-          createdAt
-          listingId
-          rating
-          userId
-        }
-        title
-        userId
       }
     }
   }
-}`;
-
+`;
 
 export const REGISTER = gql`
-  mutation($userData: userInput!) {
+  mutation ($userData: userInput!) {
     register(userData: $userData) {
       token
       user {
@@ -54,8 +54,18 @@ export const REGISTER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updateUserDetails($firstName: String!, $lastName: String!, $username: String!, $image: String) {
-    updateUserDetails(firstName: $firstName, lastName: $lastName, username: $username image: $image) {
+  mutation updateUserDetails(
+    $firstName: String!
+    $lastName: String!
+    $username: String!
+    $image: String
+  ) {
+    updateUserDetails(
+      firstName: $firstName
+      lastName: $lastName
+      username: $username
+      image: $image
+    ) {
       firstName
       lastName
       username
@@ -79,3 +89,16 @@ export const CREATE_LISTING = gql`
   }
 `;
 
+export const UPDATE_LISTING = gql`
+  mutation updateListing($listingId: ID!, $listingData: listingInput!) {
+    updateListing(listingId: $listingId, listingData: $listingData) {
+      address
+      description
+      image
+      lat
+      lng
+      price
+      title
+    }
+  }
+`;

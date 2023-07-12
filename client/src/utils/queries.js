@@ -37,6 +37,7 @@ export const QUERY_USER = gql`
 export const QUERY_LISTING_BY_USER_ID = gql`
   query getListingByUserId {
     getListingByUserId {
+      _id
       address
       description
       image

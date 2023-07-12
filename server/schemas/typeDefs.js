@@ -12,6 +12,7 @@ const typeDefs = gql`
   }
 
   type Listing {
+    _id: ID!
     title: String!
     lat: Float!
     lng: Float! 
@@ -25,6 +26,7 @@ const typeDefs = gql`
   }
 
   type Notification {
+    _id: ID!
     listingId: ID!
     userId: ID!
     arrivingBy: String
@@ -32,6 +34,7 @@ const typeDefs = gql`
   }
 
   type Rating {
+    _id: ID!
     listingId: ID!
     userId: ID!
     createdAt: String

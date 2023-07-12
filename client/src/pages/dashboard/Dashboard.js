@@ -10,7 +10,7 @@ import { useQuery, useLazyQuery } from "@apollo/client";
 import { QUERY_USER } from "../../utils/queries";
 import AddListing from "../../components/AddListingComponent";
 import DashboardListings from "../../components/DashboardListings";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { QUERY_LISTING_BY_USER_ID } from "../../utils/queries";
 import Button from "react-bootstrap/Button";
 
@@ -18,7 +18,7 @@ const Dashboard = () => {
   const { auth } = useSelector((state) => state);
 
   const { data: dataListing } = useQuery(QUERY_LISTING_BY_USER_ID);
-  console.log(dataListing?.getListingByUserId);
+  // console.log(dataListing?.getListingByUserId);
   const listings = dataListing?.getListingByUserId || [];
 
   console.log(listings);
@@ -27,7 +27,7 @@ const Dashboard = () => {
 
   if (data) {
     currentUser = data.user;
-    console.log(data.user);
+    // console.log(data.user);
   }
 
   return (

@@ -21,6 +21,7 @@ const resolvers = {
         if (context.user) {
           const listingData = await Listing.find({ userId: context.user._id }).populate('ratings').populate('notifications');
           return listingData;
+          console.log(listingData)
         }
         throw new AuthenticationError('You need to be logged in!');
       }
@@ -82,7 +83,7 @@ const resolvers = {
         throw new AuthenticationError('You need to be logged in!');
       },
 
-      updateListing: async (parent, { listingId, listingData }) => {
+      updateListing: async (parent, { listingId, listingData }, context) => {
         if (context.user) {
           const updatedListing = Listing.findByIdAndUpdate(
             listingId, {
@@ -95,7 +96,6 @@ const resolvers = {
               description: description,
               image: image,
               price: price,
-              rating: rating
           },
           {
             new: true,
