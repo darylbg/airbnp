@@ -69,16 +69,14 @@ const resolvers = {
           const newListing = await Listing.create({
             ...listingData,
             userId: context.user._id,
-            title: title,
-            lat: lat,
-            lng: lng,
-            address: address,
-            description: description,
-            image: image,
-            price: price,
-            rating: rating ,
-            notifications: [],
-            ratings: []
+            title: listingData.title,
+            lat: listingData.lat,
+            lng: listingData.lng,
+            address: listingData.address,
+            description: listingData.description,
+            image: listingData.image,
+            price: listingData.price,
+            rating: listingData.rating 
           });
           return newListing;
         }
