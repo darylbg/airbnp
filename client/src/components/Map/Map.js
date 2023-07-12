@@ -24,7 +24,7 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     const [address, setAddress] = useState('');
     const [viewport, setViewport] = useState(
         {
-        center: [0, 55], //long laT
+        center: [-2.5195, 53.0636], //long laT
         zoom: 5,
     });
     const [feature, setFeature] = useState('');
@@ -80,7 +80,7 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
             var el = document.createElement('div');
             el.className = 'marker';
 
-            new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map.current);
+            new mapboxgl.Marker().setLngLat(marker.geometry.coordinates).addTo(map.current);
           })
       
       
@@ -259,60 +259,69 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
             setDestination(e.target.value)
         
           }
-        
-const getDirection = async (e) => {
-  e.preventDefault();
-try {
-  if(startLngLat.length === 0 || setDestLngLat.length === 0) return;
-      const query = await fetch(
-        `https://api.mapbox.com/matching/v5/mapbox/${profile}/${startLngLat[0]},${startLngLat[1]};${destLngLat[0]},${destLngLat[1]}?geometries=geojson&steps=true&radiuses=50;50&access_token=pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4OHgifQ.AuZEXXUmyWFMfTxQAjH_CQ`
-      );
-      const direction = await query.json();
-      console.log(direction);
-      const coords = direction.matchings[0].geometry;
-  
-      addRoute(coords);
-      console.log(coords)
-      console.log(startLngLat)
-      console.log(destLngLat)
-      }
-      catch (e) {
-        alert('Directions could not be found.');
-      }
-        
-              
-        
-          }     
- 
-          function addRoute(coords) {
-            // If a route is already loaded, remove it
+         
+          const getRoute = async (e) => {
+            e.preventDefault();
+
+
+            const query = await fetch(
+              `https://api.mapbox.com/directions/v5/mapbox/${profile}/${startLngLat[0]},${startLngLat[1]};${destLngLat[0]},${destLngLat[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+              { method: 'GET' }
+            );
+            const json = await query.json();
+            const data = json.routes[0];
+            const route = data.geometry.coordinates;
+            const geojson = {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'LineString',
+                coordinates: route
+              }
+            };
+            // if the route already exists on the map, we'll reset it using setData
             if (map.current.getSource('route')) {
-              map.current.removeLayer('route');
-              map.current.removeSource('route');
-            } else {
-              // Add a new layer to the map
-              map.current.addLayer({
-                id: 'route',
-                type: 'line',
-                source: {
-                  type: 'geojson',
-                  data: {
-                    type: 'Feature',
-                    properties: {},
-                    geometry: coords
-                  }
-                },
-                layout: {
-                  'line-join': 'round',
-                  'line-cap': 'round'
-                },
-                paint: {
-                  'line-color': '#03AA46',
-                  'line-width': 8,
-                  'line-opacity': 0.8
-                }
-              });
+              map.current.getSource('route').setData(geojson);
             }
+            else {
+              addRouteLayer(geojson);
+            }
+            // otherwise, we'll make a new request
+
+           let instructions = document.getElementById('instructions');
+           instructions.style.display='block';
+          
+            const steps = data.legs[0].steps;
+          
+          let tripInstructions = '';
+          for (const step of steps) {
+            tripInstructions += `<li>${step.maneuver.instruction}</li>`;
+          }
+          instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
+            data.duration / 60
+          )} min </strong></p><ol>${tripInstructions}</ol>`;
+          }
+          
+          const addRouteLayer = (geojson) => {
+          
+            map.current.addLayer({
+              id: 'route',
+              type: 'line',
+              source: {
+                type: 'geojson',
+                data: geojson
+              },
+              layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+              },
+              paint: {
+                'line-color': '#3887be',
+                'line-width': 5,
+                'line-opacity': 0.75
+              }
+            });
+          
           }
                
 const resetForm = () => {
@@ -320,6 +329,9 @@ const resetForm = () => {
   setDestination('');
   setstartLngLat([])
   setDestLngLat([]);
+  let instructions = document.getElementById('instructions');
+  instructions.style.display='none';
+  instructions.innerHTML = ``;
  }
  useEffect(() => {
   console.log(profile)
@@ -346,7 +358,7 @@ const resetForm = () => {
               handleFormSubmit={handleFormSubmit}
               placeholder='find address'
             />
- <div id="instructions">{instructions}</div>
+ <div id="instructions" >{instructions}</div>
             {/* <GetDirections /> */}
             <form className="form-address">
 
@@ -380,15 +392,17 @@ const resetForm = () => {
 </AddressAutofill>
 <div class="mapbox-directions-profile mapbox-directions-component-keyline mapbox-directions-clearfix">
     
-    <input id="mapbox-directions-profile-driving" type="radio" name="profile" value="mapbox/driving" onClick={()=> { setProfile('driving') }}/>
-    <label for="mapbox-directions-profile-driving">Driving</label>
-    <input id="mapbox-directions-profile-walking" type="radio" name="profile" value="mapbox/walking" onClick={()=> { setProfile('walking') }}/>
-    <label for="mapbox-directions-profile-walking">Walking</label>
-    <input id="mapbox-directions-profile-cycling" type="radio" name="profile" value="mapbox/cycling" onClick={()=> { setProfile('cycling') }}/>
-    <label for="mapbox-directions-profile-cycling">Cycling</label>
+    <input id="driving" type="radio" name="profile" value="mapbox/driving" onClick={()=> { setProfile('driving') }}/>
+    <label for="driving">Driving</label>
+
+    <input id="walking" type="radio" name="profile" value="mapbox/walking" onClick={()=> { setProfile('walking') }}/>
+    <label for="walking">Walking</label>
+
+    <input id="cycling" type="radio" name="profile" value="mapbox/cycling" onClick={()=> { setProfile('cycling') }}/>
+    <label for="cycling">Cycling</label>
   </div>
           <div className="button-wrapper">
-            <button className="btn btn-info" id="btn-direction" onClick={getDirection}>
+            <button className="btn btn-info" id="btn-direction" onClick={getRoute}>
               Get directions
             </button>
             <button type="button" className="btn btn-info" id="btn-reset" onClick={resetForm}>
