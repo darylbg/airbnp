@@ -11,24 +11,28 @@ export const listingReducer = createSlice({
         lng: '',
         price: '',
         title: '',
-        userId: ''
+        userId: '',
+        notifications: [],
+        ratings: []
     },
     reducers: {
-        create_listing(state, action) {
+        user_listings(state, action) {
             return {
                 ...state,
-                address: action.payload.address,
-                description:  action.payload.description,
-                image:  action.payload.image,
-                lat:  action.payload.lat,
-                lng:  action.payload.lng,
-                price:  action.payload.price,
-                title:  action.payload.title,
-                userId:  action.payload.userId,
+                address: action.payload.listings.address,
+                description:  action.payload.listings.description,
+                image:  action.payload.listings.image,
+                lat:  action.payload.listings.lat,
+                lng:  action.payload.listings.lng,
+                price:  action.payload.listings.price,
+                title:  action.payload.listings.title,
+                userId:  action.payload.listings.userId,
+                notifications: action.payload.listings.notifications,
+                ratings: action.payload.listings.ratings
             }
         }
     }
 });
 
-export const { create_listing } = listingReducer.actions;
+export const { user_listings } = listingReducer.actions;
 export default listingReducer.reducer;

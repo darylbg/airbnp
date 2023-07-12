@@ -24,7 +24,13 @@ mutation login($email: String!, $password: String!) {
           userId
         }
         price
-        rating
+        ratings {
+          comment
+          createdAt
+          listingId
+          rating
+          userId
+        }
         title
         userId
       }

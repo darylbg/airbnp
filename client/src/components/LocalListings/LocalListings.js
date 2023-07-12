@@ -61,7 +61,7 @@ const LocalListings = () => {
               className='d-flex align-items-center  justify-content-center py-3'
               key={listing.title}
             >
-              <Card className='card'>
+              <Card className='local-listings-card'>
                 <Card.Img
                   variant='top'
                   src={listing.image}

@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
 import { LOGIN } from "../../../utils/mutations";
 import { login_user } from "../../../reducers/authReducer";
+import { user_listings } from '../../../reducers/listingsReducer'
 import Auth from '../../../utils/auth';
 
 import Form from 'react-bootstrap/Form';
@@ -54,7 +55,21 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
           lastName: data.login.user.lastName,
           email: data.login.user.email,
           listings: data.login.user.listings
-        })
+        }),
+        // user_listings({
+        //   address: data.login.user.listings.address,
+        //   address: data.login.user.listings.description,
+        //   address: data.login.user.listings.image,
+        //   address: data.login.user.listings.lat,
+        //   address: data.login.user.listings.lng,
+        //   address: data.login.user.listings.price,
+        //   address: data.login.user.listings.title,
+        //   address: data.login.user.listings.userId,
+        //   address: data.login.user.listings.notifications,
+        //   address: data.login.user.listings.ratings,
+
+
+        // })
       );
       Auth.login(data.login.token);
         navigate('/');

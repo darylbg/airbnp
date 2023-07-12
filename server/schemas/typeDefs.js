@@ -20,7 +20,7 @@ const typeDefs = gql`
     image: String
     userId: ID!
     price: Float!
-    rating: Int
+    ratings: [Rating]
     notifications: [Notification]
   }
 
@@ -66,7 +66,7 @@ const typeDefs = gql`
   type Query {
     user: User
     getAllListings: [Listing]
-    getListingById(listingId: ID!): Listing
+    getListingByUserId: [Listing]
     searchUser(username: String!): [User]
   }
 

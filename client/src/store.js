@@ -1,14 +1,3 @@
-// import { configureStore } from "@reduxjs/toolkit";
-// import authReducer from "./reducers/authReducer";
-// import listingsReducer from "./reducers/listingsReducer";
-
-// export default configureStore({
-//   reducer: {
-//     auth: authReducer,
-//     // listing: listingsReducer
-//   },
-// });
-
 import {
   configureStore,
   combineReducers,
@@ -17,6 +6,7 @@ import {
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./reducers/authReducer";
+import listingsReducer from "./reducers/listingsReducer";
 
 const persistConfig = {
   key: "root",
@@ -27,6 +17,7 @@ const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     auth: authReducer,
+    listing: listingsReducer
   })
 );
 

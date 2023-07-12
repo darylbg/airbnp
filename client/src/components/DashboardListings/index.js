@@ -1,0 +1,251 @@
+import React, { useState } from "react";
+import {
+  Row,
+  Col,
+  Card,
+  Form,
+  InputGroup,
+  Button,
+  Alert,
+} from "react-bootstrap";
+import { Check } from 'react-bootstrap-icons'
+import { AddressAutofill } from "@mapbox/search-js-react";
+import Geocode from "react-geocode";
+import './DashboardListings.css'
+
+function DashboardListings({ listing }) {
+  const [show, setShow] = useState(false);
+  const [addressLine1, setAddressLine1] = useState(listing.address.line1);
+  const [addressLine2, setAddressLine2] = useState(listing.address.line2);
+  const [addressLevel1, setAddressLevel1] = useState(listing.address.level1);
+  const [addressLevel2, setAddressLevel2] = useState(listing.address.level2);
+  const [country, setCountry] = useState(listing.address.country);
+  const [postalCode, setPostalCode] = useState(listing.address.postalCode);
+
+  const [imageUrlInput, setImageUrlInput] = useState('');
+  const [validUpload, setValidUpload] = useState(true);
+  const [message, setMessage] = useState("");
+
+  const [values, setValues] = useState({
+    title: listing.title,
+    description: listing.description,
+    address: listing.address,
+    price: listing.price,
+    lat: listing.lat,
+    lng: listing.lng,
+    image: imageUrlInput,
+    // userId: "",
+  });
+
+  const fullAddress = `${addressLine1} ${addressLine2} ${addressLevel1} ${addressLevel2} ${country} ${postalCode}`;
+
+  Geocode.setApiKey("AIzaSyAibEqEhSqm5drveDG8x92BLTJ-Xm1kya4");
+
+  const listingUpdateHandler = async (e) => {
+    e.preventDefault();
+    const response = await Geocode.fromAddress(fullAddress);
+    const { lat, lng } = response.results[0].geometry.location;
+  };
+
+  const processFile = async (e) => {
+    const file = e.target.files[0];
+
+    // Check file type
+    if (!file.type.startsWith("image/")) {
+      setValidUpload(false);
+      setMessage("Invalid file type. Please select an image.");
+      return;
+    }
+
+    // Check file size
+    const fileSizeInMB = file.size / (1024 * 1024);
+    const maxSizeInMB = 10; // Maximum allowed file size in MB
+    if (fileSizeInMB > maxSizeInMB) {
+      setValidUpload(false);
+      setMessage(`File size exceeds the maximum limit of ${maxSizeInMB}MB.`);
+      return;
+    }
+
+    const formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("cloud_name", process.env.REACT_APP_CLOUDINARY_NAME);
+    formdata.append("upload_preset", "vzrpgeu5");
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/darylb/auto/upload`,
+      {
+        method: "post",
+        mode: "cors",
+        body: formdata,
+      }
+    );
+
+    const json = await res.json();
+    const imageUrl = json.secure_url;
+    setImageUrlInput(imageUrl);
+    setValues({ ...values, image: imageUrl }); // Update the image URL state
+    console.log(imageUrl);
+    setValidUpload(true);
+    setMessage("");
+  };
+  return (
+    <>
+      <Col xs={12} lg={8} className="edit-listings-col">
+        <Card className="edit-listings-card">
+          <div className="row no-gutters">
+            <div className="col-md-4">
+              <Card.Img src={listing.image} className="edit-listings-img" alt="Card image" />
+            </div>
+            <div className="col-md-8">
+              <Card.Body>
+                <Card.Title>{listing.title}</Card.Title>
+                {/* <Card.Text> */}
+                  <Form
+                  // onSubmit={listingSubmitHandler}
+                  >
+                    <Form.Group>
+                      <Form.Label>Title</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="my new listing"
+                        value={values.title}
+                        onChange={(e) =>
+                          setValues({ ...values, title: e.target.value })
+                        }
+                      />
+                    </Form.Group>
+                    <br />
+                    <Form.Group>
+                      <Form.Label>Description</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        placeholder="Very nice and clean"
+                        value={values.description}
+                          onChange={(e) =>
+                            setValues({ ...values, description: e.target.value })
+                          }
+                      />
+                    </Form.Group>
+                    <br />
+                    <Form.Group>
+                      <Row>
+                        <Form.Label>Address</Form.Label>
+                        <AddressAutofill accessToken="pk.eyJ1IjoiZGF6emExMjMiLCJhIjoiY2xqcjZzc2Y5MGN5NTNncWpsZ3ByZG9tciJ9.N_FhIXIqTaKbq03NukHGYQ">
+                          <Form.Control
+                            name="address"
+                            placeholder="Search address"
+                            type="text"
+                            autoComplete="address-line1"
+                            value={addressLine1}
+                            onChange={(e) => setAddressLine1(e.target.value)}
+                          />
+                        </AddressAutofill>
+                        <div className="mb-3 list-modal-address">
+                          <span>
+                            {addressLine1} {addressLine2}
+                          </span>
+                          <span>
+                            {addressLevel1} {addressLevel2}
+                          </span>
+                          <span>{postalCode}</span>
+                          <span style={{ textTransform: "uppercase" }}>
+                            {country}
+                          </span>
+                          <span></span>
+                        </div>
+                        <Col sm={6} className="d-none">
+                          <Form.Control
+                            name="apartment"
+                            placeholder="Apartment number"
+                            type="text"
+                            autoComplete="address-line2"
+                            //   onChange={(e) => setAddressLine2(e.target.value)}
+                          />
+                        </Col>
+                        <Col sm={6} className="d-none">
+                          <Form.Control
+                            name="city"
+                            placeholder="City"
+                            type="text"
+                            autoComplete="address-level2"
+                            //   onChange={(e) => setAddressLevel2(e.target.value)}
+                          />
+                        </Col>
+                        <Form.Control
+                          name="state"
+                          placeholder="State"
+                          type="text"
+                          autoComplete="address-level1"
+                          // onChange={(e) => setAddressLevel1(e.target.value)}
+                          className="d-none"
+                        />
+                        <Col sm={6} className="d-none">
+                          <Form.Control
+                            name="country"
+                            placeholder="Country"
+                            type="text"
+                            autoComplete="country"
+                            //   onChange={(e) => setCountry(e.target.value)}
+                          />
+                        </Col>
+                        <Col sm={6} className="d-none">
+                          <Form.Control
+                            name="postcode"
+                            placeholder="Postcode"
+                            type="text"
+                            autoComplete="postal-code"
+                            //   onChange={(e) => setPostalCode(e.target.value)}
+                          />
+                        </Col>
+                      </Row>
+                    </Form.Group>
+                    {/* <br /> */}
+                    <InputGroup>
+                      <InputGroup.Text>Price: £</InputGroup.Text>
+                      <Form.Control
+                        type="number"
+                        step="0.01"
+                        placeholder="Enter price"
+                        value={values.price}
+                          onChange={(e) => {
+                            const price = parseInt(e.target.value); // Convert the value to an integer
+                            setValues({ ...values, price: isNaN(price) ? 0 : price }); // Set the price as an integer or 0 if the value is not a valid number
+                          }}
+                      />
+                    </InputGroup>
+                    <br />
+                    <Form.Group controlId="formFile" className="mb-3">
+                      <Form.Label>Upload new profile image</Form.Label>
+                      <Form.Control
+                        type="file"
+                        onChange={processFile}
+                      />
+                      <br />
+                      <Alert
+                        className={validUpload ? "d-none" : "block"}
+                        variant="danger"
+                      >
+                        {message}
+                      </Alert>
+                    </Form.Group>
+                    <Button
+                      className="edit-listing-button"
+                      type="submit"
+                      variant="primary"
+                      style={{}}
+                    >
+                      <Check />Save updates
+                    </Button>
+                  </Form>
+                {/* </Card.Text> */}
+              </Card.Body>
+            </div>
+          </div>
+        </Card>
+      </Col>
+    </>
+  );
+}
+
+export default DashboardListings;

@@ -14,22 +14,21 @@ const resolvers = {
         throw new AuthenticationError('Not logged in');
       },
       getAllListings: async (parent, args, context) => {
-        const listingsData = await Listing.find({}).populate('userId').populate('ratings').populate('notifications');
+        const listingsData = await Listing.find({}).populate('ratings').populate('notifications');
         return listingsData;
       },
-      getListingById: async (parent, { listingId }, context) => {
+      getListingByUserId: async (parent, args, context) => {
         if (context.user) {
-          const listingData = await Listing.findOne({ _id: listingId }).populate('ratings').populate('notifications');
+          const listingData = await Listing.find({ userId: context.user._id }).populate('ratings').populate('notifications');
           return listingData;
         }
         throw new AuthenticationError('You need to be logged in!');
       }
     },
-
     Mutation: {
       login: async (parent, { email, password }) => {
         console.log ("login",email,password)
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate('listings');
         if (!user) {
           throw new AuthenticationError('Incorrect credentials');
         }
