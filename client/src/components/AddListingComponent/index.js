@@ -35,7 +35,7 @@ function AddListing() {
     lat: null,
     lng: null,
     image: "",
-    userId: "",
+    // userId: "",
   });
 
   const handleClose = () => setShow(false);
@@ -66,7 +66,7 @@ function AddListing() {
             lat,
             lng,
             image: image,
-            userId: auth.user.userId,
+            // userId: auth.user.userId,
           },
         },
       });
@@ -78,7 +78,19 @@ function AddListing() {
       setCountry("");
       setPostalCode("");
 
+      setValues({
+        title: "",
+        description: "",
+        address: "",
+        price: 0,
+        lat: null,
+        lng: null,
+        image: "",
+        // userId: "",
+      })
+
       handleClose();
+      closeModal();
     } catch (error) {
       console.error(error);
     }
@@ -158,6 +170,7 @@ function AddListing() {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={false}
         style={modalStyle}
         contentLabel="Example Modal"
       >

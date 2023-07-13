@@ -20,8 +20,8 @@ const Dashboard = () => {
   const { data: dataListing } = useQuery(QUERY_LISTING_BY_USER_ID);
   // console.log(dataListing?.getListingByUserId);
   const listings = dataListing?.getListingByUserId || [];
-
-  console.log(listings);
+  const reversedListings = [...listings].reverse();
+  // console.log(listings);
   const { data } = useQuery(QUERY_USER);
   let currentUser;
 
@@ -39,7 +39,7 @@ const Dashboard = () => {
           </Row>
           <Row>
             <h2>Update my listings</h2>
-            {listings.map((listing) => (
+            {reversedListings.map((listing) => (
               <DashboardListings key={listing.id} listing={listing} />
             ))}
           </Row>

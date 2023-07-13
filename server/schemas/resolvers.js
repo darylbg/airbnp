@@ -67,8 +67,8 @@ const resolvers = {
       createListing: async (parent, { listingData }, context) => {
         if (context.user) {
           const newListing = await Listing.create({
-            ...listingData,
             userId: context.user._id,
+            ...listingData,
             title: listingData.title,
             lat: listingData.lat,
             lng: listingData.lng,
@@ -89,13 +89,13 @@ const resolvers = {
             listingId, {
               ...listingData,
               // userId: context.user._id,
-              title: title,
-              lat: lat,
-              lng: lng,
-              address: address,
-              description: description,
-              image: image,
-              price: price,
+              title: listingData.title,
+              lat: listingData.lat,
+              lng: listingData.lng,
+              address: listingData.address,
+              description: listingData.description,
+              image: listingData.image,
+              price: listingData.price,
           },
           {
             new: true,
