@@ -13,6 +13,7 @@ import DashboardListings from "../../components/DashboardListings";
 import { useSelector } from "react-redux";
 import { QUERY_LISTING_BY_USER_ID } from "../../utils/queries";
 import Button from "react-bootstrap/Button";
+import './Dashboard.css'
 
 const Dashboard = () => {
   const { auth } = useSelector((state) => state);
@@ -38,7 +39,7 @@ const Dashboard = () => {
             <AddListing />
           </Row>
           <Row>
-            <h2>Update my listings</h2>
+            <h2 className="update-listings-title">Update my listings</h2>
             {reversedListings.map((listing) => (
               <DashboardListings key={listing.id} listing={listing} />
             ))}

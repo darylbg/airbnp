@@ -8,3 +8,20 @@
 .list-modal-address span {
     display: block;
 }
+
+.add-listing-button,
+.add-listing-submit-button {
+    margin-top: 50px;
+    background-color: #FF385C;
+    border: 2px solid white;
+    box-sizing: border-box;
+}
+
+.add-listing-button:hover,
+.add-listing-button:active,
+.add-listing-submit-button:hover,
+.add-listing-submit-button:active {
+    background-color: white;
+    color: #FF385C;
+    border: 2px solid #FF385C;
+}

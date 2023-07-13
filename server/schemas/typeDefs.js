@@ -79,7 +79,7 @@ const typeDefs = gql`
     updateUserDetails(firstName: String!, lastName: String!, username: String!, image: String): User
     createListing( listingData: listingInput!): Listing
     updateListing(listingId: ID!, listingData: listingInput!): Listing
-    removeListing(listingId: ID!): User
+    removeListing(listingId: ID!): Listing
     createNotification(listingId: ID!, userId: ID! arrivingBy: String!): Listing
     removeNotification(notificationId: ID!, listingId: ID!): Listing
     createRating(listingId: ID!, rating: Int, comment: String): Listing
