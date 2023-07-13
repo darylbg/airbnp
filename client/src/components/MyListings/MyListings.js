@@ -9,38 +9,6 @@ import LocalListings from '../LocalListings/LocalListings';
 import NewListingsModal from '../NewListing/NewListingModal';
 import EditListing from '../EditListing/EditListing';
 
-const listings = [
-  {
-    title: 'Posh Toilet',
-    address: 'post road, birimingham',
-    description: 'Posh and clean',
-    image: toilet1,
-  },
-  {
-    title: 'Dirty Toilet',
-    address: 'post road, birimingham',
-    description: 'Old and dirty',
-    image: toilet2,
-  },
-  {
-    title: 'Toilet',
-    address: 'post road, birimingham',
-    description: 'King of toilets',
-    image: toilet3,
-  },
-  {
-    title: 'shower and toilet',
-    address: 'post road, birimingham',
-    description: 'wash yo self',
-    image: toilet4,
-  },
-  {
-    title: 'TOLet',
-    address: 'post road, birimingham',
-    description: 'Posh andfgfgfg clean',
-    image: toilet5,
-  },
-];
 
 const MyListings = () => {
   return (
