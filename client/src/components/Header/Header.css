@@ -1,3 +1,11 @@
 .lrg-nav-link {
     margin: 0 15px 0 15px;
+        font-weight: bold;
+        font-size: larger;
+}
+
+.nav-brand {
+    font-weight: bold;
+    margin-left: 40px;
+    font-size: x-large;
 }
