@@ -17,3 +17,7 @@
     bottom: 15px;
     right: 15px;
 }
+
+.delete-listing-confirm {
+    width: 100%;
+}

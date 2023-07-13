@@ -91,16 +91,24 @@ export const CREATE_LISTING = gql`
 
 export const UPDATE_LISTING = gql`
   mutation updateListing($listingId: ID!, $listingData: listingInput!) {
-  updateListing(listingId: $listingId, listingData: $listingData) {
-    _id
-    title
-    address
-    lat
-    lng
-    description
-    image
-    price
-    # userId
+    updateListing(listingId: $listingId, listingData: $listingData) {
+      _id
+      title
+      address
+      lat
+      lng
+      description
+      image
+      price
+      # userId
+    }
   }
-}
+`;
+
+export const DELETE_LISTING = gql`
+  mutation removeListing($listingId: ID!) {
+    removeListing(listingId: $listingId) {
+      _id
+    }
+  }
 `;

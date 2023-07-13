@@ -163,7 +163,11 @@ function AddListing() {
   return (
     <>
       <div>
-        <Button variant="primary" onClick={openModal}>
+        <Button 
+        variant="primary" 
+        onClick={openModal}
+        className='add-listing-button'
+        >
           + Add Listing
         </Button>
       </div>
@@ -284,16 +288,11 @@ function AddListing() {
             />
           </InputGroup>
           <br />
-          {/* <Form.Group controlId="addListingformFile" className="mb-3">
-            <Form.Label>Upload a photo</Form.Label>
-            <Form.Control type="file" />
-          </Form.Group> */}
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Upload new profile image</Form.Label>
             <Form.Control
               type="file"
               onChange={processFile}
-              // disabled={inputDisable}
             />
             <br />
             <Alert
@@ -303,7 +302,7 @@ function AddListing() {
               {message}
             </Alert>
           </Form.Group>
-          <Button className="" type="submit" variant="primary" style={{}}>
+          <Button className="add-listing-submit-button" type="submit" variant="primary" style={{}}>
             Add Listing
           </Button>
         </Form>
