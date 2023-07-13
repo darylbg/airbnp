@@ -14,22 +14,22 @@ const resolvers = {
         throw new AuthenticationError('Not logged in');
       },
       getAllListings: async (parent, args, context) => {
-        const listingsData = await Listing.find({}).populate('userId').populate('ratings').populate('notifications');
+        const listingsData = await Listing.find({}).populate('ratings').populate('notifications');
         return listingsData;
       },
-      getListingById: async (parent, { listingId }, context) => {
+      getListingByUserId: async (parent, args, context) => {
         if (context.user) {
-          const listingData = await Listing.findOne({ _id: listingId }).populate('ratings').populate('notifications');
+          const listingData = await Listing.find({ userId: context.user._id }).populate('ratings').populate('notifications');
           return listingData;
+          console.log(listingData)
         }
         throw new AuthenticationError('You need to be logged in!');
       }
     },
-
     Mutation: {
       login: async (parent, { email, password }) => {
         console.log ("login",email,password)
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate('listings');
         if (!user) {
           throw new AuthenticationError('Incorrect credentials');
         }
@@ -67,8 +67,8 @@ const resolvers = {
       createListing: async (parent, { listingData }, context) => {
         if (context.user) {
           const newListing = await Listing.create({
-            ...listingData,
             userId: context.user._id,
+            ...listingData,
             title: listingData.title,
             lat: listingData.lat,
             lng: listingData.lng,
@@ -83,20 +83,19 @@ const resolvers = {
         throw new AuthenticationError('You need to be logged in!');
       },
 
-      updateListing: async (parent, { listingId, listingData }) => {
+      updateListing: async (parent, { listingId, listingData }, context) => {
         if (context.user) {
           const updatedListing = Listing.findByIdAndUpdate(
             listingId, {
               ...listingData,
               // userId: context.user._id,
-              title: title,
-              lat: lat,
-              lng: lng,
-              address: address,
-              description: description,
-              image: image,
-              price: price,
-              rating: rating
+              title: listingData.title,
+              lat: listingData.lat,
+              lng: listingData.lng,
+              address: listingData.address,
+              description: listingData.description,
+              image: listingData.image,
+              price: listingData.price,
           },
           {
             new: true,

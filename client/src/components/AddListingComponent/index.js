@@ -21,9 +21,9 @@ function AddListing() {
   const [country, setCountry] = useState("");
   const [postalCode, setPostalCode] = useState("");
 
-  const [imageUrlInput, setImageUrlInput] = useState('');
+  const [imageUrlInput, setImageUrlInput] = useState("");
   const [validUpload, setValidUpload] = useState(true);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const fullAddress = `${addressLine1} ${addressLine2} ${addressLevel1} ${addressLevel2} ${country} ${postalCode}`;
   // console.log(fullAddress);
@@ -35,7 +35,7 @@ function AddListing() {
     lat: null,
     lng: null,
     image: "",
-    userId: "",
+    // userId: "",
   });
 
   const handleClose = () => setShow(false);
@@ -66,11 +66,10 @@ function AddListing() {
             lat,
             lng,
             image: image,
-            userId: auth.user.userId,
+            // userId: auth.user.userId,
           },
         },
       });
-      console.log(data);
 
       setAddressLine1("");
       setAddressLine2("");
@@ -79,7 +78,19 @@ function AddListing() {
       setCountry("");
       setPostalCode("");
 
+      setValues({
+        title: "",
+        description: "",
+        address: "",
+        price: 0,
+        lat: null,
+        lng: null,
+        image: "",
+        // userId: "",
+      })
+
       handleClose();
+      closeModal();
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +110,7 @@ function AddListing() {
   const modalStyle = {
     content: {
       // Add your custom styles here
-      maxWidth: '500px'
+      maxWidth: "500px",
     },
     overlay: {
       // Add your custom styles here
@@ -144,20 +155,22 @@ function AddListing() {
     const imageUrl = json.secure_url;
     setImageUrlInput(imageUrl);
     setValues({ ...values, image: imageUrl }); // Update the image URL state
-      console.log(imageUrl);
+    console.log(imageUrl);
     setValidUpload(true);
     setMessage("");
   };
 
   return (
     <>
-      <Button variant="primary" onClick={openModal}>
-        + Add Listing
-      </Button>
-
+      <div>
+        <Button variant="primary" onClick={openModal}>
+          + Add Listing
+        </Button>
+      </div>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={false}
         style={modalStyle}
         contentLabel="Example Modal"
       >
@@ -200,10 +213,14 @@ function AddListing() {
                 />
               </AddressAutofill>
               <div className="mb-3 list-modal-address">
-                <span>{addressLine1} {addressLine2}</span>
-                <span>{addressLevel1} {addressLevel2}</span>
+                <span>
+                  {addressLine1} {addressLine2}
+                </span>
+                <span>
+                  {addressLevel1} {addressLevel2}
+                </span>
                 <span>{postalCode}</span>
-                <span style={{textTransform: 'uppercase'}}>{country}</span>
+                <span style={{ textTransform: "uppercase" }}>{country}</span>
                 <span></span>
               </div>
               <Col sm={6} className="d-none">
@@ -215,7 +232,7 @@ function AddListing() {
                   onChange={(e) => setAddressLine2(e.target.value)}
                 />
               </Col>
-              <Col sm={6}  className="d-none">
+              <Col sm={6} className="d-none">
                 <Form.Control
                   name="city"
                   placeholder="City"
@@ -232,7 +249,7 @@ function AddListing() {
                 onChange={(e) => setAddressLevel1(e.target.value)}
                 className="d-none"
               />
-              <Col sm={6}  className="d-none">
+              <Col sm={6} className="d-none">
                 <Form.Control
                   name="country"
                   placeholder="Country"
@@ -241,7 +258,7 @@ function AddListing() {
                   onChange={(e) => setCountry(e.target.value)}
                 />
               </Col>
-              <Col sm={6}  className="d-none">
+              <Col sm={6} className="d-none">
                 <Form.Control
                   name="postcode"
                   placeholder="Postcode"

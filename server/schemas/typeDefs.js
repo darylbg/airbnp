@@ -12,6 +12,7 @@ const typeDefs = gql`
   }
 
   type Listing {
+    _id: ID!
     title: String!
     lat: Float!
     lng: Float! 
@@ -20,11 +21,12 @@ const typeDefs = gql`
     image: String
     userId: ID!
     price: Float!
-    rating: Int
+    ratings: [Rating]
     notifications: [Notification]
   }
 
   type Notification {
+    _id: ID!
     listingId: ID!
     userId: ID!
     arrivingBy: String
@@ -32,6 +34,7 @@ const typeDefs = gql`
   }
 
   type Rating {
+    _id: ID!
     listingId: ID!
     userId: ID!
     createdAt: String
@@ -51,7 +54,7 @@ const typeDefs = gql`
     address: String!
     description: String!
     image: String
-    userId: ID!
+    # userId: ID!
     price: Int!
   }
 
@@ -66,7 +69,7 @@ const typeDefs = gql`
   type Query {
     user: User
     getAllListings: [Listing]
-    getListingById(listingId: ID!): Listing
+    getListingByUserId: [Listing]
     searchUser(username: String!): [User]
   }
 
@@ -74,7 +77,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     register(userData: userInput!): Auth
     updateUserDetails(firstName: String!, lastName: String!, username: String!, image: String): User
-    createListing(listingData: listingInput!): Listing
+    createListing( listingData: listingInput!): Listing
     updateListing(listingId: ID!, listingData: listingInput!): Listing
     removeListing(listingId: ID!): User
     createNotification(listingId: ID!, userId: ID! arrivingBy: String!): Listing

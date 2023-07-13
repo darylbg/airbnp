@@ -1,0 +1,19 @@
+.edit-listings-col {
+    margin: 25px 0 25px 0;
+}
+
+.edit-listings-card {
+    border: none;
+}
+
+.edit-listings-img {
+    padding-top: 25px;
+    max-width: 240px;
+    border-radius: 0;
+}
+
+.edit-listing-button {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
