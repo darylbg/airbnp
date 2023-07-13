@@ -7,3 +7,8 @@
   width: 350px;
   height: 350px;
 }
+
+.use-button {
+  background-color: #FF385C;
+  border: #FF385C;
+}
