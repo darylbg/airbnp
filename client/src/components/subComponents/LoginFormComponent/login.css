@@ -1,4 +1,4 @@
-.mb-3{
+/* .mb-3{
     color: #FF385C;
 }
 
@@ -6,4 +6,27 @@
     background-color: #FF385C;
     width: 100%;
     border: 0px;
+} */
+
+#floatingLoginInput1,
+#floatingLoginInput2 {
+  color: #FF385C;
+}
+
+/* Password toggle button */
+.password-toggle {
+  cursor: pointer;
+  color: #FF385C;
+}
+
+.password-toggle:hover {
+  cursor: hand;
+}
+
+/* Login button */
+.login-button {
+  background-color: #FF385C;
+  font-family: monospace;
+  width: 100%;
+  border: 0;
 }
