@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
+import "./App.css";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Homepage from "./pages/homepage/Homepage";
@@ -39,21 +40,23 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className='app-div'>
-          <Header />
-          <div className='main-content'>
-            <Routes>
-              <Route path='/' element={<Homepage />} />
-              <Route
-                path='/bookListingById/:id'
-                element={<BookListingById />}
-              />
-              <Route path='/profile' element={<Profile />} />
-              <Route path='/dashboard' element={<Dashboard />} />
-              <Route path='/login' element={<Login />} />
-            </Routes>
+        <div className="app-div">
+          <div className="content-wrapper">
+            <Header />
+            <div className="main-content">
+              <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route
+                  path="/bookListingById/:id"
+                  element={<BookListingById />}
+                />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/login" element={<Login />} />
+              </Routes>
+            </div>
           </div>
-          <Footer />
+          <Footer className="main-footer" />
         </div>
       </Router>
     </ApolloProvider>

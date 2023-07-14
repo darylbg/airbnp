@@ -77,7 +77,7 @@ const LocalListings = () => {
                   </Card.Text>
                   <div className='d-flex justify-content-center'>
                     <Link to={`/bookListingById/${listing._id}`}>
-                      <Button variant='dark'>Use</Button>
+                      <Button className="use-button">Use</Button>
                     </Link>
                   </div>
                 </Card.Body>

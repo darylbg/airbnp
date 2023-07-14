@@ -111,13 +111,13 @@ const resolvers = {
             if (removedListing) {
               await Notification.deleteMany({ listingId: listingId });
               await Rating.deleteMany({ listingId: listingId });
-              const thisUser = await User.findOneAndUpdate(
+              await User.findOneAndUpdate(
                 { _id: context.user._id },
                 { $pull: { listings: listingId } },
                 { new: true }
               );
             }
-          return thisUser;
+          return;
         }
         throw new AuthenticationError('You need to be logged in!');
       },

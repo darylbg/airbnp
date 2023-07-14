@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { UPDATE_LISTING } from "../../utils/mutations";
+import { UPDATE_LISTING, DELETE_LISTING } from "../../utils/mutations";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Row,
@@ -49,6 +49,7 @@ function DashboardListings({ listing }) {
   const fullAddress = `${addressLine1}+${addressLine2}+${addressLevel1}+${addressLevel2}+${country}+${postalCode}`;
 
   const [updateListing] = useMutation(UPDATE_LISTING);
+  const [removeListing] = useMutation(DELETE_LISTING);
 
   Geocode.setApiKey("AIzaSyAibEqEhSqm5drveDG8x92BLTJ-Xm1kya4");
 
@@ -66,6 +67,20 @@ function DashboardListings({ listing }) {
       });
       console.log(listing._id);
       console.log("Updated data:", updatedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteListing = async () => {
+    try {
+      await removeListing({
+        variables: {
+          listingId: listing._id,
+        },
+      });
+      console.log("Successfully deleted listing");
+      setSmShow(false)
     } catch (error) {
       console.log(error);
     }
@@ -279,15 +294,16 @@ function DashboardListings({ listing }) {
                     <Modal.Header closeButton>
                       <Modal.Title id="example-modal-sizes-title-sm">
                         Are you sure you want to delete this listing?
-                        <Button
-                          variant=""
-                        >
-
-                        </Button>
-                        <Button></Button>
                       </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>...</Modal.Body>
+                    <Modal.Body>
+                    <Button 
+                      onClick={handleDeleteListing}
+                      variant="danger"
+                      className="delete-listing-confirm"
+                      data-id={listing._id}
+                    >Delete</Button>
+                    </Modal.Body>
                   </Modal>
                 </Form>
                 {/* </Card.Text> */}
