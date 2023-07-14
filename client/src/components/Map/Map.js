@@ -36,19 +36,14 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     const [destination, setDestination] = useState('')
     const [instructions, setInstructions] = useState('');
     const [profile, setProfile] = useState('');
+    const [error, setError] = useState('');
 
     const { data: dataAllListings } = useQuery(QUERY_GET_ALL_LISTINGS);
     const listings = dataAllListings?.getAllListings || [];
   
     const [listing, setAllListings] = useState({...listings});
+
  
-
-    useEffect(() => {
-
-      setAllListings(listings);
-      searchNearMe();
-
-    },[listing])
 
 
     useEffect(() => {
@@ -61,10 +56,47 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
         ...viewport
         });
 
-
     });
 
 
+    useEffect(() => {
+
+      setAllListings(listings);
+      Object.keys(listing).forEach(function(key, index) {
+        const { lng, lat, title, price, description, address } = listing[key]
+
+        const el = document.createElement('div');
+        el.className ='marker'
+      
+        const m = new mapboxgl.Marker(el)
+                    .setLngLat([lng, lat]).setPopup( new mapboxgl.Popup({ offset: 25 }) // add popups
+                    .setHTML(
+                      `<h2 class="marker-h2"><b>${title}<b></h2>
+                      <h3 class="marker-h3">${description}</h3>
+                      <h3 class="marker-h4"> ${address} </h3>
+                      <h4 class="marker-h4"><b> £${price} <b></h4>`
+                    ))
+                    .addTo(map.current);
+
+                    el.addEventListener('click', async function(e) {
+
+                      const markerCoords = [m._lngLat.lng, m._lngLat.lat];
+                 
+                      setDestination(address);
+                      setDestLngLat(markerCoords);
+
+                    })
+                    
+                
+         
+      });
+
+    },[listing],[destLngLat])
+
+    useEffect(() => {
+      
+ 
+      })
            
 //render current listings on map, dummy data for now
     useEffect(() => {
@@ -255,10 +287,6 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
               let newTarget = { center: coords, zoom: 15}
               flyTo(viewport, newTarget)
               setView(`Searching near: ${data.features[0].properties.place_name}`);
-
-              const popup = new mapboxgl.Popup({ offset: 25 }).setText(
-                'Start'
-                );
   
               new mapboxgl.Marker()
               .setLngLat(coords).setPopup( new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -283,7 +311,8 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
           const getRoute = async (e) => {
             e.preventDefault();
 
-
+            try{
+              // console.log(destLngLat);
             const query = await fetch(
               `https://api.mapbox.com/directions/v5/mapbox/${profile}/${startLngLat[0]},${startLngLat[1]};${destLngLat[0]},${destLngLat[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
               { method: 'GET' }
@@ -320,10 +349,13 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
           instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
             data.duration / 60
           )} min </strong></p><ol>${tripInstructions}</ol>`;
+            }
+            catch(error) {
+              setError(`Please fill in all of the fields!`)
+            }
           }
           
           const addRouteLayer = (geojson) => {
-          
             map.current.addLayer({
               id: 'route',
               type: 'line',
@@ -342,6 +374,7 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
               }
             });
           
+          
           }
                
 const resetForm = () => {
@@ -352,33 +385,14 @@ const resetForm = () => {
   let instructions = document.getElementById('instructions');
   instructions.style.display='none';
   instructions.innerHTML = ``;
+
+  setError('');
+
  }
 //  useEffect(() => {
 //   console.log(profile)
 // }, [])
 
-const searchNearMe = async () => {
-
-  
-Object.keys(listing).forEach(function(key, index) {
-  const { lng, lat } = listing[key]
-
-  new mapboxgl.Marker()
-              .setLngLat([lng, lat]).setPopup( new mapboxgl.Popup({ offset: 25 }) // add popups
-              .setHTML(
-                `<h3>end</h3>`
-              ))
-              .addTo(map.current);
-});
-
-  // const { lng, lat } = listing[0];
-  // console.log(listing[0])
-
-    
-  
-
-
-}
 
   return (
     <section className='map-component'>
@@ -451,10 +465,8 @@ Object.keys(listing).forEach(function(key, index) {
             <button type="button" className="btn btn-info" id="btn-reset" onClick={resetForm}>
               Reset
             </button>
-            <button type="button" className="btn btn-info" id="btn-searchNearMe" onClick={searchNearMe}>
-              Search near me
-            </button>
           </div>
+          <span id="map-search-error">{error}</span>
           </div>
 
         

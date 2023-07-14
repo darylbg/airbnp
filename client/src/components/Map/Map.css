@@ -1,3 +1,4 @@
+
 .mapboxgl-map {
     position: absolute;
     top: 0;
@@ -50,6 +51,7 @@
     border: 2px solid pink;
     margin-left: 10px;
     border-radius: 8px;
+     overflow-wrap: break-word;
 }
 .search{
     /* align-self: flex-end; */
@@ -103,11 +105,13 @@
     cursor: pointer;
     } */
     .marker {
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         cursor: pointer;
-        background-color: aqua;
+        background:url('./markers/toilet.png');
+        background-size: cover;
+        padding: 10px;
         }    
     .mapboxgl-popup {
     max-width: 200px;
@@ -115,7 +119,7 @@
 
 .btn-info {
     margin-block: 8px;
-    margin-inline: 5px;
+    margin-right: 5px;
     background-color: rgba(35, 55, 75, 0.9);
     color: #fff;
     font-family: monospace;
@@ -134,3 +138,13 @@
     margin-top: 50px;
 
 }
+
+.marker-h2, .marker-h3, .marker-h4 {
+    margin-inline: 10px;
+    font-size: 20px;
+}
+
+#map-search-error{
+   color: red;
+}
+
