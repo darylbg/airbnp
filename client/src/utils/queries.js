@@ -62,3 +62,34 @@ export const QUERY_LISTING_BY_USER_ID = gql`
     }
   }
 `;
+
+export const QUERY_GET_ALL_LISTINGS = gql`
+query getAllListings {
+  getAllListings {
+    _id
+    address
+    description
+    image
+    lat
+    lng
+    notifications {
+      _id
+      arrivingBy
+      createdAt
+      listingId
+      userId
+    }
+    price
+    ratings {
+      _id
+      comment
+      createdAt
+      listingId
+      rating
+      userId
+    }
+    title
+    userId
+  }
+}
+`;
