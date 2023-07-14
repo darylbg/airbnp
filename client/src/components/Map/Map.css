@@ -102,17 +102,16 @@
     border-radius: 50%;
     cursor: pointer;
     } */
-    /* .marker {
-        background-image: url('https://docs.mapbox.com/mapbox-gl-js/assets/marker-1.jpg');
-        background-size: cover;
-        width: 50px;
-        height: 50px;
+    .marker {
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
         cursor: pointer;
+        background-color: aqua;
         }    
     .mapboxgl-popup {
     max-width: 200px;
-    } */
+    }
 
 .btn-info {
     margin-block: 8px;

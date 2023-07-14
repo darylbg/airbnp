@@ -3,10 +3,12 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { AddressAutofill } from '@mapbox/search-js-react';
+import { useQuery } from "@apollo/client";
 
 // import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './Map.css';
 import SearchForm from './SearchForm';
+import { QUERY_GET_ALL_LISTINGS } from "../../utils/queries";
 
 
 
@@ -35,6 +37,20 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     const [instructions, setInstructions] = useState('');
     const [profile, setProfile] = useState('');
 
+    const { data: dataAllListings } = useQuery(QUERY_GET_ALL_LISTINGS);
+    const listings = dataAllListings?.getAllListings || [];
+  
+    const [listing, setAllListings] = useState({...listings});
+ 
+
+    useEffect(() => {
+
+      setAllListings(listings);
+      searchNearMe();
+
+    },[listing])
+
+
     useEffect(() => {
 
         if (map.current) return; // initialize map
@@ -44,9 +60,12 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
         attributionControl: false,
         ...viewport
         });
-        
+
+
     });
 
+
+           
 //render current listings on map, dummy data for now
     useEffect(() => {
 
@@ -74,23 +93,28 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
               "type": "Point"
             }
           }]}
-
-
           geoJson.features.forEach(function(marker) {
             var el = document.createElement('div');
             el.className = 'marker';
 
-            new mapboxgl.Marker().setLngLat(marker.geometry.coordinates).addTo(map.current);
+            new mapboxgl.Marker(el).setPopup( new mapboxgl.Popup({ offset: 25 }) // add popups
+            .setHTML(
+              `<h3>erwrew</h3>`
+            )).setLngLat(marker.geometry.coordinates).addTo(map.current);
           })
+
       
-      
-  });
+          // let listingLat = listing[0].lat;
+          // let listingLon = listing[0].lon;
+          // let listingPrice = listing[0].price;
+
+  },[listing]);
+
         const setUser = async () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition( async (position)=> {
                     const { latitude, longitude } = position.coords;
                     searchForUser(longitude, latitude);
-
             
 
                     if (!map.current) return; // wait for map to initialize
@@ -116,12 +140,13 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
 
           const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lon},${lat}.json?access_token=pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4OHgifQ.AuZEXXUmyWFMfTxQAjH_CQ`);
                           const location = await response.json();
-                          console.log(location)
+                          // console.log(location)
                           // let postCode = location.features[0].context[0].text;
                           // let city = location.features[0].context[1].text;
                           // let country = location.features[0].context[4].text;
                           let place_name = location.features[0].place_name;
                           setView(`Searching near: ${place_name}`);
+
       
       }
 
@@ -243,12 +268,7 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
               .addTo(map.current);
             },[setFeature, viewport]
           );
-        
-          const removeMarker = async (marker) => {
 
-            marker.remove();
-
-          }
           const handleAInputChange = async (e) => {
             setStartAddress(e.target.value);
         
@@ -333,9 +353,32 @@ const resetForm = () => {
   instructions.style.display='none';
   instructions.innerHTML = ``;
  }
- useEffect(() => {
-  console.log(profile)
-}, [profile])
+//  useEffect(() => {
+//   console.log(profile)
+// }, [])
+
+const searchNearMe = async () => {
+
+  
+Object.keys(listing).forEach(function(key, index) {
+  const { lng, lat } = listing[key]
+
+  new mapboxgl.Marker()
+              .setLngLat([lng, lat]).setPopup( new mapboxgl.Popup({ offset: 25 }) // add popups
+              .setHTML(
+                `<h3>end</h3>`
+              ))
+              .addTo(map.current);
+});
+
+  // const { lng, lat } = listing[0];
+  // console.log(listing[0])
+
+    
+  
+
+
+}
 
   return (
     <section className='map-component'>
@@ -408,8 +451,12 @@ const resetForm = () => {
             <button type="button" className="btn btn-info" id="btn-reset" onClick={resetForm}>
               Reset
             </button>
+            <button type="button" className="btn btn-info" id="btn-searchNearMe" onClick={searchNearMe}>
+              Search near me
+            </button>
           </div>
           </div>
+
         
   </form>
   </div>          
