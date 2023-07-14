@@ -1,9 +1,9 @@
-
 .mapboxgl-map {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
+    border-radius: 10%;
     }
 
 .map_box_container {
@@ -13,9 +13,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    border: 4px solid black;
     margin-top: 10px;
-    border-radius: 10px;
 }
 
 .map_box {
@@ -37,7 +35,6 @@
     flex-direction: row;
     height: 100%;
     width: 100%;
-    border: 2px solid pink;
     align-items: center;
     justify-content:center ;
     
@@ -48,16 +45,14 @@
     display: flex;
     flex-direction: column;
     padding: 15px;
-    border: 2px solid pink;
     margin-left: 10px;
     border-radius: 8px;
-     overflow-wrap: break-word;
 }
 .search{
     /* align-self: flex-end; */
     height: auto;
     width: auto;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 .map-container {
@@ -79,8 +74,7 @@
     flex-direction: column;
     height: 100%;
     width: 45%;
-    align-items: center;
-    border: 2px solid cyan;
+    align-items: center; 
 }
 
 .sidebar-container{
@@ -104,22 +98,21 @@
     border-radius: 50%;
     cursor: pointer;
     } */
-    .marker {
-        width: 30px;
-        height: 30px;
+    /* .marker {
+        background-image: url('https://docs.mapbox.com/mapbox-gl-js/assets/marker-1.jpg');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         cursor: pointer;
-        background:url('./markers/toilet.png');
-        background-size: cover;
-        padding: 10px;
         }    
     .mapboxgl-popup {
     max-width: 200px;
-    }
+    } */
 
 .btn-info {
     margin-block: 8px;
-    margin-right: 5px;
+    margin-inline: 5px;
     background-color: rgba(35, 55, 75, 0.9);
     color: #fff;
     font-family: monospace;
@@ -139,12 +132,9 @@
 
 }
 
-.marker-h2, .marker-h3, .marker-h4 {
-    margin-inline: 10px;
-    font-size: 20px;
+.search-btn {
+    background-color: rgba(35, 55, 75, 0.9);
+    color: #fff;
+    font-family: monospace;
+    margin: 5px;
 }
-
-#map-search-error{
-   color: red;
-}
-
