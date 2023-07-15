@@ -9,6 +9,7 @@ import { useQuery } from "@apollo/client";
 import './Map.css';
 import SearchForm from './SearchForm';
 import { QUERY_GET_ALL_LISTINGS } from "../../utils/queries";
+import Haversine from 'haversine';
 
 
 
@@ -398,6 +399,7 @@ const resetForm = () => {
     // ignore
     <section className='map-component'> 
 
+<div className="map_box">
 {/* map_box_wrapper wraps the whole component together to display in a row  */}
         <div className="map_box_wrapper">  
 
@@ -482,6 +484,7 @@ const resetForm = () => {
         
   </form>
   </div>          
+  </div>
   </div>
 
             
