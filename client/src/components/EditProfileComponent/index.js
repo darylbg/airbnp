@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useMutation } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
 import { UPDATE_USER } from "../../utils/mutations";
-import { updateUserDetails } from "../../reducers/userReducer";
+import { updateUserDetails } from "../../reducers/authReducer";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Alert from 'react-bootstrap/Alert';
+import { login_user } from "../../reducers/authReducer";
 
 import { useDispatch } from 'react-redux';
 
@@ -56,7 +57,13 @@ const Profile = ({ userObj }) => {
           image: imageUrlInput.trim().toString()
         },
       });
-      window.location.reload();
+      console.log(data);
+      dispatch(
+        login_user({
+          ...userObj,
+            ...data.updateUserDetails
+        }))
+      // window.location.reload();
     } catch (error) {
       console.log(error);
       setMessage('That username is already in use, please choose a different one');

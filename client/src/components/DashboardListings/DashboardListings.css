@@ -1,9 +1,13 @@
 .edit-listings-col {
     margin: 25px 0 25px 0;
+    /* border-bottom: 1px solid grey; */
 }
 
 .edit-listings-card {
     border: none;
+    border-bottom: 1px solid grey;
+    border-radius: 0;
+    padding-bottom: 25px;
 }
 
 .edit-listings-img {
@@ -14,10 +18,27 @@
 
 .edit-listing-button {
     position: absolute;
-    bottom: 15px;
+    bottom: 35px;
     right: 15px;
 }
 
 .delete-listing-confirm {
     width: 100%;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: #15d475 !important;
+    border: green;
+}
+
+.form-switch .form-check-input {
+    background-color: red !important;
+    border: red;
+    height: 25px;
+    width: 50px;
+}
+
+.form-switch label {
+    width: 90%;
+    padding-left: 25px;
 }
