@@ -11,6 +11,7 @@ export const authReducer = createSlice({
       firstName: '',
       lastName: '',
       email: '',
+      image: '',
       listings: []
     },
   },
@@ -27,6 +28,7 @@ export const authReducer = createSlice({
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           email: action.payload.email,
+          image: action.payload.image,
           listings: action.payload.listings
         },
       };
@@ -43,6 +45,7 @@ export const authReducer = createSlice({
             firstName: '',
             lastName: '',
             email: '',
+            image: '',
             listings: []
         },
       };
@@ -59,6 +62,7 @@ export const authReducer = createSlice({
             firstName: action.payload.firstName,
             lastName: action.payload.lastName,
             email: action.payload.email,
+            image: action.payload.image,
             listings: action.payload.listings
         },
       };

@@ -54,6 +54,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
           firstName: data.login.user.firstName,
           lastName: data.login.user.lastName,
           email: data.login.user.email,
+          image: data.login.user.image,
           listings: data.login.user.listings
         }),
       );

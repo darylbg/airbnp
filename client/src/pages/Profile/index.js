@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './Profile.css';
 import Login from '../login/Login'
+import { useSelector} from 'react-redux';
 
 import EditProfileForm from '../../components/EditProfileComponent';
 import { useQuery } from '@apollo/client';
@@ -11,14 +12,19 @@ import { QUERY_USER } from '../../utils/queries';
 
 const Profile = () => {
   const { data } = useQuery(QUERY_USER);
-  let currentUser;
-
+  //const [currentUser, setCurrentUser] =useState()
+  const { auth } = useSelector((state) => state);
+  const currentUser = auth.user;
+  console.log(currentUser);
+  //let currentUser;
+  
   if(data) {
-    currentUser = data.user;
+    //currentUser = data.user;
+    // setCurrentUser(data.user)
   }
   return (
     <Container fluid="md">
-      {currentUser ? (
+      {currentUser&&data ? (
       <>
         <Row className='profile-heading-row'>
           <Col md='auto'>
@@ -40,7 +46,7 @@ const Profile = () => {
         <Row>
           <Col sm='auto'>
             <h5>Edit your details</h5>
-            <EditProfileForm userObj={currentUser}/>
+            <EditProfileForm userObj={currentUser} />
           </Col>
         </Row>
       </>
