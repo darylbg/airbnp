@@ -21,7 +21,6 @@
 }
 
 .profile-header-text {
-    color: #FF385C;
     font-size: 1.7em;
 }
 
@@ -36,3 +35,6 @@
     font-style: italic;
 }
 
+.profile-wrap {
+    margin-top: 50px;
+}

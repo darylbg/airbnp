@@ -5,7 +5,7 @@ import BookListingById from "../../components/MyListings/BookListingById";
 
 const Homepage = () => {
   return (
-    <>
+    <div className="home-wrapper">
       <Map />
       <div
         className='container'
@@ -13,7 +13,7 @@ const Homepage = () => {
       >
         <LocalListings />
       </div>
-    </>
+    </div>
   );
 };
 
