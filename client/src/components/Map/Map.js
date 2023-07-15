@@ -45,7 +45,11 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     const [listing, setAllListings] = useState({...listings});
 
  
+    // useEffect(() => {
 
+    // console.log(profile)
+
+    // },[profile])
 
     useEffect(() => {
 
@@ -80,6 +84,13 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
                     .addTo(map.current);
 
                     el.addEventListener('click', async function(e) {
+                      const profile = document.getElementById('directions-profile');
+                      profile.style.display='inline';
+
+                      let ele = document.getElementsByName("profile");
+                      for(var i=0;i<ele.length;i++){
+                      ele[i].checked = false;
+                      }
 
                       const markerCoords = [m._lngLat.lng, m._lngLat.lat];
                  
@@ -99,49 +110,6 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
  
       })
            
-//render current listings on map, dummy data for now
-    useEffect(() => {
-
-      const geoJson = {
-        "features": [
-          {
-            "type": "Feature",
-            "properties": {
-              "title": "London",
-              "description": "i love the railways, not realllehh"
-            },
-            "geometry": {
-              "coordinates": [-0.1276, 51.5073],
-              "type": "Point"
-            }
-          },
-          {
-            "type": "Feature",
-            "properties": {
-              "title": "Sheffield",
-              "description": "sheffing"
-            },
-            "geometry": {
-              "coordinates": [-1.4702, 53.3807],
-              "type": "Point"
-            }
-          }]}
-          geoJson.features.forEach(function(marker) {
-            var el = document.createElement('div');
-            el.className = 'marker';
-
-            new mapboxgl.Marker(el).setPopup( new mapboxgl.Popup({ offset: 25 }) // add popups
-            .setHTML(
-              `<h3>erwrew</h3>`
-            )).setLngLat(marker.geometry.coordinates).addTo(map.current);
-          })
-
-      
-          // let listingLat = listing[0].lat;
-          // let listingLon = listing[0].lon;
-          // let listingPrice = listing[0].price;
-
-  },[listing]);
 
         const setUser = async () => {
             if (navigator.geolocation) {
@@ -155,6 +123,9 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
                     // map.current.setZoom(15)
                     let newTarget = { center: [longitude, latitude], zoom: 15}
                     flyTo(viewport, newTarget);
+
+                    new mapboxgl.Marker().setLngLat([longitude,latitude]).addTo(map.current);
+          
 
                 });
               } 
@@ -310,14 +281,20 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
           }
          
           const getRoute = async (e) => {
-            e.preventDefault();
+
+            const p = e;
 
             try{
-              // console.log(destLngLat);
+              console.log(destLngLat);
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition( async (position)=> {
+                    const { latitude, longitude } = position.coords;
+  
             const query = await fetch(
-              `https://api.mapbox.com/directions/v5/mapbox/${profile}/${startLngLat[0]},${startLngLat[1]};${destLngLat[0]},${destLngLat[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+              `https://api.mapbox.com/directions/v5/mapbox/${p}/${longitude},${latitude};${destLngLat[0]},${destLngLat[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
               { method: 'GET' }
             );
+  
             const json = await query.json();
             const data = json.routes[0];
             const route = data.geometry.coordinates;
@@ -338,18 +315,21 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
             }
             // otherwise, we'll make a new request
 
-           let instructions = document.getElementById('instructions');
-           instructions.style.display='block';
+          //  let instructions = document.getElementById('instructions');
+          //  instructions.style.display='block';
           
-            const steps = data.legs[0].steps;
+          //   const steps = data.legs[0].steps;
           
-          let tripInstructions = '';
-          for (const step of steps) {
-            tripInstructions += `<li>${step.maneuver.instruction}</li>`;
-          }
-          instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
-            data.duration / 60
-          )} min </strong></p><ol>${tripInstructions}</ol>`;
+          // let tripInstructions = '';
+          // for (const step of steps) {
+          //   tripInstructions += `<li>${step.maneuver.instruction}</li>`;
+          // }
+          // instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
+          //   data.duration / 60
+          // )} min </strong></p><ol>${tripInstructions}</ol>`;
+                })
+              }
+                
             }
             catch(error) {
               setError(`Please fill in all of the fields!`)
@@ -408,83 +388,46 @@ const resetForm = () => {
 
 {/* top bar component */}
           <div className="topbar-container">
-                <button id="userMap" onClick={setUser}> Find your location </button>
-                <div className="sidebar">Longitude: {lng} | Latitude: {lat} | Zoom: {zoom} | {view}
-                </div>
+            <p> Click on the locate me button i dare ya</p>
+          {/* <button id="userMap" onClick={setUser}> Locate me </button> */}
+                {/* <div className="sidebar">Longitude: {lng} | Latitude: {lat} | Zoom: {zoom} | {view}
+                </div> */}
             </div>
 
 {/* main map component */}
           <div className="map_box_container">
+          <button id="userMap" onClick={setUser}> Locate me </button>
             <div ref={mapContainer} className="map-container" />
             </div>
             </div>
 
+    <div id='directions-profile'>
 
-            <div className='map-side'>
-            <SearchForm
-              value={address}
-              handleInputChange={handleInputChange}
-              handleFormSubmit={handleFormSubmit}
-              placeholder='find address'
-            />
- <div id="instructions" >{instructions}</div>
-            {/* <GetDirections /> */}
-            <form className="form-address">
+    <input id="driving" type="radio" value="driving" name="profile"  onClick={(e)=> { 
 
-          <div className="start-dest">
-
-            <label className="start-destination-label">Start Destination</label>
-            <AddressAutofill accessToken={accessToken} onRetrieve={handleRetrieve}>
-              <input
-                className="form-control"
-                placeholder="Start typing your address, e.g. 123 Main..."
-                autoComplete="address-line2"
-                id="mapbox-autofill"
-                value={startAddress}
-                onChange={handleAInputChange}
-    
-              />
-            </AddressAutofill>
-            </div>
-
-<div className="end-dest">
-<label className="end-destination-label">End Destination</label>
-<AddressAutofill accessToken={accessToken} onRetrieve={handleBRetrieve} >
-<input
-  className="form-control"
-  placeholder="Start typing your address, e.g. 123 Main..."
-  autoComplete="address-line2"
-  id="mapbox-autofill"
-  value={destination} onChange={handleBInputChange}
-
-/>
-</AddressAutofill>
-<div class="mapbox-directions-profile mapbox-directions-component-keyline mapbox-directions-clearfix">
-    
-    <input id="driving" type="radio" name="profile" value="mapbox/driving" onClick={()=> { setProfile('driving') }}/>
+    getRoute(e.target.value);
+    }}/>
     <label for="driving">Driving</label>
 
-    <input id="walking" type="radio" name="profile" value="mapbox/walking" onClick={()=> { setProfile('walking') }}/>
+    <input id="walking" type="radio" name="profile" value="walking" onClick={(e)=> { 
+
+    getRoute(e.target.value);
+    }}/>
     <label for="walking">Walking</label>
 
-    <input id="cycling" type="radio" name="profile" value="mapbox/cycling" onClick={()=> { setProfile('cycling') }}/>
+    <input id="cycling" type="radio" name="profile" value="cycling" onClick={(e)=> { 
+
+    getRoute(e.target.value);
+    }}/>
     <label for="cycling">Cycling</label>
-  </div>
-          <div className="button-wrapper">
-            <button className="btn btn-info" id="btn-direction" onClick={getRoute}>
-              Get directions
-            </button>
-            <button type="button" className="btn btn-info" id="btn-reset" onClick={resetForm}>
-              Reset
-            </button>
-          </div>
-          <span id="map-search-error">{error}</span>
+
+
+    </div>
+
           </div>
 
         
-  </form>
-  </div>          
-  </div>
+
   </div>
 
             
