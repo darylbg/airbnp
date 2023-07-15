@@ -44,6 +44,7 @@ export const QUERY_LISTING_BY_USER_ID = gql`
       lat
       lng
       price
+      isAvailable
       title
       userId
       notifications {
