@@ -1,12 +1,14 @@
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-/* 
-  .container {
-    width: 100%;
-    justify-content: center;
-    display: flex;
-  } */
-  
+.login-container {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-component {
+  width: 100%;
+  max-width: 400px;
+}

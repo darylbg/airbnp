@@ -42,7 +42,7 @@ function App() {
       <Router>
         <div className="app-div">
           <div className="content-wrapper">
-            <Header />
+            <Header className='header-s' />
             <div className="main-content">
               <Routes>
                 <Route path="/" element={<Homepage />} />

@@ -1,10 +1,6 @@
-.map {
-  border-radius: 10px;
-  height: 350px;
-  background-color: brown;
-}
+
 .local-listings-card {
-  width: 350px;
+  width: 280px;
   height: 350px;
 }
 

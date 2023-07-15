@@ -403,7 +403,7 @@ const resetForm = () => {
                 <button id="userMap" onClick={setUser}> Find your location </button>
                 <div className="sidebar">Longitude: {lng} | Latitude: {lat} | Zoom: {zoom} | {view}
                 </div>
-            </div>
+          </div>
           <div className="map_box_container">
             <div ref={mapContainer} className="map-container" />
             </div>
@@ -414,8 +414,9 @@ const resetForm = () => {
               handleInputChange={handleInputChange}
               handleFormSubmit={handleFormSubmit}
               placeholder='find address'
+              className='search-form'
             />
- <div id="instructions" >{instructions}</div>
+      <div id="instructions" >{instructions}</div>
             {/* <GetDirections /> */}
             <form className="form-address">
 

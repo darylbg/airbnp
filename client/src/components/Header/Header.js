@@ -40,7 +40,7 @@ const Header = () => {
   }
   return (
     <>
-      <Navbar expand={expand} className="mb-3 bg-body-tertiary">
+      <Navbar expand={expand} className="mb-3 bg-body-tertiary navbar-s">
         <Container fluid>
           <Navbar.Brand className='nav-brand' as={NavLink} to="/">Airbnp</Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />

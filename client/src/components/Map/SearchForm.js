@@ -3,7 +3,7 @@ import './Map.css'
 
 function SearchForm(props) {
   return (
-    <>
+    < >
     <div className='search'>
     <input
 

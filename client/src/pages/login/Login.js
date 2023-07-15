@@ -4,9 +4,12 @@ import "./Login.css"
 
 const Login = () => {
   return (
-    <div className='container'>
-      <LoginRegister />
+    <div className='login-container'>
+      <div className='login-component'>
+        <LoginRegister />
+      </div>
     </div>
+   
   )
 }
 

@@ -3,7 +3,7 @@
     top: 0;
     bottom: 0;
     width: 100%;
-    border-radius: 10%;
+    border-radius: 3%;
     }
 
 .map_box_container {
@@ -114,6 +114,7 @@
     margin-block: 8px;
     margin-inline: 5px;
     background-color: rgba(35, 55, 75, 0.9);
+    border-color: rgba(35, 55, 75, 0.9);
     color: #fff;
     font-family: monospace;
 }
@@ -137,4 +138,12 @@
     color: #fff;
     font-family: monospace;
     margin: 5px;
+}
+
+.map-component {
+    margin-top: 50px;
+    /* border: 2px solid;
+    border-color: black; */
+    padding: 10px;
+
 }
