@@ -19,7 +19,7 @@ const Dashboard = () => {
   const { auth } = useSelector((state) => state);
 
   const { data: dataListing } = useQuery(QUERY_LISTING_BY_USER_ID);
-  // console.log(dataListing?.getListingByUserId);
+  console.log(dataListing?.getListingByUserId);
   const listings = dataListing?.getListingByUserId || [];
   const reversedListings = [...listings].reverse();
   // console.log(listings);

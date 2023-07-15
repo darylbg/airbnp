@@ -100,6 +100,7 @@ export const UPDATE_LISTING = gql`
       description
       image
       price
+      isAvailable
       # userId
     }
   }

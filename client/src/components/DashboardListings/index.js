@@ -19,14 +19,15 @@ import "./DashboardListings.css";
 
 function DashboardListings({ listing }) {
   const [show, setShow] = useState(false);
-  const [addressLine1, setAddressLine1] = useState("");
+  const [addressLine1, setAddressLine1] = useState(listing.address);
   const [addressLine2, setAddressLine2] = useState("");
   const [addressLevel1, setAddressLevel1] = useState("");
   const [addressLevel2, setAddressLevel2] = useState("");
   const [country, setCountry] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  // const [addressValue, setAddressValue] = useState(listing.address);
 
-  const [imageUrlInput, setImageUrlInput] = useState("");
+  const [imageUrlInput, setImageUrlInput] = useState(listing.image);
   const [validUpload, setValidUpload] = useState(true);
   const [message, setMessage] = useState("");
 
@@ -43,6 +44,7 @@ function DashboardListings({ listing }) {
     lat: listing.lat,
     lng: listing.lng,
     image: imageUrlInput,
+    isAvailable: listing.isAvailable,
     //   userId: auth.user.userId
   });
 
@@ -80,7 +82,7 @@ function DashboardListings({ listing }) {
         },
       });
       console.log("Successfully deleted listing");
-      setSmShow(false)
+      setSmShow(false);
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +124,7 @@ function DashboardListings({ listing }) {
     const json = await res.json();
     const imageUrl = json.secure_url;
     setImageUrlInput(imageUrl);
-    setValues({ ...values, image: imageUrlInput }); // Update the image URL state
+    setValues({ ...values, image: imageUrl }); // Update the image URL state
     console.log(imageUrl);
     setValidUpload(true);
     setMessage("");
@@ -144,6 +146,17 @@ function DashboardListings({ listing }) {
                 <Card.Title>{listing.title}</Card.Title>
                 {/* <Card.Text> */}
                 <Form onSubmit={listingUpdateHandler}>
+                  <Form.Group>
+                    <Form.Check
+                      type="switch"
+                      id="custom-switch"
+                      label="Set this bathroom as available or unavailable to book"
+                      checked={values.isAvailable}
+                      onChange={(e) =>
+                        setValues({ ...values, isAvailable: e.target.checked })
+                      }
+                    />
+                  </Form.Group>
                   <Form.Group>
                     <Form.Label>Title</Form.Label>
                     <Form.Control
@@ -175,10 +188,9 @@ function DashboardListings({ listing }) {
                       <AddressAutofill accessToken="pk.eyJ1IjoiZGF6emExMjMiLCJhIjoiY2xqcjZzc2Y5MGN5NTNncWpsZ3ByZG9tciJ9.N_FhIXIqTaKbq03NukHGYQ">
                         <Form.Control
                           name="address"
-                          placeholder="Search address"
+                          placeholder="Set new address"
                           type="text"
                           autoComplete="address-line1"
-                          // value={addressLine1}
                           onChange={(e) => setAddressLine1(e.target.value)}
                         />
                       </AddressAutofill>
@@ -186,7 +198,7 @@ function DashboardListings({ listing }) {
                         <span>
                           {addressLine1} {addressLine2}
                         </span>
-                        <span>
+                        <span autoComplete="address-line2">
                           {addressLevel1} {addressLevel2}
                         </span>
                         <span>{postalCode}</span>
@@ -201,7 +213,7 @@ function DashboardListings({ listing }) {
                           placeholder="Apartment number"
                           type="text"
                           autoComplete="address-line2"
-                          //   onChange={(e) => setAddressLine2(e.target.value)}
+                          onChange={(e) => setAddressLine2(e.target.value)}
                         />
                       </Col>
                       <Col sm={6} className="d-none">
@@ -210,7 +222,7 @@ function DashboardListings({ listing }) {
                           placeholder="City"
                           type="text"
                           autoComplete="address-level2"
-                          //   onChange={(e) => setAddressLevel2(e.target.value)}
+                          onChange={(e) => setAddressLevel2(e.target.value)}
                         />
                       </Col>
                       <Form.Control
@@ -218,7 +230,7 @@ function DashboardListings({ listing }) {
                         placeholder="State"
                         type="text"
                         autoComplete="address-level1"
-                        // onChange={(e) => setAddressLevel1(e.target.value)}
+                        onChange={(e) => setAddressLevel1(e.target.value)}
                         className="d-none"
                       />
                       <Col sm={6} className="d-none">
@@ -227,7 +239,7 @@ function DashboardListings({ listing }) {
                           placeholder="Country"
                           type="text"
                           autoComplete="country"
-                          //   onChange={(e) => setCountry(e.target.value)}
+                          onChange={(e) => setCountry(e.target.value)}
                         />
                       </Col>
                       <Col sm={6} className="d-none">
@@ -236,7 +248,7 @@ function DashboardListings({ listing }) {
                           placeholder="Postcode"
                           type="text"
                           autoComplete="postal-code"
-                          //   onChange={(e) => setPostalCode(e.target.value)}
+                          onChange={(e) => setPostalCode(e.target.value)}
                         />
                       </Col>
                     </Row>
@@ -279,9 +291,10 @@ function DashboardListings({ listing }) {
                     <Check />
                     Save updates
                   </Button>
-                  <Button 
-                  onClick={() => setSmShow(true)}   className="me-2"
-                  variant='danger'
+                  <Button
+                    onClick={() => setSmShow(true)}
+                    className="me-2"
+                    variant="danger"
                   >
                     x Delete Listing
                   </Button>
@@ -297,12 +310,14 @@ function DashboardListings({ listing }) {
                       </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    <Button 
-                      onClick={handleDeleteListing}
-                      variant="danger"
-                      className="delete-listing-confirm"
-                      data-id={listing._id}
-                    >Delete</Button>
+                      <Button
+                        onClick={handleDeleteListing}
+                        variant="danger"
+                        className="delete-listing-confirm"
+                        data-id={listing._id}
+                      >
+                        Delete
+                      </Button>
                     </Modal.Body>
                   </Modal>
                 </Form>
