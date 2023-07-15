@@ -11,7 +11,7 @@
 
 .add-listing-button,
 .add-listing-submit-button {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     background-color: #FF385C;
     border: 2px solid white;
     box-sizing: border-box;

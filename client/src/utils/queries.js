@@ -73,6 +73,7 @@ query getAllListings {
     image
     lat
     lng
+    isAvailable
     notifications {
       _id
       arrivingBy
