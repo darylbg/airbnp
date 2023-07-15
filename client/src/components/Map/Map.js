@@ -9,7 +9,7 @@ import { useQuery } from "@apollo/client";
 import './Map.css';
 import SearchForm from './SearchForm';
 import { QUERY_GET_ALL_LISTINGS } from "../../utils/queries";
-import Haversine from 'haversine';
+// import Haversine from 'haversine';
 
 
 

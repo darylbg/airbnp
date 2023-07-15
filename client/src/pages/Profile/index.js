@@ -23,7 +23,7 @@ const Profile = () => {
     // setCurrentUser(data.user)
   }
   return (
-    <Container fluid="md">
+    <Container className='profile-wrap' fluid="md">
       {currentUser&&data ? (
       <>
         <Row className='profile-heading-row'>
