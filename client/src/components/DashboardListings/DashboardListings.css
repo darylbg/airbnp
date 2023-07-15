@@ -28,7 +28,7 @@
 
 .form-switch .form-check-input:checked {
     background-color: #15d475 !important;
-    border: green;
+    border: #15d475;
 }
 
 .form-switch .form-check-input {

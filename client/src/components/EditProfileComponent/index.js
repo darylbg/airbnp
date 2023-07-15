@@ -62,7 +62,9 @@ const Profile = ({ userObj }) => {
         login_user({
           ...userObj,
             ...data.updateUserDetails
-        }))
+        }));
+        setMessage('');
+        setValidUpload(true);
       // window.location.reload();
     } catch (error) {
       console.log(error);

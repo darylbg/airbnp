@@ -1,5 +1,5 @@
 import React from "react";
-import LocalListings from "../../components/LocalListings/LocalListings";
+import AllListings from "../../components/AllListings";
 import Map from "../../components/Map/Map";
 import BookListingById from "../../components/MyListings/BookListingById";
 
@@ -8,10 +8,10 @@ const Homepage = () => {
     <>
       <Map />
       <div
-        className='container'
-        style={{ width: "100%", justifyContent: "center", display: "flex" }}
+      //   className='container'
+      //   style={{ width: "100%", justifyContent: "center", display: "flex" }}
       >
-        <LocalListings />
+        <AllListings />
       </div>
     </>
   );

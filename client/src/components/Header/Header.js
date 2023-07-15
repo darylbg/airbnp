@@ -7,6 +7,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Auth from '../../utils/auth';
 import Image from 'react-bootstrap/Image';
+import { useSelector} from 'react-redux';
 
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
@@ -22,6 +23,9 @@ const Header = () => {
     border: '1px solid red',
     marginRight: '5px'
   }
+
+  const { auth } = useSelector((state) => state);
+  const thisUser = auth.user;
 
   const navigate = useNavigate();
   const expand = 'sm'; // Set the desired expand value for the Navbar
@@ -65,7 +69,7 @@ const Header = () => {
                         <>
                           <Image 
                             className='header-account-img' 
-                            src={currentUser.image} 
+                            src={thisUser.image} 
                             style={Styles}
                           /> 
                           Account
