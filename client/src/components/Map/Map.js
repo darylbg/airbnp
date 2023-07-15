@@ -9,6 +9,7 @@ import { useQuery } from "@apollo/client";
 import './Map.css';
 import SearchForm from './SearchForm';
 import { QUERY_GET_ALL_LISTINGS } from "../../utils/queries";
+import Haversine from 'haversine';
 
 
 
@@ -395,19 +396,30 @@ const resetForm = () => {
 
 
   return (
-    <section className='map-component'>
-      <div className="map_box">
-        <div className="map_box_wrapper">
-          <div className="map_box-longlat">
-          <div className="sidebar-container">
+    // ignore
+    <section className='map-component'> 
+
+<div className="map_box">
+{/* map_box_wrapper wraps the whole component together to display in a row  */}
+        <div className="map_box_wrapper">  
+
+{/* map_box-longlat wraps the map and the top-bar component together into one component */}
+        <div className="map_box-longlat">
+
+{/* top bar component */}
+          <div className="topbar-container">
                 <button id="userMap" onClick={setUser}> Find your location </button>
                 <div className="sidebar">Longitude: {lng} | Latitude: {lat} | Zoom: {zoom} | {view}
                 </div>
             </div>
+
+{/* main map component */}
           <div className="map_box_container">
             <div ref={mapContainer} className="map-container" />
             </div>
             </div>
+
+
             <div className='map-side'>
             <SearchForm
               value={address}
@@ -474,6 +486,7 @@ const resetForm = () => {
   </div>          
   </div>
   </div>
+
             
 
 
