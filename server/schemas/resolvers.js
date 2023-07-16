@@ -1,4 +1,4 @@
-const { AuthenticationError } = require('apollo-server-express');
+const { AuthenticationError, ApolloError } = require('apollo-server-express');
 const { User, Listing, Notification, Rating } = require('../models');
 const { signToken } = require('../utils/auth');
 const { model } = require('mongoose');
@@ -7,7 +7,7 @@ const resolvers = {
     Query: {
      user: async (parent, args, context) => {
         if (context.user) {
-          const userData = await User.findOne({ _id: context.user._id }).select('-__v -password');
+          const userData = await User.findOne({ _id: context.user._id }).select('-__v -password').populate({path: 'listings', populate: ['ratings', 'notifications']});
   
           return userData;
         }
@@ -78,7 +78,11 @@ const resolvers = {
             price: listingData.price,
             rating: listingData.rating 
           });
-          return newListing;
+          const user = await User.findByIdAndUpdate(context.user._id, {
+            $addToSet: {listings: newListing._id}
+          }, 
+          {new: true}).populate('listings');
+          return user;
         }
         throw new AuthenticationError('You need to be logged in!');
       },
@@ -111,13 +115,14 @@ const resolvers = {
             if (removedListing) {
               await Notification.deleteMany({ listingId: listingId });
               await Rating.deleteMany({ listingId: listingId });
-              await User.findOneAndUpdate(
+              const user = await User.findOneAndUpdate(
                 { _id: context.user._id },
                 { $pull: { listings: listingId } },
                 { new: true }
-              );
+              ).populate('listings');
+              return user
             }
-          return;
+          throw new ApolloError('no listing found with that id', 404);
         }
         throw new AuthenticationError('You need to be logged in!');
       },

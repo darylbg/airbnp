@@ -1,25 +1,21 @@
 .edit-listings-col {
     margin: 25px 0 25px 0;
     /* border-bottom: 1px solid grey; */
+
 }
 
 .edit-listings-card {
     border: none;
-    border-bottom: 1px solid grey;
+    border: 1px solid grey;
     border-radius: 0;
-    padding-bottom: 25px;
 }
 
 .edit-listings-img {
-    padding-top: 25px;
-    max-width: 240px;
-    border-radius: 0;
-}
-
-.edit-listing-button {
-    position: absolute;
-    bottom: 35px;
-    right: 15px;
+    width: 250px;
+    height: 250px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    border-color: #f2f2f2;
 }
 
 .delete-listing-confirm {
@@ -42,3 +38,38 @@
     width: 90%;
     padding-left: 25px;
 }
+
+.listings-card-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    background-color: #f2f2f2;
+  }
+
+  .img-div {
+    display: flex;
+    justify-content: center;
+  }
+
+  .listing-title {
+    text-align: center;
+  }
+
+  .availabilty-switch {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .set {
+    text-align: center;
+  }
+
+  .buttons-row {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+

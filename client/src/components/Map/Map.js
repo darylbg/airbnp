@@ -448,7 +448,7 @@ const resetForm = () => {
   <h4 className="card-h4"> £{priceCard} </h4>
   </div>
   
-  <div className='card-img' style={{ backgroundImage: `url(${imageCard})`, backgroundSize:"cover"}}></div>
+  <div className='map-card-img' style={{ backgroundImage: `url(${imageCard})`, backgroundSize:"cover"}}></div>
 
   </div>
 
