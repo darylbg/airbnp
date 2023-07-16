@@ -21,6 +21,7 @@ const typeDefs = gql`
     image: String
     userId: ID!
     price: Float!
+    isAvailable: Boolean
     ratings: [Rating]
     notifications: [Notification]
   }
@@ -56,6 +57,7 @@ const typeDefs = gql`
     image: String
     # userId: ID!
     price: Int!
+    isAvailable: Boolean
   }
 
   input userInput {

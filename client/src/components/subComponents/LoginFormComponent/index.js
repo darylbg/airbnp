@@ -54,22 +54,9 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
           firstName: data.login.user.firstName,
           lastName: data.login.user.lastName,
           email: data.login.user.email,
+          image: data.login.user.image,
           listings: data.login.user.listings
         }),
-        // user_listings({
-        //   address: data.login.user.listings.address,
-        //   address: data.login.user.listings.description,
-        //   address: data.login.user.listings.image,
-        //   address: data.login.user.listings.lat,
-        //   address: data.login.user.listings.lng,
-        //   address: data.login.user.listings.price,
-        //   address: data.login.user.listings.title,
-        //   address: data.login.user.listings.userId,
-        //   address: data.login.user.listings.notifications,
-        //   address: data.login.user.listings.ratings,
-
-
-        // })
       );
       Auth.login(data.login.token);
         navigate('/');
@@ -84,7 +71,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
 
   return (
     // use login details email: testing@testing.com password: testing
-    <Form style={{paddingTop: '100px'}}>
+    <Form style={{paddingTop: '100px'}}  className='login-form'>
         <FloatingLabel controlId="floatingLoginInput1" label="Email address" className="mb-3">
         <Form.Control 
           type="email" 

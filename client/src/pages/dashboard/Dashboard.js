@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import LocalListings from "../../components/LocalListings/LocalListings";
-import MyListings from "../../components/MyListings/MyListings";
-import NewListingModal from "../../components/NewListing/NewListingModal";
+// import LocalListings from "../../components/LocalListings/LocalListings";
+// import MyListings from "../../components/MyListings/MyListings";
+// import NewListingModal from "../../components/NewListing/NewListingModal";
 import Login from "../login/Login";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { QUERY_USER } from "../../utils/queries";
@@ -19,7 +19,7 @@ const Dashboard = () => {
   const { auth } = useSelector((state) => state);
 
   const { data: dataListing } = useQuery(QUERY_LISTING_BY_USER_ID);
-  // console.log(dataListing?.getListingByUserId);
+  console.log(dataListing?.getListingByUserId);
   const listings = dataListing?.getListingByUserId || [];
   const reversedListings = [...listings].reverse();
   // console.log(listings);

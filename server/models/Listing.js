@@ -33,6 +33,10 @@ const listingSchema = new Schema({
     type: Number,
     required: true
   },
+  isAvailable: {
+    type: Boolean,
+    default: false
+  },
   notifications: [
       {
         type: Schema.Types.ObjectId,

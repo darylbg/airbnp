@@ -1,9 +1,9 @@
-
 .mapboxgl-map {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
+    /* border-radius: 10%; */
     }
 
 .map_box_container {
@@ -13,14 +13,12 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    border: 4px solid black;
     margin-top: 10px;
-    border-radius: 10px;
 }
 
 .map_box {
     width: 100%;
-    height: 500px;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,35 +27,32 @@
 }
 #userMap{
     width: 100px;
+    z-index: 1;
+    align-self: flex-start;
+    margin: 10px;
 }
 
 
 .map_box_wrapper{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 100%;
     width: 100%;
-    border: 2px solid pink;
     align-items: center;
     justify-content:center ;
     
 }
-.map-side{
+#directions-profile{
     width: auto;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    border: 2px solid pink;
-    margin-left: 10px;
-    border-radius: 8px;
-     overflow-wrap: break-word;
+    height: 50px;
+    display: none;
+    border: 2px solid green;
 }
 .search{
     /* align-self: flex-end; */
     height: auto;
     width: auto;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 .map-container {
@@ -78,9 +73,8 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 45%;
-    align-items: center;
-    border: 2px solid cyan;
+    width: 80%;
+    align-items: center; 
 }
 
 .sidebar-container{
@@ -105,21 +99,21 @@
     cursor: pointer;
     } */
     .marker {
-        width: 30px;
-        height: 30px;
+        background-image: url('./markers/toilet.png');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         cursor: pointer;
-        background:url('./markers/toilet.png');
-        background-size: cover;
-        padding: 10px;
         }    
-    .mapboxgl-popup {
-    max-width: 200px;
+    .mapboxgl-popup-content { 
+    width: 400px;
+    border-radius: 10px;
     }
 
 .btn-info {
     margin-block: 8px;
-    margin-right: 5px;
+    margin-inline: 5px;
     background-color: rgba(35, 55, 75, 0.9);
     color: #fff;
     font-family: monospace;
@@ -139,12 +133,37 @@
 
 }
 
-.marker-h2, .marker-h3, .marker-h4 {
-    margin-inline: 10px;
-    font-size: 20px;
+.search-btn {
+    background-color: rgba(35, 55, 75, 0.9);
+    color: #fff;
+    font-family: monospace;
+    margin: 5px;
 }
 
-#map-search-error{
-   color: red;
+.topbar-container {
+
+    width: 100%;
+}
+
+#listing-card {
+    width: 80vw;
+    height: auto;
+    border: 3px solid black; 
+    margin: auto;
+    display: none;
+    flex-direction: row;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+.card-details {
+    display: block;
+    height: 400px;
+    width: 70%;
+
+}
+.card-img{
+    width: 30%;
+    height: 500px;
+    border-left: 3px solid black;
 }
 

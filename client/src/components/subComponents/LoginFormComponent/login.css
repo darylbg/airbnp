@@ -1,9 +1,30 @@
-.mb-3{
-    color: #FF385C;
+.login-form {
+  padding: 10px;
+  padding: 25px 10px 10px 10px;
+  border-right: 1px solid #DEE2E6;
+  border-left: 1px solid #DEE2E6;
+  border-bottom: 1px solid #DEE2E6;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
-.login-button{
-    background-color: #FF385C;
-    width: 100%;
-    border: 0px;
+.password-toggle {
+  cursor: pointer;
+  color: #FF385C;
+}
+
+.password-toggle:hover {
+  cursor: hand;
+}
+
+/* Login button */
+.login-button {
+  background-color: #FF385C;
+  font-family: monospace;
+  width: 100%;
+  border: 0;
+}
+
+.login-button:hover {
+  background-color: #982a3e;
 }

@@ -9,4 +9,21 @@ body {
     justify-content: center;
     display: flex;
   } */
+
+  .login-register-page {
+    max-width: 500px;
+  }
   
+.login-register-page h2 {
+  font-weight: bolder;
+}
+
+.login-register-page h4 {
+  font-style: italic;
+  color: grey;
+}
+
+.login-register-page h5 {
+  font-weight: lighter;
+  padding-bottom: 50px;
+}
