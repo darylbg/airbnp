@@ -53,7 +53,7 @@ const Dashboard = () => {
             setListingValidateMsg={setListingValidateMsg}
             />
           </Row>
-          <Row>
+          <Row className="listings-row">
             <Col xs={12}>
             <h2 className="update-listings-title">Update my listings</h2>
             <Alert
@@ -62,7 +62,8 @@ const Dashboard = () => {
               variant={listingValidate ? 'success' : 'danger'}
              >
               {listingValidateMsg}
-            </Alert></Col>
+            </Alert>
+            </Col>
             
             {reversedListings.map((listing) => (
               <DashboardListings 
