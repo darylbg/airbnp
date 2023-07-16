@@ -43,13 +43,11 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     const listings = dataAllListings?.getAllListings || [];
   
     const [listing, setAllListings] = useState({...listings});
-
- 
-    // useEffect(() => {
-
-    // console.log(profile)
-
-    // },[profile])
+    const [titleCard, setTitleCard] = useState('');
+    const [descriptionCard, setDescriptionCard] = useState('');
+    const [addressCard, setAddressCard] = useState('');
+    const [priceCard, setPriceCard] = useState('');
+    const [imageCard, setImageCard] = useState('');
 
     useEffect(() => {
 
@@ -67,8 +65,9 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     useEffect(() => {
 
       setAllListings(listings);
+      console.log(listings);
       Object.keys(listing).forEach(function(key, index) {
-        const { lng, lat, title, price, description, address } = listing[key]
+        const { lng, lat, title, price, description, address, image } = listing[key]
 
         const el = document.createElement('div');
         el.className ='marker'
@@ -79,11 +78,19 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
                       `<h2 class="marker-h2"><b>${title}<b></h2>
                       <h3 class="marker-h3">${description}</h3>
                       <h3 class="marker-h4"> ${address} </h3>
-                      <h4 class="marker-h4"><b> £${price} <b></h4>`
+                      <h4 class="marker-h4"><b> £${price} <b></h4>
+                      <a href="/"> Book now </a>`
                     ))
                     .addTo(map.current);
 
                     el.addEventListener('click', async function(e) {
+
+                      setTitleCard(title)
+                      setDescriptionCard(description)
+                      setAddressCard(address)
+                      setPriceCard(price)
+                      setImageCard(image);
+                      document.getElementById('listing-card').style.display='flex';
                       const profile = document.getElementById('directions-profile');
                       profile.style.display='inline';
 
@@ -370,6 +377,9 @@ const resetForm = () => {
   setError('');
 
  }
+ const makeBooking = () => {
+  console.log('booking');
+ }
 //  useEffect(() => {
 //   console.log(profile)
 // }, [])
@@ -427,6 +437,18 @@ const resetForm = () => {
           </div>
 
         
+
+  </div>
+  <div id='listing-card'>
+    <div className="card-details">
+
+  <h2 class="card-h2">{titleCard}</h2>
+  <h3 class="card-h3">{descriptionCard}</h3>
+  <h3 class="card-h4"> {addressCard} </h3>
+  <h4 class="card-h4"> £{priceCard} </h4>
+  </div>
+  
+  <div className='card-img' style={{ backgroundImage: `url(${imageCard})`, backgroundSize:"cover"}}></div>
 
   </div>
 
