@@ -38,3 +38,9 @@
     padding-right: 7px;
     width: 21px;
 }
+
+@media only screen and (max-width: 600px) {
+    .nav-brand {
+        margin-left: 2px;
+}
+}

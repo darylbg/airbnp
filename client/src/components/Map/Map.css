@@ -18,7 +18,7 @@
 
 .map_box {
     width: 100%;
-    height: 700px;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -106,8 +106,9 @@
         border-radius: 50%;
         cursor: pointer;
         }    
-    .mapboxgl-popup {
-    max-width: 200px;
+    .mapboxgl-popup-content { 
+    width: 400px;
+    border-radius: 10px;
     }
 
 .btn-info {
@@ -143,3 +144,26 @@
 
     width: 100%;
 }
+
+#listing-card {
+    width: 80vw;
+    height: auto;
+    border: 3px solid black; 
+    margin: auto;
+    display: none;
+    flex-direction: row;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+.card-details {
+    display: block;
+    height: 400px;
+    width: 70%;
+
+}
+.card-img{
+    width: 30%;
+    height: 500px;
+    border-left: 3px solid black;
+}
+

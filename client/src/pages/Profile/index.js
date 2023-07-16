@@ -27,12 +27,12 @@ const Profile = () => {
       {currentUser&&data ? (
       <>
         <Row className='profile-heading-row'>
-          <Col md='auto'>
-            <div className='profile-img-wrapper'>
-              <img className='profile-img' alt='profile' src={currentUser.image}></img>
-            </div>
+            <Col md='auto' className='prof-img-col'>
+              <div className='profile-img-wrapper'>
+                <img className='profile-img' alt='profile' src=  {currentUser.image}></img>
+              </div>
             </Col>
-            <Col>
+            <Col className='prof-text-col'>
               <div className='profile-header-text'>
                 <h1>Profile</h1>
                 <div className='profile-header-name'>
@@ -41,10 +41,10 @@ const Profile = () => {
                   <h4>{currentUser.email}</h4>
                 </div>
               </div>
-          </Col>
+            </Col>
         </Row>
-        <Row>
-          <Col sm='auto'>
+        <Row className='form-row'>
+          <Col sm='auto' className='prof-form'>
             <h5>Edit your details</h5>
             <EditProfileForm userObj={currentUser} />
           </Col>
