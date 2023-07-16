@@ -80,9 +80,9 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     register(userData: userInput!): Auth
     updateUserDetails(firstName: String!, lastName: String!, username: String!, image: String): User
-    createListing( listingData: listingInput!): Listing
+    createListing( listingData: listingInput!): User
     updateListing(listingId: ID!, listingData: listingInput!): Listing
-    removeListing(listingId: ID!): Listing
+    removeListing(listingId: ID!): User
     createNotification(listingId: ID!, userId: ID! arrivingBy: String!): Listing
     removeNotification(notificationId: ID!, listingId: ID!): Listing
     createRating(listingId: ID!, rating: Int, comment: String): Listing
