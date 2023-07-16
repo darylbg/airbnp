@@ -8,15 +8,10 @@
     border: 0px;
 } */
 
-#floatingLoginInput1,
-#floatingLoginInput2 {
-  color: #FF385C;
-}
 
 /* Password toggle button */
 .password-toggle {
   cursor: pointer;
-  color: #FF385C;
 }
 
 .password-toggle:hover {
