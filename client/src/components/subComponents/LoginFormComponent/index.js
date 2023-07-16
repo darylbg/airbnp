@@ -71,7 +71,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
 
   return (
     // use login details email: testing@testing.com password: testing
-    <Form style={{paddingTop: '100px'}}>
+    <Form style={{paddingTop: '100px'}}  className='login-form'>
         <FloatingLabel controlId="floatingLoginInput1" label="Email address" className="mb-3">
         <Form.Control 
           type="email" 

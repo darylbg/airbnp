@@ -1,14 +1,45 @@
-.lrg-nav-link {
-    margin: 0 15px 0 15px;
+.nav-link-custom {
+
         font-weight: bold;
         font-size: larger;
         font-family: monospace;
-        color: rgba(35, 55, 75, 0.9);
+        /* color: rgba(35, 55, 75, 0.9); */
+}
+
+.lrg-nav-link {
+    margin: 0 15px 0 15px;
 }
 
 .nav-brand {
     font-weight: bold;
     margin-left: 40px;
     font-size: x-large;
-    color: rgba(35, 55, 75, 0.9);
+    color: #FF385C;
+}
+
+.nav-link-custom:active {
+    color: #FF385C !important;
+    background-color: transparent;
+}
+
+.nav-link-custom:hover {
+    color: #FF385C !important;
+    background-color: transparent;
+}
+
+.nav-link-custom:focus {
+    color: #FF385C !important;
+    background-color: transparent;
+}
+
+.active {
+    color: red !important;
+    background-color: transparent !important;
+}
+
+.nav-brand-icon {
+    height: 25px;
+    padding-bottom: 5px;
+    padding-right: 7px;
+    width: 21px;
 }

@@ -21,11 +21,11 @@ function LoginRegister() {
   return (
     <div>
       <TabContainer>
-      <Tabs className="myClass" defaultActiveKey="first">
-        <Tab eventKey="first" title="Login" >
+      <Tabs className="login-register-tabs" defaultActiveKey="first">
+        <Tab className='login-register-tab' eventKey="first" title="Login" >
           <LoginForm handleTogglePassword={handleTogglePassword} passwordVisible={passwordVisible} />
         </Tab>
-        <Tab eventKey="second" title="Register">
+        <Tab className='login-register-tab' eventKey="second" title="Register">
           <RegisterForm handleTogglePassword={handleTogglePassword} passwordVisible={passwordVisible} />
         </Tab>
       </Tabs>
