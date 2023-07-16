@@ -36,7 +36,7 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     const [destLngLat, setDestLngLat] = useState([]);
     const [destination, setDestination] = useState('')
     const [instructions, setInstructions] = useState('');
-    const [profile, setProfile] = useState('');
+    const [profile, setProfile] = useState('walking');
     const [error, setError] = useState('');
 
     const { data: dataAllListings } = useQuery(QUERY_GET_ALL_LISTINGS);
@@ -71,6 +71,7 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
 
         const el = document.createElement('div');
         el.className ='marker'
+        el.id =key
       
         const m = new mapboxgl.Marker(el)
                     .setLngLat([lng, lat]).setPopup( new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -79,18 +80,19 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
                       <h3 class="marker-h3">${description}</h3>
                       <h3 class="marker-h4"> ${address} </h3>
                       <h4 class="marker-h4"><b> £${price} <b></h4>
-                      <a href="/"> Book now </a>`
+                      <button onclick="document.getElementById('listing-card').style.display='flex'"> Proceed to book </button>
+         `
                     ))
                     .addTo(map.current);
 
-                    el.addEventListener('click', async function(e) {
+                    document.getElementById(`${key}`).addEventListener('click', async function(e) {
 
                       setTitleCard(title)
                       setDescriptionCard(description)
                       setAddressCard(address)
                       setPriceCard(price)
                       setImageCard(image);
-                      document.getElementById('listing-card').style.display='flex';
+                      // document.getElementById('listing-card').style.display='flex';
                       const profile = document.getElementById('directions-profile');
                       profile.style.display='inline';
 
@@ -288,11 +290,11 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
           }
          
           const getRoute = async (e) => {
-
             const p = e;
 
+   
+
             try{
-              console.log(destLngLat);
               if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition( async (position)=> {
                     const { latitude, longitude } = position.coords;
@@ -414,20 +416,17 @@ const resetForm = () => {
     <div id='directions-profile'>
 
     <input id="driving" type="radio" value="driving" name="profile"  onClick={(e)=> { 
-
-    getRoute(e.target.value);
-    }}/>
+ getRoute(e.target.value);
+}}/>
     <label for="driving">Driving</label>
 
     <input id="walking" type="radio" name="profile" value="walking" onClick={(e)=> { 
-
-    getRoute(e.target.value);
-    }}/>
+ getRoute(e.target.value);
+}}/>
     <label for="walking">Walking</label>
 
     <input id="cycling" type="radio" name="profile" value="cycling" onClick={(e)=> { 
-
-    getRoute(e.target.value);
+     getRoute(e.target.value);
     }}/>
     <label for="cycling">Cycling</label>
 
@@ -441,11 +440,12 @@ const resetForm = () => {
   </div>
   <div id='listing-card'>
     <div className="card-details">
+      <h1 className="close-button"onClick={(e) => { e.target.parentNode.parentNode.style.display='none'}}> X </h1>
 
-  <h2 class="card-h2">{titleCard}</h2>
-  <h3 class="card-h3">{descriptionCard}</h3>
-  <h3 class="card-h4"> {addressCard} </h3>
-  <h4 class="card-h4"> £{priceCard} </h4>
+  <h2 className="card-h2">{titleCard}</h2>
+  <h3 className="card-h3">{descriptionCard}</h3>
+  <h3 className="card-h4"> {addressCard} </h3>
+  <h4 className="card-h4"> £{priceCard} </h4>
   </div>
   
   <div className='card-img' style={{ backgroundImage: `url(${imageCard})`, backgroundSize:"cover"}}></div>

@@ -146,15 +146,27 @@
 }
 
 #listing-card {
-    width: 80vw;
-    height: auto;
-    border: 3px solid black; 
+    width: 50vw;
+    height: 70vh;
+    border: 1px solid black; 
     margin: auto;
     display: none;
-    flex-direction: row;
+    flex-direction: column;
     margin-top: 30px;
     border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    overflow: hidden;
 }
+
+  
+  
 .card-details {
     display: block;
     height: 400px;
@@ -164,6 +176,16 @@
 .card-img{
     width: 30%;
     height: 500px;
-    border-left: 3px solid black;
+    border: 3px solid black;
 }
 
+.close-button {
+    position: absolute;
+    right: 0;
+    padding-right: 20px;
+    top:0;
+}
+
+.close-button:hover{
+    cursor:pointer;
+}
