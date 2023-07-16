@@ -79,7 +79,7 @@ const Header = () => {
                       )
                     }
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
-                    className="dropdown-menu-end lrg-nav-link"
+                    className="dropdown dropdown-menu-end lrg-nav-link"
                     align="end"
                   >
                     <NavDropdown.Item as={NavLink} to="/profile">My Profile</NavDropdown.Item>
