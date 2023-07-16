@@ -11,21 +11,22 @@ import { QUERY_USER } from "../../utils/queries";
 import AddListing from "../../components/AddListingComponent";
 import DashboardListings from "../../components/DashboardListings";
 import { useSelector } from "react-redux";
-import { QUERY_LISTING_BY_USER_ID } from "../../utils/queries";
+import { QUERY_USER_LISTINGS } from "../../utils/queries";
 import Button from "react-bootstrap/Button";
 import './Dashboard.css'
 
 const Dashboard = () => {
   const { auth } = useSelector((state) => state);
 
-  const { data: dataListing } = useQuery(QUERY_LISTING_BY_USER_ID);
+  const { data: dataListing } = useQuery(QUERY_USER_LISTINGS);
   console.log(dataListing?.getListingByUserId);
-  const listings = dataListing?.getListingByUserId || [];
+  const listings = dataListing?.user.listings || [];
   const reversedListings = [...listings].reverse();
   // console.log(listings);
-  const { data } = useQuery(QUERY_USER);
+  const { data, error } = useQuery(QUERY_USER);
+  // const currentUser = data?.
   let currentUser;
-
+  console.log(error);
   if (data) {
     currentUser = data.user;
     // console.log(data.user);

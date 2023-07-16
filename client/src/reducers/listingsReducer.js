@@ -12,6 +12,7 @@ export const listingReducer = createSlice({
         price: '',
         title: '',
         userId: '',
+        isAvailable: '',
         notifications: [],
         ratings: []
     },
@@ -27,6 +28,7 @@ export const listingReducer = createSlice({
                 price:  action.payload.listings.price,
                 title:  action.payload.listings.title,
                 userId:  action.payload.listings.userId,
+                isAvailable: action.payload.listings.isAvailable,
                 notifications: action.payload.listings.notifications,
                 ratings: action.payload.listings.ratings
             }
