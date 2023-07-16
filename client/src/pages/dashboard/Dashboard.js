@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import LocalListings from "../../components/LocalListings/LocalListings";
-// import MyListings from "../../components/MyListings/MyListings";
-// import NewListingModal from "../../components/NewListing/NewListingModal";
+import Alert from 'react-bootstrap/Alert'
 import Login from "../login/Login";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { QUERY_USER } from "../../utils/queries";
@@ -17,6 +15,19 @@ import './Dashboard.css'
 
 const Dashboard = () => {
   const { auth } = useSelector((state) => state);
+  const [listingValidate, setListingValidate] = useState();
+  const [listingValidateMsg, setListingValidateMsg] = useState('');
+
+  useEffect(() => {
+    let timeoutId;
+    if (listingValidate) {
+      timeoutId = setTimeout(() => {
+        setListingValidate(false);
+        setListingValidateMsg('');
+      }, 5000);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [listingValidate]);
 
   const { data: dataListing } = useQuery(QUERY_USER_LISTINGS);
   console.log(dataListing?.getListingByUserId);
@@ -37,12 +48,28 @@ const Dashboard = () => {
       {currentUser ? (
         <>
           <Row>
-            <AddListing />
+            <AddListing 
+            setListingValidate={setListingValidate} 
+            setListingValidateMsg={setListingValidateMsg}
+            />
           </Row>
           <Row>
+            <Col xs={12}>
             <h2 className="update-listings-title">Update my listings</h2>
+            <Alert
+            style={{width: 'fit-content'}}
+              className={listingValidate ? 'd-block' : 'd-none'}
+              variant={listingValidate ? 'success' : 'danger'}
+             >
+              {listingValidateMsg}
+            </Alert></Col>
+            
             {reversedListings.map((listing) => (
-              <DashboardListings key={listing.id} listing={listing} />
+              <DashboardListings 
+              key={listing.id} 
+              listing={listing} 
+              setListingValidate={setListingValidate} 
+              setListingValidateMsg={setListingValidateMsg} />
             ))}
           </Row>
           <Row>

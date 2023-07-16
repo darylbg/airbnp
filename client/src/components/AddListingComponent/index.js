@@ -12,7 +12,9 @@ import Modal from "react-modal";
 import { AddressAutofill } from "@mapbox/search-js-react";
 import Geocode from "react-geocode";
 
-function AddListing() {
+Modal.setAppElement("#root");
+
+function AddListing( {setListingValidate, setListingValidateMsg}) {
   const [show, setShow] = useState(false);
   const [addressLine1, setAddressLine1] = useState("");
   const [addressLine2, setAddressLine2] = useState("");
@@ -88,9 +90,11 @@ function AddListing() {
         image: "",
         // userId: "",
       })
-
-      handleClose();
-      closeModal();
+      setListingValidate(true);
+    setListingValidateMsg("Successfully added a listing");
+    console.log(setListingValidateMsg);
+    handleClose();
+    closeModal();
     } catch (error) {
       console.error(error);
     }
@@ -111,6 +115,7 @@ function AddListing() {
     content: {
       // Add your custom styles here
       maxWidth: "500px",
+      marginTop: '60px'
     },
     overlay: {
       // Add your custom styles here
@@ -289,7 +294,7 @@ function AddListing() {
           </InputGroup>
           <br />
           <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label>Upload new profile image</Form.Label>
+            <Form.Label>Upload an image</Form.Label>
             <Form.Control
               type="file"
               onChange={processFile}

@@ -17,7 +17,7 @@ import { AddressAutofill } from "@mapbox/search-js-react";
 import Geocode from "react-geocode";
 import "./DashboardListings.css";
 
-function DashboardListings({ listing }) {
+function DashboardListings({ listing, setListingValidate, setListingValidateMsg }) {
   const [show, setShow] = useState(false);
   const [addressLine1, setAddressLine1] = useState(listing.address);
   const [addressLine2, setAddressLine2] = useState("");
@@ -69,6 +69,8 @@ function DashboardListings({ listing }) {
       });
       console.log(listing._id);
       console.log("Updated data:", updatedData);
+      setListingValidate(true);
+      setListingValidateMsg('Successfully updated listing');
     } catch (error) {
       console.log(error);
     }
@@ -83,6 +85,8 @@ function DashboardListings({ listing }) {
       });
       console.log("Successfully deleted listing");
       setSmShow(false);
+      setListingValidate(true);
+      setListingValidateMsg('Successfully deleted listing');
     } catch (error) {
       console.log(error);
     }
@@ -272,7 +276,7 @@ function DashboardListings({ listing }) {
                   </InputGroup>
                   <br />
                   <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Label>Upload new profile image</Form.Label>
+                    <Form.Label>Upload new image</Form.Label>
                     <Form.Control type="file" onChange={processFile} />
                     <br />
                     <Alert
