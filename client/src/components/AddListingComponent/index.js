@@ -111,6 +111,7 @@ function AddListing() {
     content: {
       // Add your custom styles here
       maxWidth: "500px",
+      marginTop: "60px"
     },
     overlay: {
       // Add your custom styles here
