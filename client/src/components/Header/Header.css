@@ -10,16 +10,16 @@
     margin: 0 15px 0 15px;
 }
 
+.navbar-nav .active {
+    color: #FF385C !important;
+    background-color: transparent;
+}
+
 .nav-brand {
     font-weight: bold;
     margin-left: 40px;
     font-size: x-large;
     color: #FF385C;
-}
-
-.nav-link-custom:active {
-    color: #FF385C !important;
-    background-color: transparent;
 }
 
 .nav-link-custom:hover {
@@ -30,12 +30,7 @@
 .nav-link-custom:focus {
     color: #FF385C !important;
     background-color: transparent;
-}
-
-.active {
-    color: red !important;
-    background-color: transparent !important;
-}
+} 
 
 .nav-brand-icon {
     height: 25px;

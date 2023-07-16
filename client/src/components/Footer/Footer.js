@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <Container fluid className="myFooter bg-body-tertiary w-100 p-3">
       <Row>
-        <h2>Footer</h2>
+        <h2></h2>
       </Row>
     </Container>
   );
