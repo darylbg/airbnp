@@ -40,7 +40,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="app-div">
+        <div className="app-div" style={{paddingTop: '80px'}}>
           <div className="content-wrapper">
             <Header />
             <div className="main-content">

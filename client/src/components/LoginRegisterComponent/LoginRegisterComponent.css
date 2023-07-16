@@ -1,22 +1,32 @@
-.login-register-tabs {
-    width: 400px;
-    padding-top: 50px;
-}
-.register-tab {
-    color: #FF385C;
-}
-.myClass ul > li > a {
-    background-color: gray;
-    color: white;
+.login-register-tabs li {
+    flex: 1;
 }
 
-@media screen and (max-width: 500px) {
+.login-register-tabs li button {
+    width: 100%;
+    font-family: monospace;
+    color: black;
+}
+
+.login-register-tabs .nav-item .active {
+    color: #FF385C !important;
+}
+
+.login-register-tabs li button:hover {
+    color: #FF385C !important;
+}
+
+.login-register-tabs li button:focus {
+    color: #FF385C !important;
+}
+
+/* @media screen and (max-width: 500px) {
     .login-register-tabs {
         width: 90%;
     }
 }
 
-.login-register-tabs ul li {
+.login-register-tab {
     flex: 1;
 }
 
@@ -27,4 +37,4 @@
 .login-register-tabs .tab-content {
     padding-top: 25px;
     font-family: monospace;
-}
+} */

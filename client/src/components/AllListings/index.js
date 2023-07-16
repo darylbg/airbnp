@@ -14,9 +14,9 @@ const AllListings = () => {
 
   return (
     <div className="homepage-cards">
-      {allListingsData?.getAllListings?.map((listing) => {
+      {allListingsData?.getAllListings?.map((listing, index) => {
         return (
-          <Card className='homepage-card'>
+          <Card className='homepage-card' key={index}>
             <Link className="homepage-card-link">
             <Card.Img variant="top" src={listing.image} />
             <div className="gradient-overlay">
