@@ -1,3 +1,8 @@
 .update-listings-title {
     margin: 50px 0 50px 0;
 }
+
+.listings-row {
+    display: flex;
+    justify-content: center;
+}

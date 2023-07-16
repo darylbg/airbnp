@@ -133,8 +133,8 @@ function DashboardListings({ listing }) {
     <>
       <Col xs={12} lg={8} className="edit-listings-col">
         <Card className="edit-listings-card">
-          <div className="row no-gutters">
-            <div className="col-md-4">
+          <div className="listings-card-row no-gutters">
+            <div className="img-div">
               <Card.Img
                 src={listing.image}
                 className="edit-listings-img"
@@ -143,19 +143,20 @@ function DashboardListings({ listing }) {
             </div>
             <div className="col-md-8">
               <Card.Body>
-                <Card.Title>{listing.title}</Card.Title>
+                <Card.Title className="listing-title">{listing.title}</Card.Title>
                 {/* <Card.Text> */}
                 <Form onSubmit={listingUpdateHandler}>
                   <Form.Group>
                     <Form.Check
+                      className="availabilty-switch"
                       type="switch"
                       id="custom-switch"
-                      label="Set this bathroom as available or unavailable to book"
                       checked={values.isAvailable}
                       onChange={(e) =>
                         setValues({ ...values, isAvailable: e.target.checked })
                       }
                     />
+                    <p className="set">Set availabilty</p>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Title</Form.Label>
@@ -282,22 +283,30 @@ function DashboardListings({ listing }) {
                       {message}
                     </Alert>
                   </Form.Group>
-                  <Button
-                    className="edit-listing-button"
-                    type="submit"
-                    variant="primary"
-                    style={{}}
-                  >
-                    <Check />
-                    Save updates
-                  </Button>
-                  <Button
-                    onClick={() => setSmShow(true)}
-                    className="me-2"
-                    variant="danger"
-                  >
-                    x Delete Listing
-                  </Button>
+              <Row className="">
+                <div className="buttons-row">
+                  <Col className="flex-grow-1 bg-alert">
+                    <Button
+                      className="edit-listing-buttons"
+                      type="submit"
+                      variant="primary"
+                      style={{}}
+                    >
+                      <Check />
+                      Save updates
+                    </Button>
+                  </Col>
+                  <Col className="flex-grow-1 d-flex justify-content-end delete-col">
+                    <Button
+                      className="edit-listing-buttons me-2"
+                      onClick={() => setSmShow(true)}
+                      variant="danger"
+                    >
+                      x Delete Listing
+                    </Button>
+                  </Col>
+                </div>        
+              </Row>               
                   <Modal
                     size="sm"
                     show={smShow}
