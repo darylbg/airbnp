@@ -7,6 +7,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Auth from '../../utils/auth';
 import Image from 'react-bootstrap/Image';
+import { useSelector} from 'react-redux';
+import icon from '../../images/icon.png'
 
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
@@ -22,6 +24,9 @@ const Header = () => {
     border: '1px solid red',
     marginRight: '5px'
   }
+
+  const { auth } = useSelector((state) => state);
+  const thisUser = auth.user;
 
   const navigate = useNavigate();
   const expand = 'sm'; // Set the desired expand value for the Navbar
@@ -40,9 +45,16 @@ const Header = () => {
   }
   return (
     <>
-      <Navbar expand={expand} className="mb-3 bg-body-tertiary">
+      <Navbar 
+      expand={expand} 
+      className="mb-3 bg-body-tertiary"
+      fixed='top'
+      >
         <Container fluid>
-          <Navbar.Brand className='nav-brand' as={NavLink} to="/">Airbnp</Navbar.Brand>
+          <Navbar.Brand className='nav-brand' as={NavLink} to="/">
+            <img className='nav-brand-icon' src={icon} alt='Icon'></img>
+            Airbnp
+            </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${expand}`}
@@ -56,7 +68,7 @@ const Header = () => {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link as={NavLink} to="/"  className='lrg-nav-link'>Home</Nav.Link>
+                <Nav.Link as={NavLink} to="/"  className='nav-link-custom lrg-nav-link'>Home</Nav.Link>
                 {/* conditionally render login/register */}
                 { Auth.loggedIn() ? (
                   <NavDropdown
@@ -65,7 +77,7 @@ const Header = () => {
                         <>
                           <Image 
                             className='header-account-img' 
-                            src={currentUser.image} 
+                            src={thisUser.image} 
                             style={Styles}
                           /> 
                           Account
@@ -75,16 +87,16 @@ const Header = () => {
                       )
                     }
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
-                    className="dropdown-menu-end lrg-nav-link"
+                    className="nav-link-custom dropdown-menu-end lrg-nav-link"
                     align="end"
                   >
-                    <NavDropdown.Item as={NavLink} to="/profile">My Profile</NavDropdown.Item>
-                    <NavDropdown.Item as={NavLink} to="/dashboard">Dashboard</NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/profile" className='nav-link-custom'>My Profile</NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/dashboard" className='nav-link-custom'>Dashboard</NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+                    <NavDropdown.Item onClick={logout} className='nav-link-custom'>Logout</NavDropdown.Item>
                   </NavDropdown>
                 ):(
-                  <Nav.Link as={NavLink} to="/login"  className='lrg-nav-link'>Login / Register</Nav.Link>
+                  <Nav.Link as={NavLink} to="/login"  className='lrg-nav-link nav-link-custom'>Login / Register</Nav.Link>
                 )}
               </Nav>
             </Offcanvas.Body>

@@ -1,11 +1,19 @@
-.mb-3{
-    color: #FF385C;
+.register-form {
+    padding: 25px 10px 10px 10px;
+    border-right: 1px solid #DEE2E6;
+    border-left: 1px solid #DEE2E6;
+    border-bottom: 1px solid #DEE2E6;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
-.register-button{
+.register-button {
     border: 0px;
     background-color:#FF385C;
-    width:100%;
-    
+    width:100%; 
+}
+
+.register-button:hover {
+    background-color: #982a3e;
 }
 

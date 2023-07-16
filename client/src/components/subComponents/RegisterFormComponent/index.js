@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";
 import { REGISTER } from "../../../utils/mutations";
-import { register_user } from "../../../reducers/authReducer";
 
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -81,7 +80,7 @@ function RegisterForm({ handleTogglePassword, passwordVisible}) {
     }
 
     return (
-        <Form onSubmit={submitHandler}>
+        <Form onSubmit={submitHandler} className='register-form'>
             <FloatingLabel controlId="floatingRegisterInput1" label="First Name" className="mb-3">
                 <Form.Control 
                     type="text" 

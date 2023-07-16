@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     background-color: white;
-    margin-bottom: 50px;
+    margin: 15px 0 50px 0;
 }
 
 .profile-img-wrapper {
@@ -11,18 +11,18 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
+
 .profile-img {
     border-radius: 50%;
     width: 150px;
     height: 150px;
     object-fit: cover;
-    border-radius: 50%;
     border: 6px solid transparent;
 }
 
 .profile-header-text {
-    color: #FF385C;
     font-size: 1.7em;
+    margin-top: 10px;
 }
 
 .profile-header-name h3 {
@@ -36,3 +36,60 @@
     font-style: italic;
 }
 
+.profile-wrap {
+    margin-top: 50px;
+}
+
+
+
+/* @media only screen and (max-width: 600px) {
+    body {
+      background-color: lightblue;
+    }
+  } */
+
+    @media only screen and (max-width:800px) {
+        .profile-img-wrapper {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+    }
+  }
+
+    @media only screen and (max-width: 770px) {
+        .prof-img-col {
+            display: flex;
+            justify-content: center;
+    }
+  }
+
+    @media only screen and (max-width: 600px) {
+        .prof-text-col {
+            display: flex;
+            justify-content: center;
+    }
+  }
+
+    @media only screen and (max-width: 770px) {
+        .profile-header-text {
+            text-align: center;
+            margin-top: 30px;
+    }
+  }
+
+    @media only screen and (max-width: 770px) {
+        .profile-wrap {
+            display: flex;
+            justify-content: center;    
+            flex-direction: column;
+    }
+  }
+
+ 
+
+    @media only screen and (max-width: 770px) {
+        .form-row {
+            display: flex;
+            justify-content: center;    
+    }
+  }
