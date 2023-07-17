@@ -58,7 +58,6 @@ const Dashboard = () => {
 
 
             <Col xs={12}>
-            <h2 className="update-listings-title">Update my listings</h2>
             <Alert
             style={{width: 'fit-content'}}
               className={listingValidate ? 'd-block' : 'd-none'}
