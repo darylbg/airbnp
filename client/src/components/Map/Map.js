@@ -5,7 +5,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AddressAutofill } from "@mapbox/search-js-react";
 import { useQuery } from "@apollo/client";
-import Checkout from "../Checkout/Checkout";
+// import Checkout from "../Checkout/Checkout";
 import CheckoutWrapper from "../Checkout/CheckoutWrapper";
 
 // import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -51,6 +51,7 @@ function Map() {
   const [priceCard, setPriceCard] = useState("");
   const [imageCard, setImageCard] = useState("");
   const [tripDuration, setTripDuration] = useState("");
+  const [idCard, setIdCard] = useState('');
 
   useEffect(() => {
     if (map.current) return; // initialize map
@@ -67,7 +68,7 @@ function Map() {
       setAllListings(listings);
 
       Object.keys(listing).forEach(async function (key, index) {
-        const { lng, lat, title, price, description, address, image } =
+        const { _id, lng, lat, title, price, description, address, image } =
           listing[key];
 
         const el = document.createElement("div");
@@ -79,7 +80,7 @@ function Map() {
           .setPopup(
             new mapboxgl.Popup({ offset: 25 }) // add popups
               .setHTML(
-                `<h2 class="marker-h2"><b>${title}<b></h2>
+                `<h2 class="marker-h2" data-id'${_id}'}><b>${title}<b></h2>
                       <h3 class="marker-h3">${description}</h3>
                       <h3 class="marker-h3"> Location: <br>${address} </h3>
                       <div class="marker-book">
@@ -99,6 +100,7 @@ function Map() {
             setAddressCard(address);
             setPriceCard(price);
             setImageCard(image);
+            setIdCard(_id);
             // document.getElementById('listing-card').style.display='flex';
             const profile = document.getElementById("directions-profile");
             profile.style.display = "inline";
@@ -483,7 +485,7 @@ function Map() {
             x{" "}
           </h1>
 
-          <div class="card-header">
+          <div class="card-header" data-id={idCard}>
             <h2 className="card-h2">{titleCard}</h2>
             <h2 className="card-h2 dist">
               {" "}
@@ -502,7 +504,7 @@ function Map() {
               backgroundSize: "cover",
             }}
           ></div> 
-          < CheckoutWrapper priceCard={priceCard} addressCard={addressCard}/>
+          < CheckoutWrapper idCard={idCard} tripDuration={tripDuration} priceCard={priceCard} addressCard={addressCard}/>
         
         </div>
       </div>

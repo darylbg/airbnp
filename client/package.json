@@ -16,6 +16,7 @@
     "cloudinary-react": "^1.8.1",
     "date-and-time": "0.14.1",
     "datetimepicker": "0.1.39",
+    "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
     "haversine": "^1.1.1",
     "jquery": "^3.7.0",

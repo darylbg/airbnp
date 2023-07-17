@@ -127,12 +127,13 @@ const resolvers = {
         throw new AuthenticationError('You need to be logged in!');
       },
 
-      createNotification: async (parent, { listingId, arrivingBy }, context) => {
+      createNotification: async (parent, { listingId, arrivingBy, createdAt }, context) => {
         if (context.user) {
           const newNotification = await Notification.create({
             listingId: listingId,
             arrivingBy: arrivingBy,
             userId: context.user._id,
+            createdAt: createdAt
           });
           await Listing.findOneAndUpdate(
             { _id: listingId },

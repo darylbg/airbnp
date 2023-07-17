@@ -120,3 +120,14 @@ export const DELETE_LISTING = gql`
     }
   }
 `;
+
+export const CREATE_NOTIFICATION = gql`
+mutation createNotification($listingId: ID!, $userId: ID!, $arrivingBy: String, $createdAt: String) {
+  createNotification(listingId: $listingId, arrivingBy: $arrivingBy, createdAt: $createdAt) {
+    _id
+    arrivingBy
+    createdAt
+    listingId
+    userId
+  }
+}`;

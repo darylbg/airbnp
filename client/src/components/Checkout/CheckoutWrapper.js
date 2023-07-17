@@ -5,7 +5,7 @@ import {useSelector} from "react-redux"
 import { useNavigate } from 'react-router-dom'
 
 
-function CheckoutWrapper({addressCard, priceCard}) {
+function CheckoutWrapper({tripDuration, addressCard, priceCard}) {
   const user = useSelector(state => state.auth.user)
   
   const navigate = useNavigate()
@@ -18,7 +18,12 @@ function CheckoutWrapper({addressCard, priceCard}) {
       <h4 className="card-h4"> £{priceCard} </h4>
 
       <button id="reserve-button" onClick={() =>{ user.userId ? setModal(true): navigate("/login")}}> Reserve </button>
-    {modal && ReactDOM.createPortal( <Checkout price={priceCard} close={() => setModal(false)}/>, document.querySelector("#root"))}
+    {modal && ReactDOM.createPortal( <Checkout 
+                                      tripDuration={tripDuration} 
+                                      price={priceCard} 
+                                      close={() => setModal(false)}
+                                      />, 
+                                      document.querySelector("#root"))}
     </div>
   </div>
   )
