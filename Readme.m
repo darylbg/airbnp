@@ -1,8 +1,8 @@
 # Welcome to the airbnp
 
-Airbnp is an online platform that allows individuals to rent out their property toilets to travelers. 
-It is a platform that connects hosts and guests from around the world and makes it easy for travelers to find and book a host.
-Airbnp offers a diverse range of toilet options, allowing guests to choose from private toilets within a host's home.
+Airbnp is an online platform that allows individuals to rent out their property bathrooms to travelers. 
+It is a platform that connects hosts and guests from around the world and makes it easy for travelers to find and book a host bathroom.
+Airbnp offers a diverse range of bathroom options, allowing guests to choose from private toilets within a host's home.
  
 ## How to use Airbnp
 1. Sign up for an account
@@ -65,8 +65,18 @@ Airbnp offers a diverse range of toilet options, allowing guests to choose from 
 - Node.js
 - Express.js
 - MongoDB 
+- Mapbox
 - Stripe
 - Booststrap
 - Heroku Hosting
+
+## Contributors links:
+Jays - https://github.com/jsen07
+Daryl - https://github.com/darylbg
+Harun - https://github.com/193G
+Nkem - https://github.com/dakenny5241
+Abdi - https://github.com/Karbuuno
+Aaron - https://github.com/Hicku
+Repository - https://github.com/darylbg/airbnp
 
 
