@@ -65,8 +65,18 @@ Airbnp offers a diverse range of bathroom options, allowing guests to choose fro
 - Node.js
 - Express.js
 - MongoDB 
+- Mapbox
 - Stripe
 - Booststrap
 - Heroku Hosting
+
+## Contributors links:
+Jays - https://github.com/jsen07
+Daryl - https://github.com/darylbg
+Harun - https://github.com/193G
+Nkem - https://github.com/dakenny5241
+Abdi - https://github.com/Karbuuno
+Aaron - https://github.com/Hicku
+Repository - https://github.com/darylbg/airbnp
 
 
