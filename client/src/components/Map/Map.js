@@ -5,7 +5,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AddressAutofill } from "@mapbox/search-js-react";
 import { useQuery } from "@apollo/client";
-import Checkout from "../Checkout/Checkout";
+// import Checkout from "../Checkout/Checkout";
 import CheckoutWrapper from "../Checkout/CheckoutWrapper";
 
 // import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -51,6 +51,7 @@ function Map() {
   const [priceCard, setPriceCard] = useState("");
   const [imageCard, setImageCard] = useState("");
   const [tripDuration, setTripDuration] = useState("");
+  const [availability, setAvailablity] = useState(false);
 
   useEffect(() => {
     if (map.current) return; // initialize map
@@ -67,7 +68,7 @@ function Map() {
       setAllListings(listings);
 
       Object.keys(listing).forEach(async function (key, index) {
-        const { lng, lat, title, price, description, address, image } =
+        const { lng, lat, title, price, description, address, image, isAvailable } =
           listing[key];
 
         const el = document.createElement("div");
@@ -80,8 +81,6 @@ function Map() {
             new mapboxgl.Popup({ offset: 25 }) // add popups
               .setHTML(
                 `<h2 class="marker-h2"><b>${title}<b></h2>
-                      <h3 class="marker-h3">${description}</h3>
-                      <h3 class="marker-h3"> Location: <br>${address} </h3>
                       <div class="marker-book">
                       <h4 class="marker-h4"><b> £${price} <b></h4>
                       <button id="proceed-button" onclick="document.getElementById('listing-card').style.display='flex'"> Proceed to book </button>
@@ -99,6 +98,7 @@ function Map() {
             setAddressCard(address);
             setPriceCard(price);
             setImageCard(image);
+            setAvailablity(isAvailable);
             // document.getElementById('listing-card').style.display='flex';
             const profile = document.getElementById("directions-profile");
             profile.style.display = "inline";
@@ -396,7 +396,8 @@ function Map() {
           <div className="map_box-longlat">
             {/* top bar component */}
             <div className="topbar-container">
-              <p> Click on the locate me button i dare ya</p>
+              <p> Introducing <i>"Airbnp" </i> – the revolutionary app that brings convenience and comfort to your bathroom needs. Whether you're on the go or in an unfamiliar area, Airbnp connects you with a network of clean and accessible toilets, allowing you to find and book the perfect restroom just when you need it. Say goodbye to desperate searches and discomfort, and say hello to a stress-free bathroom experience.</p>
+              <p>In order to gain the best user experience for this application, enabling location on your device is highly recommended!</p>
               {/* <button id="userMap" onClick={setUser}> Locate me </button> */}
               {/* <div className="sidebar">Longitude: {lng} | Latitude: {lat} | Zoom: {zoom} | {view}
                 </div> */}
@@ -485,16 +486,15 @@ function Map() {
 
           <div class="card-header">
             <h2 className="card-h2">{titleCard}</h2>
+            <div className="availability" style={availability ? {backgroundColor: '#00FF00',
+  boxShadow: '0px 0px 10px rgba(5, 247, 5, 0.7)'} : {backgroundColor: 'grey',
+  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.7)'}}></div>
             <h2 className="card-h2 dist">
               {" "}
               Walking distance: {tripDuration}min(s) away
             </h2>
           </div>
-
-          <h3 className="card-h3">{descriptionCard}</h3>
-        </div>
-
-        <div className="card-bottom-wrapper">
+          <div className="card-bottom-wrapper">
           <div
             className="map-card-img"
             style={{
@@ -502,9 +502,16 @@ function Map() {
               backgroundSize: "cover",
             }}
           ></div> 
+          <div className="dpa-wrapper">
+          
+          <h3 className="card-h3">{descriptionCard}</h3>
           < CheckoutWrapper priceCard={priceCard} addressCard={addressCard}/>
-        
+          </div>
         </div>
+
+        </div>
+
+      
       </div>
       
     </section>
