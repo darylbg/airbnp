@@ -7,7 +7,7 @@
 .edit-listings-card {
     border: none;
     border: 1px solid grey;
-    border-radius: 0;
+    border-radius: 10%;
 }
 
 .edit-listings-img {
@@ -44,7 +44,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center; 
-    background-color: #f2f2f2;
   }
 
   .img-div {

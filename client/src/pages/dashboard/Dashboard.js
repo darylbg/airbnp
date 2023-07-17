@@ -39,8 +39,8 @@ const Dashboard = () => {
           <Row>
             <AddListing />
           </Row>
+          <h2 className="update-listings-title">Update my listings</h2>
           <Row className="listings-row">
-            <h2 className="update-listings-title">Update my listings</h2>
             {reversedListings.map((listing) => (
               <DashboardListings key={listing.id} listing={listing} />
             ))}
