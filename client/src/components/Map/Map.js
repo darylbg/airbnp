@@ -18,35 +18,37 @@ function Map() {
   const accessToken =
     "pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4OHgifQ.AuZEXXUmyWFMfTxQAjH_CQ";
 
-  const mapContainer = useRef(0);
-  const map = useRef(0);
-  const [lng, setLng] = useState(0);
-  const [lat, setLat] = useState(55);
-  const [zoom, setZoom] = useState(5);
-  const [view, setView] = useState("");
-  const [address, setAddress] = useState("");
-  const [viewport, setViewport] = useState({
-    center: [-2.5195, 53.0636], //long laT
-    zoom: 5,
-  });
-  const [feature, setFeature] = useState("");
-  const [startAddress, setStartAddress] = useState("");
-  const [startLngLat, setstartLngLat] = useState([]);
-  const [destLngLat, setDestLngLat] = useState([]);
-  const [destination, setDestination] = useState("");
-  const [instructions, setInstructions] = useState("");
-  const [profile, setProfile] = useState("");
-  const [error, setError] = useState("");
+    const mapContainer = useRef(0);
+    const map = useRef(0);
+    const [lng, setLng] = useState(0);
+    const [lat, setLat] = useState(55);
+    const [zoom, setZoom] = useState(5);
+    const [view, setView] = useState('');
+    const [address, setAddress] = useState('');
+    const [viewport, setViewport] = useState(
+        {
+        center: [-2.5195, 53.0636], //long laT
+        zoom: 5,
+    });
+    const [feature, setFeature] = useState('');
+    const [startAddress, setStartAddress] = useState('');
+    const [startLngLat, setstartLngLat] = useState([]);
+    const [destLngLat, setDestLngLat] = useState([]);
+    const [destination, setDestination] = useState('')
+    const [instructions, setInstructions] = useState('');
+    const [profile, setProfile] = useState('walking');
+    const [error, setError] = useState('');
 
-  const { data: dataAllListings } = useQuery(QUERY_GET_ALL_LISTINGS);
-  const listings = dataAllListings?.getAllListings || [];
-
-  const [listing, setAllListings] = useState({ ...listings });
-  const [titleCard, setTitleCard] = useState("");
-  const [descriptionCard, setDescriptionCard] = useState("");
-  const [addressCard, setAddressCard] = useState("");
-  const [priceCard, setPriceCard] = useState("");
-  const [imageCard, setImageCard] = useState("");
+    const { data: dataAllListings } = useQuery(QUERY_GET_ALL_LISTINGS);
+    const listings = dataAllListings?.getAllListings || [];
+  
+    const [listing, setAllListings] = useState({...listings});
+    const [titleCard, setTitleCard] = useState('');
+    const [descriptionCard, setDescriptionCard] = useState('');
+    const [addressCard, setAddressCard] = useState('');
+    const [priceCard, setPriceCard] = useState('');
+    const [imageCard, setImageCard] = useState('');
+    const [tripDuration, setTripDuration] = useState('');
 
   useEffect(() => {
     if (map.current) return; // initialize map
@@ -61,14 +63,14 @@ function Map() {
   useEffect(
     () => {
       setAllListings(listings);
-      console.log(listings);
-      Object.keys(listing).forEach(function (key, index) {
-        const { lng, lat, title, price, description, address, image } =
-          listing[key];
+    
+      Object.keys(listing).forEach(async function(key, index) {
+        const { lng, lat, title, price, description, address, image } = listing[key]
 
-        const el = document.createElement("div");
-        el.className = "marker";
-
+        const el = document.createElement('div');
+        el.className ='marker'
+        el.id =key
+      
         const m = new mapboxgl.Marker(el)
           .setLngLat([lng, lat])
           .setPopup(
@@ -76,52 +78,89 @@ function Map() {
               .setHTML(
                 `<h2 class="marker-h2"><b>${title}<b></h2>
                       <h3 class="marker-h3">${description}</h3>
-                      <h3 class="marker-h4"> ${address} </h3>
+                      <h3 class="marker-h3"> Location: <br>${address} </h3>
+                      <div class="marker-book">
                       <h4 class="marker-h4"><b> £${price} <b></h4>
-                      <a href="/"> Book now </a>`
-              )
-          )
-          .addTo(map.current);
+                      <button id="proceed-button" onclick="document.getElementById('listing-card').style.display='flex'"> Proceed to book </button>
+                      </div>
+         `
+                    ))
+                    .addTo(map.current);
 
-        el.addEventListener("click", async function (e) {
-          setTitleCard(title);
-          setDescriptionCard(description);
-          setAddressCard(address);
-          setPriceCard(price);
-          setImageCard(image);
-          document.getElementById("listing-card").style.display = "flex";
-          const profile = document.getElementById("directions-profile");
-          profile.style.display = "inline";
+                    document.getElementById(`${key}`).addEventListener('click', async function(e) {
 
-          let ele = document.getElementsByName("profile");
-          for (var i = 0; i < ele.length; i++) {
-            ele[i].checked = false;
-          }
+                      setTitleCard(title)
+                      setDescriptionCard(description)
+                      setAddressCard(address)
+                      setPriceCard(price)
+                      setImageCard(image);
+                      // document.getElementById('listing-card').style.display='flex';
+                      const profile = document.getElementById('directions-profile');
+                      profile.style.display='inline';
 
-          const markerCoords = [m._lngLat.lng, m._lngLat.lat];
+                      let ele = document.getElementsByName("profile");
+                      for(var i=0;i<ele.length;i++){
+                      ele[i].checked = false;
+                      }
 
-          setDestination(address);
-          setDestLngLat(markerCoords);
-        });
+                      
+                      const markerCoords = [m._lngLat.lng, m._lngLat.lat];
+                 
+                      setDestination(address);
+                      setDestLngLat(markerCoords);
+                      if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition( async (position)=> {
+                            const { latitude, longitude } = position.coords;
+
+                      const getTripDuration = async () => {
+                        const query = await fetch(
+                          `https://api.mapbox.com/directions/v5/mapbox/walking/${longitude},${latitude};${m._lngLat.lng},${m._lngLat.lat}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+                          { method: 'GET' }
+                        );
+                  
+                        const json =  await query.json();
+                        const data = json.routes[0];
+                        let tripMins = Math.floor(data.duration / 60);
+                        setTripDuration(tripMins);
+                      }
+                      getTripDuration();
+                    })
+
+                      }
+
+                    })
+                    
+                
+         
       });
-    },
-    [listing],
-    [destLngLat]
-  );
 
-  useEffect(() => {});
+      
 
-  const setUser = async () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const { latitude, longitude } = position.coords;
-        searchForUser(longitude, latitude);
 
-        if (!map.current) return; // wait for map to initialize
-        // map.current.setCenter([longitude, latitude]);
-        // map.current.setZoom(15)
-        let newTarget = { center: [longitude, latitude], zoom: 15 };
-        flyTo(viewport, newTarget);
+    },[listing],[destLngLat])
+
+    
+
+    useEffect(() => {
+      
+ 
+      })
+           
+
+        const setUser = async () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition( async (position)=> {
+                    const { latitude, longitude } = position.coords;
+                    searchForUser(longitude, latitude);
+                    setstartLngLat([longitude, latitude]);
+                    console.log(startLngLat)
+            
+
+                    if (!map.current) return; // wait for map to initialize
+                    // map.current.setCenter([longitude, latitude]);
+                    // map.current.setZoom(15)
+                    let newTarget = { center: [longitude, latitude], zoom: 15}
+                    flyTo(viewport, newTarget);
 
         new mapboxgl.Marker()
           .setLngLat([longitude, latitude])
@@ -257,46 +296,51 @@ function Map() {
     [setFeature, viewport]
   );
 
-  const handleAInputChange = async (e) => {
-    setStartAddress(e.target.value);
-  };
-
-  const handleBInputChange = async (e) => {
-    setDestination(e.target.value);
-  };
-
-  const getRoute = async (e) => {
-    const p = e;
-
-    try {
-      console.log(destLngLat);
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          const { latitude, longitude } = position.coords;
-
-          const query = await fetch(
-            `https://api.mapbox.com/directions/v5/mapbox/${p}/${longitude},${latitude};${destLngLat[0]},${destLngLat[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
-            { method: "GET" }
-          );
-
-          const json = await query.json();
-          const data = json.routes[0];
-          const route = data.geometry.coordinates;
-          const geojson = {
-            type: "Feature",
-            properties: {},
-            geometry: {
-              type: "LineString",
-              coordinates: route,
-            },
-          };
-          // if the route already exists on the map, we'll reset it using setData
-          if (map.current.getSource("route")) {
-            map.current.getSource("route").setData(geojson);
-          } else {
-            addRouteLayer(geojson);
+          const handleAInputChange = async (e) => {
+            setStartAddress(e.target.value);
+        
           }
-          // otherwise, we'll make a new request
+        
+          const handleBInputChange = async (e) => {
+        
+            setDestination(e.target.value)
+        
+          }
+         
+          const getRoute = async (e) => {
+            const p = e;
+
+   
+
+            try{
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition( async (position)=> {
+                    const { latitude, longitude } = position.coords;
+  
+            const query = await fetch(
+              `https://api.mapbox.com/directions/v5/mapbox/${p}/${longitude},${latitude};${destLngLat[0]},${destLngLat[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+              { method: 'GET' }
+            );
+  
+            const json = await query.json();
+            const data = json.routes[0];
+            const route = data.geometry.coordinates;
+            const geojson = {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'LineString',
+                coordinates: route
+              }
+            };
+            // if the route already exists on the map, we'll reset it using setData
+            if (map.current.getSource('route')) {
+              map.current.getSource('route').setData(geojson);
+            }
+            else {
+              addRouteLayer(geojson);
+            }
+            // otherwise, we'll make a new request
 
           //  let instructions = document.getElementById('instructions');
           //  instructions.style.display='block';
@@ -381,65 +425,93 @@ function Map() {
             </div>
           </div>
 
-          <div id="directions-profile">
-            <input
-              id="driving"
-              type="radio"
-              value="driving"
-              name="profile"
-              onClick={(e) => {
-                getRoute(e.target.value);
-              }}
-            />
-            <label for="driving">Driving</label>
+    <div id='directions-profile'>
 
-            <input
-              id="walking"
-              type="radio"
-              name="profile"
-              value="walking"
-              onClick={(e) => {
-                getRoute(e.target.value);
-              }}
-            />
-            <label for="walking">Walking</label>
+    {/* <input id="driving" type="radio" value="driving" name="profile"  onClick={(e)=> { 
+ getRoute(e.target.value);
+}}/>
+    <label for="driving">Driving</label>
 
-            <input
-              id="cycling"
-              type="radio"
-              name="profile"
-              value="cycling"
-              onClick={(e) => {
-                getRoute(e.target.value);
-              }}
-            />
-            <label for="cycling">Cycling</label>
+    <input id="walking" type="radio" name="profile" value="walking" onClick={(e)=> { 
+ getRoute(e.target.value);
+}}/>
+    <label for="walking">Walking</label>
+
+    <input id="cycling" type="radio" name="profile" checked="" value="cycling" onClick={(e)=> { 
+     getRoute(e.target.value);
+    }}/>
+    <label for="cycling">Cycling</label> */}
+
+<div className="dpx">
+
+<div className='py'>
+  <label>
+    <input type="radio" class="option-input radio" value="driving" name="example" onClick={(e)=> { 
+     getRoute(e.target.value);
+    }}  />
+    Driving
+  </label>
+  <label>
+    <input type="radio" class="option-input radio" value="walking" name="example" onClick={(e)=> { 
+     getRoute(e.target.value);
+    }}/>
+    Walking
+  </label>
+  <label>
+    <input type="radio" class="option-input radio" value="cycling" name="example" onClick={(e)=> { 
+     getRoute(e.target.value);
+    }}/>
+    Cycling
+  </label>
+</div>
+</div>
+
+
+    </div>
+
           </div>
-        </div>
-      </div>
-      <div id="listing-card">
-        <div className="card-details">
-          <h2 class="card-h2">{titleCard}</h2>
-          <h3 class="card-h3">{descriptionCard}</h3>
-          <h3 class="card-h4"> {addressCard} </h3>
-          <h4 class="card-h4"> £{priceCard} </h4>
-          <Button
-          variant="primary"
-          >
-            Book
-          </Button>
-        </div>
 
-        <div
-          className="map-card-img"
-          style={{
-            backgroundImage: `url(${imageCard})`,
-            backgroundSize: "cover",
-          }}
-        ></div>
-      </div>
-    </section>
-  );
+        
+
+  </div>
+  <div id='listing-card'>
+    <div className="card-details">
+      <h1 className="close-button"onClick={(e) => { e.target.parentNode.parentNode.style.display='none'}}> x </h1>
+
+      <div class="card-header">
+  <h2 className="card-h2">{titleCard}</h2>
+  <h2 className="card-h2 dist">  Walking distance: {tripDuration}min(s) away</h2>
+  </div>
+
+  
+  <h3 className="card-h3">{descriptionCard}</h3>
+
+
+  </div>
+
+  <div className='card-bottom-wrapper'>
+      
+  <div className='map-card-img' style={{ backgroundImage: `url(${imageCard})`, backgroundSize:"cover"}}></div>
+
+  <div className='checkout-wrapper'> 
+ 
+  <h3 className="card-h4"> {addressCard} </h3>
+
+  <div className='price-checkout-wrapper'>
+  <h4 className="card-h4"> £{priceCard} </h4>
+
+  <button id="reserve-button"> Reserve </button>
+  </div>
+  </div>
+  </div>
+
+  </div>
+
+            
+
+
+</section>
+    );
 }
 
 export default Map;
