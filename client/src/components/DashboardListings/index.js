@@ -137,7 +137,7 @@ function DashboardListings({ listing, setListingValidate, setListingValidateMsg 
     <>
       <Col xs={12} lg={8} className="edit-listings-col">
         <Card className="edit-listings-card">
-          <div className="listings-card-row no-gutters">
+          <div className="listings-card-row bg-body-tertiary no-gutters">
             <div className="img-div">
               <Card.Img
                 src={listing.image}

@@ -53,7 +53,10 @@ const Dashboard = () => {
             setListingValidateMsg={setListingValidateMsg}
             />
           </Row>
+          <h2 className="update-listings-title">Update my listings</h2>
           <Row className="listings-row">
+
+
             <Col xs={12}>
             <h2 className="update-listings-title">Update my listings</h2>
             <Alert
@@ -65,6 +68,7 @@ const Dashboard = () => {
             </Alert>
             </Col>
             
+
             {reversedListings.map((listing) => (
               <DashboardListings 
               key={listing.id} 
