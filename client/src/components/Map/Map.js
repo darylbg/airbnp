@@ -48,6 +48,7 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     const [addressCard, setAddressCard] = useState('');
     const [priceCard, setPriceCard] = useState('');
     const [imageCard, setImageCard] = useState('');
+    const [tripDuration, setTripDuration] = useState('');
 
     useEffect(() => {
 
@@ -65,8 +66,8 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
     useEffect(() => {
 
       setAllListings(listings);
-      console.log(listings);
-      Object.keys(listing).forEach(function(key, index) {
+    
+      Object.keys(listing).forEach(async function(key, index) {
         const { lng, lat, title, price, description, address, image } = listing[key]
 
         const el = document.createElement('div');
@@ -78,9 +79,11 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
                     .setHTML(
                       `<h2 class="marker-h2"><b>${title}<b></h2>
                       <h3 class="marker-h3">${description}</h3>
-                      <h3 class="marker-h4"> ${address} </h3>
+                      <h3 class="marker-h3"> Location: <br>${address} </h3>
+                      <div class="marker-book">
                       <h4 class="marker-h4"><b> £${price} <b></h4>
-                      <button onclick="document.getElementById('listing-card').style.display='flex'"> Proceed to book </button>
+                      <button id="proceed-button" onclick="document.getElementById('listing-card').style.display='flex'"> Proceed to book </button>
+                      </div>
          `
                     ))
                     .addTo(map.current);
@@ -101,10 +104,30 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
                       ele[i].checked = false;
                       }
 
+                      
                       const markerCoords = [m._lngLat.lng, m._lngLat.lat];
                  
                       setDestination(address);
                       setDestLngLat(markerCoords);
+                      if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition( async (position)=> {
+                            const { latitude, longitude } = position.coords;
+
+                      const getTripDuration = async () => {
+                        const query = await fetch(
+                          `https://api.mapbox.com/directions/v5/mapbox/walking/${longitude},${latitude};${m._lngLat.lng},${m._lngLat.lat}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+                          { method: 'GET' }
+                        );
+                  
+                        const json =  await query.json();
+                        const data = json.routes[0];
+                        let tripMins = Math.floor(data.duration / 60);
+                        setTripDuration(tripMins);
+                      }
+                      getTripDuration();
+                    })
+
+                      }
 
                     })
                     
@@ -112,7 +135,12 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
          
       });
 
+      
+
+
     },[listing],[destLngLat])
+
+    
 
     useEffect(() => {
       
@@ -125,6 +153,8 @@ const accessToken = 'pk.eyJ1IjoianNlbjA3IiwiYSI6ImNsanI2enp3NDBkYzMzZGxsM2JobTZ4
                 navigator.geolocation.getCurrentPosition( async (position)=> {
                     const { latitude, longitude } = position.coords;
                     searchForUser(longitude, latitude);
+                    setstartLngLat([longitude, latitude]);
+                    console.log(startLngLat)
             
 
                     if (!map.current) return; // wait for map to initialize
@@ -415,7 +445,7 @@ const resetForm = () => {
 
     <div id='directions-profile'>
 
-    <input id="driving" type="radio" value="driving" name="profile"  onClick={(e)=> { 
+    {/* <input id="driving" type="radio" value="driving" name="profile"  onClick={(e)=> { 
  getRoute(e.target.value);
 }}/>
     <label for="driving">Driving</label>
@@ -425,10 +455,34 @@ const resetForm = () => {
 }}/>
     <label for="walking">Walking</label>
 
-    <input id="cycling" type="radio" name="profile" value="cycling" onClick={(e)=> { 
+    <input id="cycling" type="radio" name="profile" checked="" value="cycling" onClick={(e)=> { 
      getRoute(e.target.value);
     }}/>
-    <label for="cycling">Cycling</label>
+    <label for="cycling">Cycling</label> */}
+
+<div className="dpx">
+
+<div className='py'>
+  <label>
+    <input type="radio" class="option-input radio" value="driving" name="example" onClick={(e)=> { 
+     getRoute(e.target.value);
+    }}  />
+    Driving
+  </label>
+  <label>
+    <input type="radio" class="option-input radio" value="walking" name="example" onClick={(e)=> { 
+     getRoute(e.target.value);
+    }}/>
+    Walking
+  </label>
+  <label>
+    <input type="radio" class="option-input radio" value="cycling" name="example" onClick={(e)=> { 
+     getRoute(e.target.value);
+    }}/>
+    Cycling
+  </label>
+</div>
+</div>
 
 
     </div>
@@ -440,15 +494,34 @@ const resetForm = () => {
   </div>
   <div id='listing-card'>
     <div className="card-details">
-      <h1 className="close-button"onClick={(e) => { e.target.parentNode.parentNode.style.display='none'}}> X </h1>
+      <h1 className="close-button"onClick={(e) => { e.target.parentNode.parentNode.style.display='none'}}> x </h1>
 
+      <div class="card-header">
   <h2 className="card-h2">{titleCard}</h2>
-  <h3 className="card-h3">{descriptionCard}</h3>
-  <h3 className="card-h4"> {addressCard} </h3>
-  <h4 className="card-h4"> £{priceCard} </h4>
+  <h2 className="card-h2 dist">  Walking distance: {tripDuration}min(s) away</h2>
   </div>
+
   
+  <h3 className="card-h3">{descriptionCard}</h3>
+
+
+  </div>
+
+  <div className='card-bottom-wrapper'>
+      
   <div className='map-card-img' style={{ backgroundImage: `url(${imageCard})`, backgroundSize:"cover"}}></div>
+
+  <div className='checkout-wrapper'> 
+ 
+  <h3 className="card-h4"> {addressCard} </h3>
+
+  <div className='price-checkout-wrapper'>
+  <h4 className="card-h4"> £{priceCard} </h4>
+
+  <button id="reserve-button"> Reserve </button>
+  </div>
+  </div>
+  </div>
 
   </div>
 
