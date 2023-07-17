@@ -11,7 +11,7 @@ const Homepage = () => {
       //   className='container'
       //   style={{ width: "100%", justifyContent: "center", display: "flex" }}
       >
-        <AllListings />
+        {/* <AllListings /> */}
       </div>
     </div>
   );
