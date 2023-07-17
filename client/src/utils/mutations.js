@@ -77,6 +77,9 @@ export const UPDATE_USER = gql`
 export const CREATE_LISTING = gql`
   mutation createListing($listingData: listingInput!) {
     createListing(listingData: $listingData) {
+      _id
+     listings {
+      _id 
       title
       lat
       lng
@@ -85,6 +88,7 @@ export const CREATE_LISTING = gql`
       image
       # userId
       price
+      }
     }
   }
 `;
@@ -110,6 +114,9 @@ export const DELETE_LISTING = gql`
   mutation removeListing($listingId: ID!) {
     removeListing(listingId: $listingId) {
       _id
+      listings {
+        _id
+      }
     }
   }
 `;
