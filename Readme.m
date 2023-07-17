@@ -33,6 +33,8 @@ Airbnp offers a diverse range of bathroom options, allowing guests to choose fro
 - Payment integration options
 - Guest reviews
 - marketplace integration
+- Application could be expanded to include other types of listings such as hotels, restaurants, and attractions.
+- Application could be optimized for mobile devices to make it easier for users to access the application on the go.
 - And much more!
 
 ## Installing Airbnp
