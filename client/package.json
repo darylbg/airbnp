@@ -36,7 +36,11 @@
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
     "stripe": "^12.13.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@mapbox/mapbox-gl-directions": "^4.1.1",
+    "mapbox-gl": "^2.15.0",
+    "react-bootstrap-icons": "^1.10.3",
+    "styled-components": "^6.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
