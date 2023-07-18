@@ -32,7 +32,7 @@ const formReducer = (state, action) => {
 
 const NewListing = () => {
   const { listing } = useSelector((state) => state);
-  console.log(listing)
+  // console.log(listing)
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: {
       title: {
@@ -69,7 +69,7 @@ const NewListing = () => {
     }
 
   
-    console.log('Form submitted:', formState.inputs);
+    // console.log('Form submitted:', formState.inputs);
 
     setModalShow(false);
   };

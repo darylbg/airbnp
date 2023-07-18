@@ -67,12 +67,12 @@ function DashboardListings({ listing, setListingValidate, setListingValidateMsg 
           listingData: { ...values, lat, lng },
         },
       });
-      console.log(listing._id);
-      console.log("Updated data:", updatedData);
+      // console.log(listing._id);
+      // console.log("Updated data:", updatedData);
       setListingValidate(true);
       setListingValidateMsg('Successfully updated listing');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -83,12 +83,12 @@ function DashboardListings({ listing, setListingValidate, setListingValidateMsg 
           listingId: listing._id,
         },
       });
-      console.log("Successfully deleted listing");
+      // console.log("Successfully deleted listing");
       setSmShow(false);
       setListingValidate(true);
       setListingValidateMsg('Successfully deleted listing');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -129,7 +129,7 @@ function DashboardListings({ listing, setListingValidate, setListingValidateMsg 
     const imageUrl = json.secure_url;
     setImageUrlInput(imageUrl);
     setValues({ ...values, image: imageUrl }); // Update the image URL state
-    console.log(imageUrl);
+    // console.log(imageUrl);
     setValidUpload(true);
     setMessage("");
   };

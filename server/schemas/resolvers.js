@@ -21,14 +21,14 @@ const resolvers = {
         if (context.user) {
           const listingData = await Listing.find({ userId: context.user._id }).populate('ratings').populate('notifications');
           return listingData;
-          console.log(listingData)
+          // console.log(listingData)
         }
         throw new AuthenticationError('You need to be logged in!');
       }
     },
     Mutation: {
       login: async (parent, { email, password }) => {
-        console.log ("login",email,password)
+        // console.log ("login",email,password)
         const user = await User.findOne({ email }).populate('listings');
         if (!user) {
           throw new AuthenticationError('Incorrect credentials');
@@ -42,7 +42,7 @@ const resolvers = {
       },
 
       register: async (parent, { userData }) => {
-        console.log ("register",userData);
+        // console.log ("register",userData);
         const user = await User.create(userData);
         const token = signToken(user);
   
@@ -58,7 +58,7 @@ const resolvers = {
               { new: true });
               return user;
           } catch (error) {
-            console.log(error);
+            // console.log(error);
           }
           }
           throw new AuthenticationError('You need to be logged in!');

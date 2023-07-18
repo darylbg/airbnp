@@ -92,7 +92,7 @@ function AddListing( {setListingValidate, setListingValidateMsg}) {
       })
       setListingValidate(true);
     setListingValidateMsg("Successfully added a listing");
-    console.log(setListingValidateMsg);
+    // console.log(setListingValidateMsg);
     handleClose();
     closeModal();
     } catch (error) {
@@ -160,7 +160,7 @@ function AddListing( {setListingValidate, setListingValidateMsg}) {
     const imageUrl = json.secure_url;
     setImageUrlInput(imageUrl);
     setValues({ ...values, image: imageUrl }); // Update the image URL state
-    console.log(imageUrl);
+    // console.log(imageUrl);
     setValidUpload(true);
     setMessage("");
   };

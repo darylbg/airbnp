@@ -145,7 +145,7 @@ function Map() {
         const { latitude, longitude } = position.coords;
         searchForUser(longitude, latitude);
         setstartLngLat([longitude, latitude]);
-        console.log(startLngLat);
+        // console.log(startLngLat);
 
         if (!map.current) return; // wait for map to initialize
         // map.current.setCenter([longitude, latitude]);
@@ -200,7 +200,7 @@ function Map() {
         } else {
           return;
         }
-        console.log(location);
+        // console.log(location);
 
         const start = {
           center: [lng, lat],
@@ -379,7 +379,7 @@ function Map() {
     setError("");
   };
   const makeBooking = () => {
-    console.log("booking");
+    // console.log("booking");
   };
   //  useEffect(() => {
   //   console.log(profile)

@@ -64,7 +64,7 @@ const EditListing = () => {
     }
 
     // form submission logic
-    console.log('Form submitted:', formState.inputs);
+    // console.log('Form submitted:', formState.inputs);
 
     
     setModalShow(false);

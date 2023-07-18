@@ -15,7 +15,7 @@ const Profile = () => {
   //const [currentUser, setCurrentUser] =useState()
   const { auth } = useSelector((state) => state);
   const currentUser = auth.user;
-  console.log(currentUser);
+  // console.log(currentUser);
   //let currentUser;
   
   if(data) {

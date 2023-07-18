@@ -45,7 +45,7 @@ function LoginForm({ handleTogglePassword, passwordVisible}) {
       const { data } = await login({
         variables: { email, password },
       });
-      console.log(data);
+      // console.log(data);
       dispatch(
         login_user({
           token: data.login.token,

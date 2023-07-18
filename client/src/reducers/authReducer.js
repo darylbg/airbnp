@@ -17,7 +17,7 @@ export const authReducer = createSlice({
   },
   reducers: {
     login_user(state, action) {
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         isLoggedIn: true,

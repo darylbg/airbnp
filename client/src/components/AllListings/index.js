@@ -10,7 +10,7 @@ import { QUERY_GET_ALL_LISTINGS } from "../../utils/queries";
 
 const AllListings = () => {
   const { data: allListingsData } = useQuery(QUERY_GET_ALL_LISTINGS);
-  console.log(allListingsData);
+  // console.log(allListingsData);
 
   return (
     <div className="homepage-cards">

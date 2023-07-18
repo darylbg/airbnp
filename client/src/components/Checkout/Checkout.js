@@ -15,14 +15,14 @@ const stripePromise = loadStripe('pk_test_doIfqdnODmzgg00kfQcj9wHj00ld9K3l0D');
 
 function Checkout({price , close}) {
     const [paymentIntent , setPaymentIntent] = useState({})
-    console.log(price)
+    // console.log(price)
     async function GetPaymentIntent(){
        const pi = await stripe.paymentIntents.create({
         amount: price * 100,
         currency: 'gbp',
         payment_method_types: ['card'],
       })
-      console.log(pi)
+      // console.log(pi)
         setPaymentIntent(pi )
     }
     const [paid , setPaid] = useState(false)

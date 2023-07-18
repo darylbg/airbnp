@@ -30,14 +30,14 @@ const Dashboard = () => {
   }, [listingValidate]);
 
   const { data: dataListing } = useQuery(QUERY_USER_LISTINGS);
-  console.log(dataListing?.getListingByUserId);
+  // console.log(dataListing?.getListingByUserId);
   const listings = dataListing?.user.listings || [];
   const reversedListings = [...listings].reverse();
   // console.log(listings);
   const { data, error } = useQuery(QUERY_USER);
   // const currentUser = data?.
   let currentUser;
-  console.log(error);
+  // console.log(error);
   if (data) {
     currentUser = data.user;
     // console.log(data.user);

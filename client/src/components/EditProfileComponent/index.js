@@ -57,7 +57,7 @@ const Profile = ({ userObj }) => {
           image: imageUrlInput.trim().toString()
         },
       });
-      console.log(data);
+      // console.log(data);
       dispatch(
         login_user({
           ...userObj,
@@ -67,7 +67,7 @@ const Profile = ({ userObj }) => {
         setValidUpload(true);
       // window.location.reload();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setMessage('That username is already in use, please choose a different one');
       setValidUpload(false);
     }
