@@ -5,7 +5,6 @@
   "proxy": "http://localhost:3001",
   "dependencies": {
     "@apollo/client": "^3.7.16",
-    "@mapbox/search-js-react": "^1.0.0-beta.17",
     "@reduxjs/toolkit": "^1.9.5",
     "@stripe/react-stripe-js": "^2.1.1",
     "@stripe/stripe-js": "^1.54.1",
@@ -39,6 +38,7 @@
     "web-vitals": "^2.1.4",
     "@mapbox/mapbox-gl-directions": "^4.1.1",
     "mapbox-gl": "^2.15.0",
+    "@mapbox/search-js-react": "^1.0.0-beta.17",
     "react-bootstrap-icons": "^1.10.3",
     "styled-components": "^6.0.3"
   },
@@ -56,9 +56,8 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "defaults",
+      "not ie 11"
     ],
     "development": [
       "last 1 chrome version",
