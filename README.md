@@ -37,29 +37,10 @@ Airbnp offers a diverse range of bathroom options, allowing guests to choose fro
 - Application could be optimized for mobile devices to make it easier for users to access the application on the go.
 - And much more!
 
-## Installing Airbnp
+## Deployment
 
-1 . Install npx create react-app airbnp
-
-2. Clone the repository
-
-   ```bash
-   git clone https://github.com/airbnp/
-   ```
-
-3. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-4. Start the server
-
-   ```bash
-   npm run develop
-   ```
-
-5. Visit http://localhost:3001 in your browser to view the app.
+Live Application [here](https://airbnp-website-190a74645719.herokuapp.com/)
+Source code[here](https://github.com/darylbg/airbnp)
 
 ## Built With
 - React components
